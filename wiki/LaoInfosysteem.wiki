@@ -1,11 +1,12 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
+= Sissejuhatus =
 
-Add your content here.
+Tegemist on laosüsteemiga, täpsemat infot leiab:
 
+http://maurus.ttu.ee/ained/IDU0200_2013/doc/13/LADU_juhend.pdf
 
-= Details =
+= Detailid =
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
