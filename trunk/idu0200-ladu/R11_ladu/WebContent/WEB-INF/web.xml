@@ -4,7 +4,7 @@
   <servlet>
     <display-name>MainPageController</display-name>
     <servlet-name>MainPageController</servlet-name>
-    <servlet-class>Controller.MainPageController</servlet-class>
+    <servlet-class>controller.MainPageController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>MainPageController</servlet-name>

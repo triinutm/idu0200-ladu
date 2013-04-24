@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="model">
+
+    <class name="ItemType" table="item_type">
+		<id name="ItemType" column="item_type" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <property name="TypeName" column="type_name"/>
+        <property name="Level" column="level"/>
+        <property name="SuperType" column="super_type_fk"/>
+        
+        <set name="SubItemTypes" lazy="true" inverse="true" cascade="all" order-by="type_name">
+        	<key column="super_type_fk" />
+        	<one-to-many class="model.ItemType" />
+  		</set>      
+    </class>
+
+</hibernate-mapping>
