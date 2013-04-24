@@ -8,5 +8,7 @@
 </head>
 <body>
 <h3>R11 LADU</h3>
+<%String categorytree = (String)request.getAttribute("categoryTree"); %>
+<%out.println(categorytree); %>
 </body>
 </html>
