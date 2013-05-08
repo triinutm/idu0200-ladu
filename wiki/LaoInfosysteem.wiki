@@ -6,6 +6,9 @@ Tegemist on laosüsteemiga, täpsemat infot leiab:
 
 http://maurus.ttu.ee/ained/IDU0200_2013/doc/13/LADU_juhend.pdf
 
+= Sarnased lahendused=
+https://code.google.com/p/ladu/source/browse/#svn
+
 = Detailid =
 
 Add your content here.  Format your content with:
