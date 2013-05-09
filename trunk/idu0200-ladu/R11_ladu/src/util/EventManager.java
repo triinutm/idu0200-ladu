@@ -64,6 +64,7 @@ public class EventManager {
 		return itemTypes;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<ItemType> getAllFirstlevelCatalogs(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<ItemType> itemTypes = null;
