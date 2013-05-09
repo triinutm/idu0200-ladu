@@ -7,7 +7,10 @@ Tegemist on laosüsteemiga, täpsemat infot leiab:
 http://maurus.ttu.ee/ained/IDU0200_2013/doc/13/LADU_juhend.pdf
 
 = Sarnased lahendused=
-https://code.google.com/p/ladu/source/browse/#svn
+1. https://code.google.com/p/ladu/source/browse/#svn
+
+2. http://subversion.assembla.com/svn/service-mvc/trunk/
+    http://imbi.ld.ttu.ee:7500/t104445_t103950_ladu/
 
 = Detailid =
 
