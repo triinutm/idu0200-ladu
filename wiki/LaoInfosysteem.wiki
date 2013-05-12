@@ -14,7 +14,7 @@ http://maurus.ttu.ee/ained/IDU0200_2013/doc/13/LADU_juhend.pdf
 
 3.http://hektor4.ttu.ee:7500/t104493_ladu/s
 Kasutaja: olga
-Parool:test
+Parool: test
 
 = Detailid =
 
