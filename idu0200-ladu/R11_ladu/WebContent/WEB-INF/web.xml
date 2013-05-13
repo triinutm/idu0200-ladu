@@ -18,12 +18,4 @@
     <servlet-name>Vealeht</servlet-name>
     <url-pattern>/viga</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>Login</servlet-name>
-    <jsp-file>/login.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Login</servlet-name>
-    <url-pattern>/login</url-pattern>
-  </servlet-mapping>
 </web-app>
