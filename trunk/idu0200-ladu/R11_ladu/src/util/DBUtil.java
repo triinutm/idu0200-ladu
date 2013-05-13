@@ -62,7 +62,6 @@ public class DBUtil {
 			log.warn("Error: getItemTypeCatalogs()");
 		}
 		
-		
 		return itemTypes;
 	}
 	

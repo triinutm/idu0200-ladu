@@ -25,9 +25,7 @@ public class LoginPageController extends BaseController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException {
 		RequestDispatcher view = request.getRequestDispatcher("/login.jsp");
-		view.forward(request, response);
-		
-		
+		view.forward(request, response);	
 	}
 	
 	@Override
@@ -47,17 +45,15 @@ public class LoginPageController extends BaseController {
 			String hashedPassword=loginService.hashPassword(password);
 			if(userAccount.getPassw().equals(hashedPassword)){
 				request.getSession().setAttribute("user", userAccount);
-				response.sendRedirect("/");
-				
+				response.sendRedirect("/R11_ladu/");
+				return;
 			}else{
 				request.setAttribute("wrongpass", "Vale parool!");
 			}
 		}else{
 			request.setAttribute("wronguser", "Vale kasutaja!");
 		}
-		
-		view.forward(request, response);
-		
+		view.forward(request, response);	
 	}
 
 }
