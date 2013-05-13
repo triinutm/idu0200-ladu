@@ -30,7 +30,37 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping resource="hibernate/ItemType.hbm.xml"/>
+        <mapping class="db.Address"/> 
+        <mapping class="db.AddressType"/>
+        <mapping class="db.Contact"/>  
+        <mapping class="db.ContactType"/>  
+        <mapping class="db.Customer"/>
+        <mapping class="db.CustomerPriceList"/>   
+        <mapping class="db.Employee"/>   
+        <mapping class="db.EmployeeRole"/> 
+        <mapping class="db.EmployeeRoleType"/> 
+        <mapping class="db.Enterprise"/> 
+        <mapping class="db.EnterprisePersonRelation"/> 
+        <mapping class="db.EntPerRelationType"/> 
+        <mapping class="db.Item"/> 
+        <mapping class="db.ItemAction"/> 
+        <mapping class="db.ItemActionType"/> 
+        <mapping class="db.ItemAttribute"/> 
+        <mapping class="db.ItemAttributeType"/> 
+        <mapping class="db.ItemPriceList"/> 
+        <mapping class="db.ItemStore"/> 
+        <mapping class="db.ItemType"/> 
+        <mapping class="db.Person"/> 
+        <mapping class="db.PriceList"/> 
+        <mapping class="db.PriceListStatusType"/> 
+        <mapping class="db.Store"/> 
+        <mapping class="db.StructUnit"/> 
+        <mapping class="db.SubjectAttribute"/> 
+        <mapping class="db.SubjectAttributeType"/> 
+        <mapping class="db.SubjectType"/> 
+        <mapping class="db.TypeAttribute"/> 
+        <mapping class="db.UnitType"/> 
+        <mapping class="db.UserAccount"/> 
 
     </session-factory>
 
