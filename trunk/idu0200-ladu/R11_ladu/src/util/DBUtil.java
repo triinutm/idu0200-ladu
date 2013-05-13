@@ -2,15 +2,15 @@ package util;
 
 import java.util.List;
 
-import model.ItemType;
+import db.ItemType;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-public class EventManager {
+public class DBUtil {
 	
-	static Logger log = Logger.getLogger(EventManager.class);
+	static Logger log = Logger.getLogger(DBUtil.class);
 
 	@SuppressWarnings("unchecked")
 	public List<ItemType> getAllItemTypes() {
@@ -71,12 +71,13 @@ public class EventManager {
 		try{
 			session.beginTransaction();
 			
-			Query q = session.createQuery("from ItemType as p where p.Level =1 order by p.TypeName");
+			Query q = session.createQuery("from ItemType as p where p.level =1 order by p.typeName");
 			itemTypes = (List<ItemType>) q.list();
 			//session.getTransaction().commit();
 			
 		}catch(RuntimeException e){
 			session.getTransaction().rollback();
+			System.out.println(e.getMessage());
 			log.warn("Error: getAllFirstLevelCatalogs");
 		}
 		return itemTypes;
