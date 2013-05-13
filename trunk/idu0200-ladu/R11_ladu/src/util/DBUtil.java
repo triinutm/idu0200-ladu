@@ -3,6 +3,7 @@ package util;
 import java.util.List;
 
 import db.ItemType;
+import db.UserAccount;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
@@ -61,6 +62,7 @@ public class DBUtil {
 			log.warn("Error: getItemTypeCatalogs()");
 		}
 		
+		
 		return itemTypes;
 	}
 	
@@ -81,6 +83,25 @@ public class DBUtil {
 			log.warn("Error: getAllFirstLevelCatalogs");
 		}
 		return itemTypes;
+	}
+	
+	public UserAccount getUserByUsername(String username){
+		UserAccount userAccount=null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query=session.createQuery("from UserAccount as u where u.username= :username");
+			query.setString("username", username);
+			List<UserAccount> userAccountList=(List<UserAccount>)query.setMaxResults(1).list();
+			if(!userAccountList.isEmpty()){
+				userAccount=(UserAccount)userAccountList.get(0);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return userAccount ;
 	}
 
 }
