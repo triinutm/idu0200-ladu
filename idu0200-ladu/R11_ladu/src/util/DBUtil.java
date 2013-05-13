@@ -35,7 +35,7 @@ public class DBUtil {
 		ItemType itemType = null;
 		try{ 
 			session.getTransaction().begin();
-			itemType = (ItemType) session.get(ItemType.class, new Integer(id));
+			itemType = (ItemType) session.get(ItemType.class, new Long(id));
 			//session.getTransaction().commit();
 		}catch(Exception e){
 			session.getTransaction().rollback();
@@ -52,7 +52,7 @@ public class DBUtil {
 		try{
 			session.getTransaction().begin();
 			
-			Query q = session.createQuery("from ItemType as p where p.SuperType =:id order by p.TypeName");
+			Query q = session.createQuery("from ItemType as p where p.itemType_1.itemType =:id order by p.typeName");
 			q.setInteger("id", id);
 			itemTypes = (List<ItemType>) q.list();
 			session.getTransaction().commit();
