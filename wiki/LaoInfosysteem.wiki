@@ -2,6 +2,18 @@
 
 = Sissejuhatus =
 
+Funktsionaalsused
+
+RÜHM 1
+- Toodete haldus (toote otsing, toote lisamine, toote andmete muutmine)
+
+RÜHM 2
+- Lao toimingud (arvele võtmine, maha kandmine, ühest laost teise liigutamine)
+
+RÜHM 3
+- Hinnakirja tegemine (hinnakirja loomine/muutmine/kustutame, hinnakirja klientide haldus, hinnakirja toodete haldus)
+
+
 Tegemist on laosüsteemiga, täpsemat infot leiab:
 
 http://maurus.ttu.ee/ained/IDU0200_2013/doc/13/LADU_juhend.pdf
