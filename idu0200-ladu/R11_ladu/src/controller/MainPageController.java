@@ -2,10 +2,15 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import db.ItemType;
+import util.DBUtil;
 import view.DrawCatalog;
 
 public class MainPageController extends BaseController {
@@ -24,6 +29,11 @@ public class MainPageController extends BaseController {
 			{
 				String s = request.getParameter("catalog");
 				selectedCatalogId = Integer.parseInt(s.trim());
+				DBUtil m = new DBUtil();
+				List<ItemType> subCatalogs = m.getItemTypeCatalogs(selectedCatalogId);
+				if(subCatalogs != null && subCatalogs.size() == 0){
+				    request.setAttribute("lastCatalog", m.getItemTypeById(selectedCatalogId).getTypeName());
+				}
 			}
 			
 			DrawCatalog drawCatalog = new DrawCatalog();

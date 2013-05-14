@@ -9,8 +9,13 @@
 </head>
 <body>
 <h3>R11 LADU </h3>
-
 <%String categorytree = (String)request.getAttribute("categoryTree"); %>
-<%out.println(categorytree); %>
+<%out.println(categorytree); 
+if(request.getAttribute("lastCatalog") != null){
+    out.println("Valitud: " + request.getAttribute("lastCatalog")+" <br>");
+    %>
+    <a href="<%=request.getContextPath() + "/insert?catalog="+request.getParameter("catalog")%>">Lisa toode</a><br>
+    
+<%}%>
 </body>
 </html>
