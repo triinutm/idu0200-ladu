@@ -2,7 +2,9 @@ package util;
 
 import java.util.List;
 
+import db.Item;
 import db.ItemType;
+import db.Store;
 import db.TypeAttribute;
 import db.UserAccount;
 
@@ -122,5 +124,46 @@ public class DBUtil {
 		}
 		return typeAttributes;
 	}
+	
+	/**
+	 * Meetod leiab Item objekti id järgi.
+	 * @param id - otsitava toote id
+	 * @return - null kui toodet ei leita.
+	 */
+	public Item getItemById(int id) {
 
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Item item = null;
+		try{ 
+			session.getTransaction().begin();
+			item = (Item) session.get(Item.class, new Long(id));
+			//session.getTransaction().commit();
+		}catch(Exception e){
+			session.getTransaction().rollback();
+			log.warn("Error: getItemTypeById()");
+			e.printStackTrace();
+		}
+		return item;
+	}
+	
+	/**
+	 * Meetod küsib andmebaasist kõik laod.
+	 * @return - null, kui ladusid ei leita.
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Store> getAllWareHouses() {
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Store> storeList = null;
+		try{
+			session.getTransaction().begin();
+			storeList = (List<Store>) session.createCriteria(Store.class).list();
+			session.getTransaction().commit();
+		}catch(Exception e){
+			session.getTransaction().rollback();
+			log.warn("Error: getAllWareHouses()");
+			e.printStackTrace();
+		}
+		return storeList;
+	}
 }
