@@ -3,6 +3,7 @@ package util;
 import java.util.List;
 
 import db.ItemType;
+import db.TypeAttribute;
 import db.UserAccount;
 
 import org.apache.log4j.Logger;
@@ -101,6 +102,25 @@ public class DBUtil {
 		}
 		
 		return userAccount ;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TypeAttribute> getTypeAttributesByItemType(int itemType){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<TypeAttribute> typeAttributes = null;
+		try{
+			session.beginTransaction();
+			
+			Query q = session.createQuery("from TypeAttribute where itemType.itemType = :id order by orderby");
+			q.setInteger("id", itemType);
+			typeAttributes = (List<TypeAttribute>) q.list();
+			//session.getTransaction().commit();
+			
+		}catch(RuntimeException e){
+			session.getTransaction().rollback();
+			System.out.println(e.getMessage());
+		}
+		return typeAttributes;
 	}
 
 }
