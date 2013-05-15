@@ -6,6 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Uus hinnakiri</title>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css" />
+<script>
+	$(function() {
+		$("#date_from").datepicker();
+		$("#date_to").datepicker();
+	});
+</script>
 </head>
 <body>
 <form action="pricelist?action=new" method="POST">
@@ -13,8 +24,8 @@
 			<tr>
 				<th>staatus</th>
 				<td><select name="status" id="status">		
-						<option value="1" >pooleli</option>
-						<option value="2">kinnitatud</option>
+						<option value="pooleli" >pooleli</option>
+						<option value="kinnitatud">kinnitatud</option>
 				</select></td>
 			</tr>
 			<tr>
@@ -23,11 +34,11 @@
 			</tr>
 			<tr>
 				<th>kehtimise algus</th>
-				<td><input type="text" name="date_from"/></td>
+				<td><input readonly type="text" name="date_from" id="date_from"/></td>
 			</tr>
 			<tr>
 				<th>kehtimise lõpp</th>
-				<td><input type="text" name="date_to"/></td>
+				<td><input readonly type="text" name="date_to" id="date_to"/></td>
 			</tr>
 			<tr>
 				<th>märkus</th>

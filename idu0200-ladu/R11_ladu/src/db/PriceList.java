@@ -190,7 +190,7 @@ public class PriceList implements java.io.Serializable {
 		PriceListForm p = new PriceListForm();
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		p.setId(""+priceList);
-		p.setPriceListStatusType(""+priceListStatusType);
+		p.setPriceListStatusType(""+priceListStatusType.getTypeName());
 		p.setDefaultDiscountXtra(""+defaultDiscountXtra);
 		p.setDateFrom(""+df.format(dateFrom));
 		p.setDateTo(""+df.format(dateTo));
