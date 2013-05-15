@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List"%>
+<%@ page import="model.CustomerModel"%>
 <jsp:useBean id="pricelist" scope="request" type="model.PriceListForm" />
 <jsp:useBean id="otherstatus" scope="request"
 	type="List<java.lang.String>" />
+<jsp:useBean id="customers" scope="request" type="List<CustomerModel>" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,9 +31,10 @@
 				<th>staatus</th>
 				<td><select name="status" id="status">
 						<option value='<%=pricelist.getPriceListStatusType()%>'><%=pricelist.getPriceListStatusType()%></option>
-						<%for(String s: otherstatus){
-							out.println("<option value='"+s+"'>"+s+"</option>");
-						}
+						<%
+							for (String s : otherstatus) {
+								out.println("<option value='" + s + "'>" + s + "</option>");
+							}
 						%>
 				</select></td>
 			</tr>
@@ -57,5 +60,25 @@
 		</table>
 		<input type="submit" value="salvesta" />
 	</form>
+	<br>
+	<br>
+
+	<%
+		String id = "";
+		String name = "";
+		out.println("KLIENDID:");
+		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>nimi</th></tr>");
+		try {
+			for (CustomerModel c : customers) {
+				id = Integer.toString(c.getId());
+				name = c.getName();
+				out.println("<tr><td>" + id + "</td><td>" + name
+						+ "</td></tr>");
+			}
+			out.println("</table>");
+		} catch (Exception ex) {
+			out.println("Mingi viga" + ex.getMessage());
+		}
+	%>
 </body>
 </html>
