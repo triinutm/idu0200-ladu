@@ -9,6 +9,6 @@
 <body>
 <h3>VEALEHT</h3>
 Süsteemi töös tekkis viga!
-Liigu <a href="${pageContext.request.contextPath}">esilehele</a>.
+Liigu <a href="${pageContext.request.contextPath}">esilehele</a>
 </body>
 </html>

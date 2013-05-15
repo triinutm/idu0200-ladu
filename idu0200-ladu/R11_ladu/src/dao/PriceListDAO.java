@@ -8,7 +8,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.CustomerModel;
 
+
+import db.Customer;
+import db.Enterprise;
+import db.Person;
 import db.PriceList;
 import db.PriceListStatusType;
 import dao.dbconnection;
@@ -173,5 +178,51 @@ public class PriceListDAO {
 			System.out.println("PriceListDAO.findOtherStatusTypes() : "+e.getMessage());
 			return null;
 		}	
+	}
+	
+
+	public List <Customer> searchCustomer(String name) {
+		List <Customer> list = new LinkedList<Customer>();
+		ResultSet result = dbconnection.executeQuery("SELECT P.subject_id ,P.subject_name, P.subject_type FROM " +
+				"(SELECT person AS subject_id, 'isik'  AS subject_type, last_name AS subject_name FROM person " +
+				"WHERE UPPER(last_name) LIKE UPPER('"+name+"%') " +
+				"UNION SELECT enterprise AS subject_id, 'ettevote'  AS subject_type, name AS subject_name " +
+				"FROM enterprise WHERE UPPER(name) LIKE UPPER('"+name+"%')) AS P");
+		
+		if (result == null) {
+			return null;
+		}
+		try {
+			while (result.next()) {
+				Customer c = new Customer();
+				c.setCustomer(result.getInt("P.subject_id"));
+				list.add(c);
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.searchCustomer() : "+e.getMessage());
+			return null;
+		}
+	}
+
+	public List<CustomerModel> findCustomersById(int price_list) {
+		List <CustomerModel> list = new LinkedList<CustomerModel>();
+		ResultSet result = dbconnection.executeQuery("SELECT kood, klient FROM f_leia_kliendid("+price_list+")");	
+		if (result == null) {
+			return null;
+		}
+		try {
+			while (result.next()) {
+				CustomerModel c = new CustomerModel();
+				c.setId(result.getInt("kood"));
+				c.setName(result.getString("klient"));
+				System.out.println("FIND"+c.getName());
+				list.add(c);
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.searchCustomer() : "+e.getMessage());
+			return null;
+		}
 	}
 }

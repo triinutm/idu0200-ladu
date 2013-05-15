@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.CustomerModel;
 import model.PriceListForm;
 
 import dao.PriceListDAO;
+import db.Customer;
 import db.PriceList;
 
 /**
@@ -55,23 +57,33 @@ public class PriceListController extends HttpServlet {
 			if (request.getParameter("action").equals("delete")){
 				dao.deletePriceList(Integer.parseInt(request.getParameter("uid")));	
 			}
+			if (request.getParameter("action").equals("searchcustomer")){
+				view = request.getRequestDispatcher("/pricelistdetails.jsp");
+				List<Customer> customers = dao.searchCustomer(request.getParameter("customer"));
+				request.setAttribute("customers",customers);
+			}
+			if (request.getParameter("action").equals("customer")){
+				view = request.getRequestDispatcher("/pricelistdetails.jsp");
+			}
 		}
 		if (request.getParameter("id") != null){
 			if(request.getParameter("id").equals("new")){
 				view = request.getRequestDispatcher("/newpricelist.jsp");
 			}else{
-			try {
-				PriceListForm pricelist = dao.findById(Integer.parseInt(request.getParameter("id"))).convertToPriceListForm();
-				request.setAttribute("pricelist",pricelist);
-				List<String> list = dao.findOtherStatusTypes(pricelist.getPriceListStatusType());
-				request.setAttribute("otherstatus", list);
-			} catch (NumberFormatException | ParseException e) {
-				System.out.println("PriceListController.doGet()"+e.getMessage());
-			}view = request.getRequestDispatcher("/pricelist.jsp");
+				try {
+					PriceListForm pricelist = dao.findById(Integer.parseInt(request.getParameter("id"))).convertToPriceListForm();
+					request.setAttribute("pricelist",pricelist);
+					List<String> list = dao.findOtherStatusTypes(pricelist.getPriceListStatusType());
+					request.setAttribute("otherstatus", list);
+					List<CustomerModel> customers = dao.findCustomersById(Integer.parseInt(request.getParameter("id")));
+					request.setAttribute("customers", customers);
+				} catch (NumberFormatException | ParseException e) {
+					System.out.println("PriceListController.doGet()"+e.getMessage());
+				}view = request.getRequestDispatcher("/pricelist.jsp");
 			}
-			
+
 		}else{
-		request.setAttribute("pricelistElements", dao.findAll());
+			request.setAttribute("pricelistElements", dao.findAll());
 		}
 		request.setCharacterEncoding("UTF-8");
 		view.forward(request, response);
@@ -88,7 +100,7 @@ public class PriceListController extends HttpServlet {
 		PriceListDAO dao = new PriceListDAO();
 		PriceListForm priceListForm = new PriceListForm(); 
 		if(request.getParameter("id")!=null){
-		priceListForm.setId(request.getParameter("id"));
+			priceListForm.setId(request.getParameter("id"));
 		}
 		priceListForm.setPriceListStatusType(""+dao.findStatusType(request.getParameter("status")).getPriceListStatusType());
 		priceListForm.setDefaultDiscountXtra(request.getParameter("discount"));
