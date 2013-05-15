@@ -62,18 +62,43 @@
 	</form>
 	<br>
 	<br>
-
 	<%
 		String id = "";
 		String name = "";
 		out.println("KLIENDID:");
-		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>nimi</th></tr>");
+		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>nimi</th><th></th></tr>");
 		try {
 			for (CustomerModel c : customers) {
 				id = Integer.toString(c.getId());
 				name = c.getName();
 				out.println("<tr><td>" + id + "</td><td>" + name
-						+ "</td></tr>");
+						+ "</td><td><a HREF='pricelist?id="+pricelist.getId()+"&action=deletecustomer&customer="+ id
+						+ "'TARGET='_self'><strong>kustuta</strong></a></td></tr>");
+			}
+			out.println("</table>");
+		} catch (Exception ex) {
+			out.println("Mingi viga" + ex.getMessage());
+		}
+	%>
+	<form action="pricelist?id=<%=pricelist.getId()%>&action=searchcustomer" method="POST">
+		<input type="text" name="customer"> <input type="submit"
+			value="Otsi" />
+	</form>
+	
+		<%
+		List<CustomerModel> searchcustomers;
+		if (request.getAttribute("searchcustomers")!=null){
+			searchcustomers = (List<CustomerModel>) request.getAttribute("searchcustomers");
+		}else{
+			searchcustomers=null;
+		}
+		out.println("Tulemus:");
+		try {
+			for (CustomerModel c : searchcustomers) {
+				id = Integer.toString(c.getId());
+				name = c.getName();
+				out.println("<a HREF='pricelist?id="+pricelist.getId()+"&action=addcustomer&customer="+id
+						+ "'TARGET='_self'><strong>"+id+" "+name+"</strong></a>");
 			}
 			out.println("</table>");
 		} catch (Exception ex) {

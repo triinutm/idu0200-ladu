@@ -181,21 +181,25 @@ public class PriceListDAO {
 	}
 	
 
-	public List <Customer> searchCustomer(String name) {
-		List <Customer> list = new LinkedList<Customer>();
-		ResultSet result = dbconnection.executeQuery("SELECT P.subject_id ,P.subject_name, P.subject_type FROM " +
-				"(SELECT person AS subject_id, 'isik'  AS subject_type, last_name AS subject_name FROM person " +
+	public List <CustomerModel> searchCustomer(String name) {
+		List <CustomerModel> list = new LinkedList<CustomerModel>();
+		ResultSet result = dbconnection.executeQuery("SELECT R.subject_id ,R.subject_name FROM " +
+				"(SELECT customer AS subject_id, (first_name || ' ' || last_name) AS subject_name " +
+				"FROM person AS P INNER JOIN customer C ON C.subject_fk = P.person " +
 				"WHERE UPPER(last_name) LIKE UPPER('"+name+"%') " +
-				"UNION SELECT enterprise AS subject_id, 'ettevote'  AS subject_type, name AS subject_name " +
-				"FROM enterprise WHERE UPPER(name) LIKE UPPER('"+name+"%')) AS P");
+						"UNION SELECT customer AS subject_id, name AS subject_name FROM " +
+						"enterprise AS E INNER JOIN customer C ON C.subject_fk = E.enterprise " +
+						"WHERE UPPER(name) LIKE UPPER('"+name+"%')) AS R");
 		
 		if (result == null) {
 			return null;
 		}
 		try {
 			while (result.next()) {
-				Customer c = new Customer();
-				c.setCustomer(result.getInt("P.subject_id"));
+				CustomerModel c = new CustomerModel();
+				c.setId(result.getInt("subject_id"));
+				c.setName(result.getString("subject_name"));
+				System.out.println("LEITUD"+c.getName());
 				list.add(c);
 			}
 			return list;
@@ -216,13 +220,42 @@ public class PriceListDAO {
 				CustomerModel c = new CustomerModel();
 				c.setId(result.getInt("kood"));
 				c.setName(result.getString("klient"));
-				System.out.println("FIND"+c.getName());
 				list.add(c);
 			}
 			return list;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.searchCustomer() : "+e.getMessage());
+			System.out.println("PriceListDAO.findCustomersById() : "+e.getMessage());
 			return null;
+		}
+	}
+
+	public void addCustomer(int customer, int price_list) {
+		Connection connection = dbconnection.getConnection();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("INSERT INTO customer_price_list(customer_fk, price_list_fk)" +
+							"VALUES (?,?)");
+			statement.setInt(1,customer);
+			statement.setInt(2, price_list);
+			statement.execute();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.addCustomer()"+e.getMessage());
+		}
+	}
+
+	public void deleteCustomer(int customer, int price_list) {
+		System.out.println("SISU: "+customer+" "+price_list);
+		Connection connection = dbconnection.getConnection();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("DELETE FROM customer_price_list WHERE price_list_fk="+price_list+" AND customer_fk="+customer);
+			statement.execute();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.deletePriceList() : "+e.getMessage());
 		}
 	}
 }

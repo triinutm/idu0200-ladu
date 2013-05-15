@@ -58,12 +58,17 @@ public class PriceListController extends HttpServlet {
 				dao.deletePriceList(Integer.parseInt(request.getParameter("uid")));	
 			}
 			if (request.getParameter("action").equals("searchcustomer")){
-				view = request.getRequestDispatcher("/pricelistdetails.jsp");
-				List<Customer> customers = dao.searchCustomer(request.getParameter("customer"));
-				request.setAttribute("customers",customers);
+				view = request.getRequestDispatcher("/pricelist.jsp");
+				List<CustomerModel> searchcustomers = dao.searchCustomer(request.getParameter("customer"));
+				request.setAttribute("searchcustomers",searchcustomers);
 			}
-			if (request.getParameter("action").equals("customer")){
-				view = request.getRequestDispatcher("/pricelistdetails.jsp");
+			if (request.getParameter("action").equals("addcustomer")){
+				view = request.getRequestDispatcher("/pricelist.jsp");
+				dao.addCustomer(Integer.parseInt(request.getParameter("customer")),Integer.parseInt(request.getParameter("id")));
+			}
+			if (request.getParameter("action").equals("deletecustomer")){
+				view = request.getRequestDispatcher("/pricelist.jsp");
+				dao.deleteCustomer(Integer.parseInt(request.getParameter("customer")),Integer.parseInt(request.getParameter("id")));
 			}
 		}
 		if (request.getParameter("id") != null){
