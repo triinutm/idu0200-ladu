@@ -48,6 +48,5 @@ public class ProductModel {
     public void setAttributes(Map<Long, AttributeModel> attributes) {
 	this.attributes = attributes;
     }
-    
-    
+       
 }

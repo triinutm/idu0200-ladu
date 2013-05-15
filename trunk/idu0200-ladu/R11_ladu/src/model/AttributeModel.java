@@ -5,6 +5,7 @@ public class AttributeModel {
     private String attributeName ="";
     private String attributeValue = "";
     private String errorMessage = "";
+    private Long attributeId;
     public String getAttributeName() {
         return attributeName;
     }
@@ -22,6 +23,12 @@ public class AttributeModel {
     }
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+    public Long getAttributeId() {
+	return attributeId;
+    }
+    public void setAttributeId(Long attributeId) {
+	this.attributeId = attributeId;
     }
     
 

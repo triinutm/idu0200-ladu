@@ -43,13 +43,6 @@ public class InsertController extends BaseController implements Servlet {
 	    SQLException {
 	RequestDispatcher view = request.getRequestDispatcher("/insert.jsp");
 	Map<String, String[]> parameterMap = request.getParameterMap();
-	for(String key : parameterMap.keySet()){   
-	    if(parameterMap.get(key).length > 1){
-		 System.out.println("Key: "+key+"  Value: "+parameterMap.get(key)[0] + "  " + parameterMap.get(key)[1]);
-	    }else{
-		 System.out.println("Key: "+key+"  Value: "+parameterMap.get(key)[0]);
-	    }
-	}
 	ProductModel m = FormUtil.getProductFromParameterMap(parameterMap);
 	ProductValidator validator = new ProductValidator();
 	boolean isValid = validator.validateProductModel(m);
@@ -57,7 +50,8 @@ public class InsertController extends BaseController implements Servlet {
 	    DBUtil dbUtil = new DBUtil();
 	    Item item = dbUtil.saveItem(m);
 	    if(item != null){
-		System.out.println(item.getItem());
+		response.sendRedirect(request.getContextPath()+"/product?id="+item.getItem());
+		return;
 	    }
 	}
 	request.setAttribute("productModel", m);
