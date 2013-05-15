@@ -1,16 +1,29 @@
 package util;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import db.Enterprise;
 import db.Item;
+import db.ItemAttribute;
 import db.ItemType;
 import db.Store;
 import db.TypeAttribute;
+import db.UnitType;
 import db.UserAccount;
+
+import model.AttributeModel;
+import model.ProductModel;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class DBUtil {
 	
@@ -61,7 +74,6 @@ public class DBUtil {
 			itemTypes = (List<ItemType>) q.list();
 			session.getTransaction().commit();
 		}catch(Exception e){
-			session.getTransaction().rollback();
 			log.warn("Error: getItemTypeCatalogs()");
 		}
 		
@@ -113,16 +125,13 @@ public class DBUtil {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<TypeAttribute> typeAttributes = null;
 		try{
-			session.beginTransaction();
-			
+			session.beginTransaction();		
 			Query q = session.createQuery("from TypeAttribute where itemType.itemType = :id order by orderby");
 			q.setInteger("id", itemType);
 			typeAttributes = (List<TypeAttribute>) q.list();
-			//session.getTransaction().commit();
 			
 		}catch(RuntimeException e){
-			session.getTransaction().rollback();
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return typeAttributes;
 	}
@@ -167,5 +176,52 @@ public class DBUtil {
 			e.printStackTrace();
 		}
 		return storeList;
+	}
+	
+	/**
+	 * Toote lisamine koos attribuutidega
+	 * @param model
+	 * @return
+	 */
+	public Item saveItem(ProductModel model){
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction trans = session.beginTransaction();
+	    Item item = new Item();
+	    item.setDescription(model.getDescription().getAttributeValue());
+	    item.setName(model.getName().getAttributeValue());
+	    item.setSalePrice(new BigDecimal(model.getPrice().getAttributeValue()));
+	    item.setCreated(new Date());
+	    item.setUnitType((UnitType) session.get(UnitType.class, 1L));
+	    item.setItemType((ItemType) session.get(ItemType.class, new Long(model.getItemType())));
+	    item.setEnterprise((Enterprise) session.get(Enterprise.class, 2));
+	    Set<ItemAttribute> attributes = new HashSet<ItemAttribute>();
+	    DBUtil dbUtil = new DBUtil();
+	    // Otsime toote attribuudid ning paneme ID järgi map-i
+	    List<TypeAttribute> itemAttributes = dbUtil.getTypeAttributesByItemType(Integer.parseInt(model.getItemType()));
+	    Map<Long, TypeAttribute> attributeMap = new HashMap<Long, TypeAttribute>();
+	    for(TypeAttribute a : itemAttributes){
+		attributeMap.put(a.getTypeAttribute(), a);
+	    }
+	    for(Long key : model.getAttributes().keySet()){
+		ItemAttribute attribute = new ItemAttribute();
+		AttributeModel currentAttribute = model.getAttributes().get(key);
+		TypeAttribute attributeDefinition = attributeMap.get(key);	
+		// kas on tekstiväli
+		if(attributeDefinition.getItemAttributeType().getDataType().equals(1L)){
+		    attribute.setDataType(1L);
+		    attribute.setValueText(currentAttribute.getAttributeValue());
+		}else if(attributeDefinition.getItemAttributeType().getDataType().equals(2L)){
+		    attribute.setDataType(2L);
+		    attribute.setValueNumber(new BigDecimal(currentAttribute.getAttributeValue()));
+		}
+		attribute.setItemAttributeType(attributeDefinition.getItemAttributeType());
+		attribute.setOrderby(attributeDefinition.getOrderby());
+		attribute.setItem(item);
+		attributes.add(attribute);
+	    }
+	    item.setItemAttributes(attributes);
+	    session.save(item);
+	    trans.commit();
+	    return item;
 	}
 }

@@ -38,6 +38,7 @@ public class DrawCatalog {
 		catalog_out = catalog_out + selected_indicator + "<a href=\"?catalog="
 				+ itemType.getItemType() + "\">" + itemType.getTypeName()
 				+ "</a><br>\n";
+		
 		Iterator<ItemType> iter = itemType.getItemTypes().iterator();
 		while (iter.hasNext()) {
 			subcatalog = (ItemType) iter.next();

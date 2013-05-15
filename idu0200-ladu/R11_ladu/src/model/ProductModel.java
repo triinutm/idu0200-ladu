@@ -5,27 +5,29 @@ import java.util.Map;
 
 public class ProductModel {
 
-    private String name = "";
-    private String description = "";
-    private String price = "";
+    private AttributeModel name = new AttributeModel();
+    private AttributeModel description = new AttributeModel();
+    private AttributeModel price = new AttributeModel();
     private String type;
+    private String itemType;
     private Map<Long, AttributeModel> attributes = new HashMap<Long, AttributeModel>();
-    public String getName() {
+
+    public AttributeModel getName() {
         return name;
     }
-    public void setName(String name) {
+    public void setName(AttributeModel name) {
         this.name = name;
     }
-    public String getDescription() {
+    public AttributeModel getDescription() {
         return description;
     }
-    public void setDescription(String description) {
+    public void setDescription(AttributeModel description) {
         this.description = description;
     }
-    public String getPrice() {
+    public AttributeModel getPrice() {
         return price;
     }
-    public void setPrice(String price) {
+    public void setPrice(AttributeModel price) {
         this.price = price;
     }
     public String getType() {
@@ -33,6 +35,12 @@ public class ProductModel {
     }
     public void setType(String type) {
         this.type = type;
+    }
+    public String getItemType() {
+	return itemType;
+    }
+    public void setItemType(String itemType) {
+	this.itemType = itemType;
     }
     public Map<Long, AttributeModel> getAttributes() {
 	return attributes;

@@ -18,7 +18,10 @@ import model.ProductModel;
 import util.DBUtil;
 import util.FormUtil;
 
+import db.Item;
+import db.ItemType;
 import db.TypeAttribute;
+import frontend.ProductValidator;
 
 /**
  * Servlet implementation class InsertController
@@ -40,8 +43,7 @@ public class InsertController extends BaseController implements Servlet {
 	    SQLException {
 	RequestDispatcher view = request.getRequestDispatcher("/insert.jsp");
 	Map<String, String[]> parameterMap = request.getParameterMap();
-	for(String key : parameterMap.keySet()){
-	   
+	for(String key : parameterMap.keySet()){   
 	    if(parameterMap.get(key).length > 1){
 		 System.out.println("Key: "+key+"  Value: "+parameterMap.get(key)[0] + "  " + parameterMap.get(key)[1]);
 	    }else{
@@ -49,6 +51,15 @@ public class InsertController extends BaseController implements Servlet {
 	    }
 	}
 	ProductModel m = FormUtil.getProductFromParameterMap(parameterMap);
+	ProductValidator validator = new ProductValidator();
+	boolean isValid = validator.validateProductModel(m);
+	if(isValid){
+	    DBUtil dbUtil = new DBUtil();
+	    Item item = dbUtil.saveItem(m);
+	    if(item != null){
+		System.out.println(item.getItem());
+	    }
+	}
 	request.setAttribute("productModel", m);
 	view.forward(request, response);
     }
@@ -63,7 +74,9 @@ public class InsertController extends BaseController implements Servlet {
 	    DBUtil m = new DBUtil();
 	    List<TypeAttribute> itemAttributes = m.getTypeAttributesByItemType(id);
 	    ProductModel model = new ProductModel();
-	    model.setType(m.getItemTypeById(id).getTypeName());
+	    ItemType type = m.getItemTypeById(id);
+	    model.setType(type.getTypeName());
+	    model.setItemType(id.toString());
 	    for(TypeAttribute attribute : itemAttributes){
 		AttributeModel attibute = new AttributeModel();
 		attibute.setAttributeName(attribute.getItemAttributeType().getTypeName());		

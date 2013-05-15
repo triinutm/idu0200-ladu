@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,7 +31,8 @@ public class MainPageController extends BaseController {
 				String s = request.getParameter("catalog");
 				selectedCatalogId = Integer.parseInt(s.trim());
 				DBUtil m = new DBUtil();
-				List<ItemType> subCatalogs = m.getItemTypeCatalogs(selectedCatalogId);
+				ItemType catalog = m.getItemTypeById(selectedCatalogId);
+				Set<ItemType> subCatalogs = catalog.getItemTypes();
 				if(subCatalogs != null && subCatalogs.size() == 0){
 				    request.setAttribute("lastCatalog", m.getItemTypeById(selectedCatalogId).getTypeName());
 				}
