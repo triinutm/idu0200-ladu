@@ -10,6 +10,8 @@ import java.util.Set;
 
 import db.Enterprise;
 import db.Item;
+import db.ItemAction;
+import db.ItemActionType;
 import db.ItemAttribute;
 import db.ItemType;
 import db.Store;
@@ -103,7 +105,8 @@ public class DBUtil {
     /*
 	 * 
 	 */
-    public UserAccount getUserByUsername(String username) {
+    @SuppressWarnings("unchecked")
+	public UserAccount getUserByUsername(String username) {
 	UserAccount userAccount = null;
 	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	try {
@@ -291,8 +294,47 @@ public class DBUtil {
 		}
 	    }
 	}
-	session.save(item);
-	trans.commit();
+			session.save(item);
+			trans.commit();
 	return item;
     }
+	
+	/**
+	 * Meetod leiab ItemActionType objekti id järgi.
+	 * @param id - otsitava lao toimingu tüübi id
+	 * @return - null kui lao toimingu tüüpi ei leita.
+	 */
+	public ItemActionType getItemActionType(int id) {
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		ItemActionType itemActionType = null;
+		try{ 
+			session.getTransaction().begin();
+			itemActionType = (ItemActionType) session.get(ItemActionType.class, new Long(id));
+			session.getTransaction().commit();
+		}catch(Exception e){
+			session.getTransaction().rollback();
+			log.warn("Error: getItemActionType()");
+			e.printStackTrace();
+		}
+		return itemActionType;
+	}
+	
+	/**
+	 * Meetod, mis sisestab lao toimingu andmebaasi.
+	 * @param itemAction - sisestatav toiming.
+	 */
+	public void insertItemAction(ItemAction itemAction){
+
+		Session session = HibernateUtil.buildSessionFactory().openSession();
+		
+		try {
+			session.beginTransaction();
+			session.save(itemAction);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			log.warn("EventManager: insertItemAction()" + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }

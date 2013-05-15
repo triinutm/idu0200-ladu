@@ -11,21 +11,30 @@
 </head>
 <%Item item = (Item)request.getAttribute("item");%>
 <%List<Store> allStores = (List<Store>)request.getAttribute("allStores");%>
+<%String registerSuccessful = (String)request.getAttribute("register_successful"); %>
 <body>
 <h1>Lao toimingud</h1>
 <%if(item != null){ %>
+<%if(registerSuccessful != null){ %>
+	<%out.println(registerSuccessful); %>
+	<br />
+	<br />
+<%} %>
+<form method="post" id="warehouse_register_form" accept-charset="UTF-8" action="?action=register">
 	<table>
 		<tr>
-			<td>ARVELE VÕTMINE</td>
+			<td colspan="2">ARVELE VÕTMINE</td>
 		</tr>
 		<tr>
 			<td>Toode:</td>
-			<td><%out.println(item.getName() + "- " + item.getDescription() );%></td>
+			<td><%out.println(item.getName() + "- " + item.getDescription() );%>
+				<input type="hidden" name="register_item_id" value="<%out.print(item.getItem());%>" />
+			</td>
 		</tr>
 		<tr>
 			<td>Ladu:</td>
 			<td>
-				<select>
+				<select name="register_select_store">
     				<option value="" disabled="disabled" selected="selected">--Vali ladu--</option>
     				<%for(Store store : allStores){ %>
     					<option value="<%out.print(store.getStore());%>"><%out.print(store.getName());%></option>
@@ -52,15 +61,19 @@
 			<td><input type="submit" name="register_submit" value="Salvesta lao toiming" /></td>
 		</tr>
 	</table>
+</form>
 	<br />
 	<br />
+<form>
 	<table>
 		<tr>
-			<td>MAHA KANDMINE</td>
+			<td colspan="2">MAHA KANDMINE</td>
 		</tr>
 		<tr>
 			<td>Toode:</td>
-			<td><%out.println(item.getName() + "- " + item.getDescription() );%></td>
+			<td><%out.println(item.getName() + "- " + item.getDescription() );%>
+				<input type="hidden" name="remove_item_id" value="<%out.print(item.getItem());%>" />
+			</td>
 		</tr>
 		<tr>
 			<td>Ladu:</td>
@@ -92,15 +105,19 @@
 			<td><input type="submit" name="remove_submit" value="Salvesta lao toiming" /></td>
 		</tr>
 	</table>
+</form>
 	<br />
 	<br />
+<form>
 	<table>
 		<tr>
-			<td>LIIGUTAMINE LADUDE VAHEL</td>
+			<td colspan="2">LIIGUTAMINE LADUDE VAHEL</td>
 		</tr>
 		<tr>
 			<td>Toode:</td>
-			<td><%out.println(item.getName() + "- " + item.getDescription() );%></td>
+			<td><%out.println(item.getName() + "- " + item.getDescription() );%>
+				<input type="hidden" name="move_item_id" value="<%out.print(item.getItem());%>" />
+			</td>
 		</tr>
 		<tr>
 			<td>Laost:</td>
@@ -139,6 +156,7 @@
 			<td><input type="submit" name="move_submit" value="Salvesta lao toiming" /></td>
 		</tr>
 	</table>
+</form>
 <%}else{ %>
 	Toodet ei leitud!
 <%} %>
