@@ -18,10 +18,13 @@ public class LoginService {
 	public UserAccount getUser(){
 	return user;
 	}
+	/*
+	 * parooli hashimine
+	 */
 	
 	public String hashPassword(String password){
 		String hashedPassword=null;
-		if(null==password) return null;
+		if(password==null) return null;
 		try {
 			MessageDigest digest=MessageDigest.getInstance("MD5");
 			digest.update(password.getBytes(), 0, password.length());
