@@ -42,9 +42,9 @@ nõue 4.6. Vähemalt ühe veebilehe (või keerulisema html-vormi või lehel alam
 nõue 5.7. asutage vähemalt ühes sellises  andmete salvestamise tegevuses „validator“-tüüpi objekti.  Teie ülesanne on vähemalt ühe andmete sisestuse/muudatuse korral teha nii et vigaste andmete salvestamise katsel püütaks vead validatori poolt kinni ja näidataks
  IGA andmevälja juures (mille sisu oli ebakorrektne) veateadet (vaata allpool olevat kasutajavormide näidet)
  
- nõue 6.8. Rakenduse andmebaasiühenduse parameetrid (andmebaasi serveri aadress, andmebaasi nimi, andmebaasi port, andmebaasi kasutajanimi ja parool) ei tohiks olla  koodi sisse kirjutatud vaid need peaks olema salvestatud konfiguratsioonifailis. Väga hästi sobib selleks näiteks ava platvormil kasutatavad „properties“-tüüpi failid (vaata selle kohta harjutustundides tulevaid näiteid)
+nõue 6.8. Rakenduse andmebaasiühenduse parameetrid (andmebaasi serveri aadress, andmebaasi nimi, andmebaasi port, andmebaasi kasutajanimi ja parool) ei tohiks olla  koodi sisse kirjutatud vaid need peaks olema salvestatud konfiguratsioonifailis. Väga hästi sobib selleks näiteks ava platvormil kasutatavad „properties“-tüüpi failid (vaata selle kohta harjutustundides tulevaid näiteid)
  
- nõue 6.9.   Kasutage rakenduses täiendavalt selliseid disainimustreid mida selles materjalis mainitud ei ole (siin juhendis on mainitud järgmiseid idsianimustreid :  „MVC“, „Composite View“, „Data Access Object“). Selliseid täiendavaid, teie enda poolt valitud mustreid peaks olema vähemalt 3. Proovige oma rakenduses neid vähemalt kolme mustrit kasutada.
+nõue 6.9.   Kasutage rakenduses täiendavalt selliseid disainimustreid mida selles materjalis mainitud ei ole (siin juhendis on mainitud järgmiseid idsianimustreid :  „MVC“, „Composite View“, „Data Access Object“). Selliseid täiendavaid, teie enda poolt valitud mustreid peaks olema vähemalt 3. Proovige oma rakenduses neid vähemalt kolme mustrit kasutada.
  
  nõue 9.10. 
 •Osade andmebaasiga seotud operatsioonide realiseerimiseksl tuleb andmebaasiga suhtlemiseks kasutada ORM-vahekihi tarkvara. (Object Relational Mapping)
@@ -62,6 +62,7 @@ nõue 12.14. Logifaili olemasolu
 nõue 13.15. Kaitsmise ajal peab rakenduse lähtekood peab olema kopeeritud TTÜ serverisse tudengi kodukataloogi  (vabal valikul imbi.ld.ttu.ee või hektor4.ttu.ee) ja peab olema võimalik seda rakendust linuxi käsureal uuesti kompileerida  ja serverile installeerida.
 
 dokumentatsioon:
+
 nõue 15.17.  Vabalt valitud vahendiga (ArgoUML, Rational, MS Visio) kandke klassidiagrammidele kõik teie poolt loodud komponendid – klassid, JSP-lehed, XSL-lehed,SQL-protseduurid. Kuigi vormistuseks on klassidiagramm tuleks nendlee diagrammidel kanda  kõik komponendid – ka selliseid mis ei ole vormistatud kui klassid (JSP-lehed , SQL-protseduurid vms.)
 
 nõue 15.18. Kaks jada- või koostöödiagrammi.
