@@ -40,20 +40,23 @@ nõue 3.5 Vähemalt ühe veebilehe või kasutajavormi või alamvormi HTML-i gene
 nõue 4.6. Vähemalt ühe veebilehe (või keerulisema html-vormi või lehel alamosa) genereerimise realiseerimisel tuleks kasutada „Composite View“ mustrit.
 
 nõue 5.7. asutage vähemalt ühes sellises  andmete salvestamise tegevuses „validator“-tüüpi objekti.  Teie ülesanne on vähemalt ühe andmete sisestuse/muudatuse korral teha nii et vigaste andmete salvestamise katsel püütaks vead validatori poolt kinni ja näidataks
- IGA andmevälja juures (mille sisu oli ebakorrektne) veateadet (vaata allpool olevat kasutajavormide näidet)
+IGA andmevälja juures (mille sisu oli ebakorrektne) veateadet (vaata allpool olevat kasutajavormide näidet)
  
 nõue 6.8. Rakenduse andmebaasiühenduse parameetrid (andmebaasi serveri aadress, andmebaasi nimi, andmebaasi port, andmebaasi kasutajanimi ja parool) ei tohiks olla  koodi sisse kirjutatud vaid need peaks olema salvestatud konfiguratsioonifailis. Väga hästi sobib selleks näiteks ava platvormil kasutatavad „properties“-tüüpi failid (vaata selle kohta harjutustundides tulevaid näiteid)
+
+nõue 6.9.
+Kasutage rakenduses täiendavalt selliseid disainimustreid mida selles materjalis mainitud ei ole (siin juhendis on mainitud järgmiseid idsianimustreid :  „MVC“, „Composite View“, „Data Access Object“). Selliseid täiendavaid, teie enda poolt valitud mustreid peaks olema vähemalt 3. Proovige oma rakenduses neid vähemalt kolme mustrit kasutada.
  
-nõue 6.9.   Kasutage rakenduses täiendavalt selliseid disainimustreid mida selles materjalis mainitud ei ole (siin juhendis on mainitud järgmiseid idsianimustreid :  „MVC“, „Composite View“, „Data Access Object“). Selliseid täiendavaid, teie enda poolt valitud mustreid peaks olema vähemalt 3. Proovige oma rakenduses neid vähemalt kolme mustrit kasutada.
- 
- nõue 9.10. 
+nõue 9.10.
 •Osade andmebaasiga seotud operatsioonide realiseerimiseksl tuleb andmebaasiga suhtlemiseks kasutada ORM-vahekihi tarkvara. (Object Relational Mapping)
 
 •Osade andmebaasidega seotud operatsioonide realiseerimiseks tuleb kasutada JDBC-d (Java Database Connectivity) ja SQL lauseid. JDBC-d tuleb kasutada Data Access Object mustrit (DAO) realiseeriva klassi sees.(Ehk siis teiste sõnadega – andmebaasiga suhtleb DAO klass mille meetodid sisaldavad andmebaasi poole pöördumisi SQL-lausetega üle JDBC API)
 
-nõue 9.11. Kasutage ühes andmeuuendus-tegevuses SQL-protseduuri väljakutsumist . Töö andmetega (SQL-laused) teeb siis ära andmebaasi salvestatud SQL-protseduur ja  rakenduses ei sisaldu selle tegevusega seotud SQL-lauseid – rakenduses on ainult SQL-protseduuri väljakutse.
- 
-nõue 10.12. Kasutage XMLHttpRequest objekti (nn. „AJAX-väljakutse“) andmete tõmbamiseks serveril, andmete tagasisaatmiseks serverile ja selle tagasisaatmise tulemuste näitamiseks veebilehel (mitu ajaxi varianti on)
+nõue 9.11.
+Kasutage ühes andmeuuendus-tegevuses SQL-protseduuri väljakutsumist . Töö andmetega (SQL-laused) teeb siis ära andmebaasi salvestatud SQL-protseduur ja  rakenduses ei sisaldu selle tegevusega seotud SQL-lauseid – rakenduses on ainult SQL-protseduuri väljakutse.
+
+nõue 10.12.
+Kasutage XMLHttpRequest objekti (nn. „AJAX-väljakutse“) andmete tõmbamiseks serveril, andmete tagasisaatmiseks serverile ja selle tagasisaatmise tulemuste näitamiseks veebilehel (mitu ajaxi varianti on)
  
 nõue 11.13. Kirjutage üks käsurealt käivitatav test kasutades JUnit testimis-raamistikku.
  
