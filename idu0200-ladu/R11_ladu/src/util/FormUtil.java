@@ -22,6 +22,9 @@ public class FormUtil {
 		AttributeModel a = new AttributeModel();
 		a.setAttributeValue(valueAndName[0]);
 		a.setAttributeName(valueAndName[1]);
+		if(valueAndName.length>2 && !StringUtils.equalsIgnoreCase("null", valueAndName[2])){
+		    a.setAttributeId(Long.parseLong(valueAndName[2]));
+		}
 		model.getAttributes().put(Long.parseLong(key), a);
 	    }
 	}
