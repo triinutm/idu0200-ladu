@@ -25,7 +25,9 @@ if(request.getAttribute("lastCatalog") != null){
     out.println("Valitud: " + request.getAttribute("lastCatalog")+" <br>");
     %>
     <a href="<%=request.getContextPath() + "/insert?catalog="+request.getParameter("catalog")%>">Lisa toode</a><br>
-    
-<%}%>
+    <a href="<%=request.getContextPath() + "/search?catalog="+request.getParameter("catalog")%>">Otsi</a>
+<%}else{
+    out.println("<a href='" + request.getContextPath()+"/search'>Otsi</a>");
+}%>
 </body>
 </html>
