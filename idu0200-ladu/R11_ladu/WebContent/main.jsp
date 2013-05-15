@@ -15,7 +15,10 @@
 <%
 UserAccount user=(UserAccount)request.getSession().getAttribute("user");
 %>
+<% if (user != null) {%>
 <h1>Tere <%=user.getUsername()%></h1>
+<% }%> 
+
 <%String categorytree = (String)request.getAttribute("categoryTree"); %>
 <%out.println(categorytree); 
 if(request.getAttribute("lastCatalog") != null){
