@@ -8,6 +8,7 @@
 <title>Sisse logimine</title>
 </head>
 <%String wrongPassword = (String)request.getAttribute("wrongpass");%>
+<%String wrongUser = (String)request.getAttribute("wronguser");%>
 <body>
 	<h3>Logi sisse:</h3>
 	
@@ -21,5 +22,9 @@
 <%if(wrongPassword != null){%>
 	<%out.println(wrongPassword); %>
 <%}%>
+<%if(wrongUser != null){%>
+	<%out.println(wrongUser); %>
+<%}%>
+
 </body>
 </html>

@@ -27,6 +27,10 @@ public class LoginPageController extends BaseController {
 		RequestDispatcher view = request.getRequestDispatcher("/login.jsp");
 		view.forward(request, response);	
 	}
+	/*
+	 * 
+	 * @see controller.BaseController#doOnPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	
 	@Override
 	protected void doOnPost(HttpServletRequest request,

@@ -86,7 +86,9 @@ public class DBUtil {
 		}
 		return itemTypes;
 	}
-	
+	/*
+	 * 
+	 */
 	public UserAccount getUserByUsername(String username){
 		UserAccount userAccount=null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
