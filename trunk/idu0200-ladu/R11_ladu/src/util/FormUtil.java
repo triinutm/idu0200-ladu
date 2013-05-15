@@ -11,10 +11,11 @@ public class FormUtil {
     
     public static ProductModel getProductFromParameterMap(Map<String, String[]> parameterMap){
 	ProductModel model = new ProductModel();
-	model.setName(getValueFromMap("name", parameterMap));
-	model.setDescription(getValueFromMap("description", parameterMap));
-	model.setPrice(getValueFromMap("price", parameterMap));
+	model.getName().setAttributeValue(getValueFromMap("name", parameterMap));
+	model.getDescription().setAttributeValue(getValueFromMap("description", parameterMap));
+	model.getPrice().setAttributeValue(getValueFromMap("price", parameterMap));
 	model.setType(getValueFromMap("type", parameterMap));
+	model.setItemType(getValueFromMap("itemType", parameterMap));
 	for(String key : parameterMap.keySet()){
 	    String[] valueAndName = parameterMap.get(key);
 	    if(StringUtils.isNumeric(key) && valueAndName.length > 1){

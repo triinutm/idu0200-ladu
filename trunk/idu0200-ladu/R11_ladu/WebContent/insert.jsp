@@ -19,20 +19,25 @@ if(request.getAttribute("productModel") != null){
     ProductModel model = (ProductModel) request.getAttribute("productModel");
 %>
 
-<tr><td>Nimetus</td><td><input type="text" name="name" value="<%=model.getName()%>"/></td></tr>
-<tr><td>Kirjeldus</td><td><input type="text" name="description" value="<%=model.getDescription()%>" /></td></tr>
-<tr><td>Müügihind</td><td><input type="text" name="price" value="<%=model.getPrice()%>"/></td></tr>
+<tr><td>Nimetus</td><td><input type="text" name="name" value="<%=model.getName().getAttributeValue()%>"/>
+<span><%=model.getName().getErrorMessage()%></span></td></tr>
+<tr><td>Kirjeldus</td><td><input type="text" name="description" value="<%=model.getDescription().getAttributeValue()%>" />
+<span><%=model.getDescription().getErrorMessage()%></span></td></tr>
+<tr><td>Müügihind</td><td><input type="text" name="price" value="<%=model.getPrice().getAttributeValue()%>"/>
+<span><%=model.getPrice().getErrorMessage()%></span></td></tr>
 <tr><td colspan="2">------------------------ attribuudid ------------------------ </td></tr>
 <%
-    out.println("<tr><td>Toote tüüp</td><td>"+model.getType()+
-	    "<input type='hidden' name='type' value='"+model.getType()+"'</td><tr>");
     for(Long key : model.getAttributes().keySet()){
 		AttributeModel attributeModel = model.getAttributes().get(key);
 		out.println("<tr><td>"+attributeModel.getAttributeName()+"</td><td>");
 		out.println("<input type='text' name='"+key+"' placeholder='"
 		+attributeModel.getAttributeName()+"' value='"+attributeModel.getAttributeValue()+"'/>"+
-		"<input type='hidden' name='"+key+"'value='"+attributeModel.getAttributeName()+"' /> </td></tr>");
+		"<input type='hidden' name='"+key+"'value='"+attributeModel.getAttributeName()+"' />"
+		+"<span>"+attributeModel.getErrorMessage()+"</span></td></tr>");
     }
+	out.println("<tr><td>Toote tüüp</td><td>"+model.getType()+
+	    "<input type='hidden' name='type' value='"+model.getType()+"' />"+
+	    "<input type='hidden' name='itemType' value='"+model.getItemType()+"'</td><tr>");
 %>
 <tr><td><input type="submit" value="Lisa uus toode" /></td></tr>
 <%} %>

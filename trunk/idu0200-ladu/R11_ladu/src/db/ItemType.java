@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class ItemType implements java.io.Serializable {
 
 	private long itemType;
-	private ItemType itemType_1;
+	private Long itemType_1;
 	private String typeName;
 	private Long level;
 	private Set<Item> items = new HashSet<Item>(0);
@@ -35,7 +35,7 @@ public class ItemType implements java.io.Serializable {
 		this.itemType = itemType;
 	}
 
-	public ItemType(long itemType, ItemType itemType_1, String typeName,
+	public ItemType(long itemType, Long itemType_1, String typeName,
 			Long level, Set<Item> items, Set<TypeAttribute> typeAttributes,
 			Set<ItemType> itemTypes) {
 		this.itemType = itemType;
@@ -57,13 +57,12 @@ public class ItemType implements java.io.Serializable {
 		this.itemType = itemType;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "super_type_fk")
-	public ItemType getItemType_1() {
+	@Column(name = "super_type_fk", precision = 10, scale = 0)
+	public Long getItemType_1() {
 		return this.itemType_1;
 	}
 
-	public void setItemType_1(ItemType itemType_1) {
+	public void setItemType_1(Long itemType_1) {
 		this.itemType_1 = itemType_1;
 	}
 
