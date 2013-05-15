@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -55,6 +56,24 @@ public class PriceListDAO {
 			return null;
 		}	
 	}
+	public PriceListStatusType findStatusType(String status){
+		ResultSet result = dbconnection.executeQuery("SELECT price_list_status_type, type_name FROM price_list_status_type WHERE type_name='"+status+"'");
+		PriceListStatusType s= new PriceListStatusType();
+		try {
+			if (!result.next()) {
+				return null;
+			}
+			else {
+				s.setPriceListStatusType(result.getLong("price_list_status_type"));
+				s.setTypeName(result.getString("type_name"));
+
+			}
+			return s;
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.findStatusType() : "+e.getMessage());
+			return null;
+		}	
+	}
 
 	public void createNewPriceList(PriceList priceList) {
 		if (priceList == null) {
@@ -78,7 +97,7 @@ public class PriceListDAO {
 			System.out.println("PriceListDAO.createNewPriceList()"+e.getMessage());
 		}
 	}
-	
+
 	public PriceList findById(int id){
 		ResultSet result = dbconnection.executeQuery("SELECT * FROM price_list WHERE price_list=" + id);
 		PriceList p = new PriceList();
@@ -124,7 +143,7 @@ public class PriceListDAO {
 			System.out.println("PriceListDAO.updateNewPriceList()"+e.getMessage());
 		}
 	}
-	
+
 	public void deletePriceList(int id) {
 		Connection connection = dbconnection.getConnection();
 		try {
@@ -134,7 +153,25 @@ public class PriceListDAO {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.deletePriceList()"+e.getMessage());
+			System.out.println("PriceListDAO.deletePriceList() : "+e.getMessage());
 		}
+	}
+
+	public List<String> findOtherStatusTypes(String status) {
+		List<String> list = new LinkedList<String>();
+		ResultSet result = dbconnection.executeQuery("SELECT DISTINCT type_name FROM price_list_status_type WHERE NOT type_name='"+status+"'");
+		if (result == null) {
+			return null;
+		}
+		try {
+			while (result.next()) {
+				String s = result.getString("type_name");
+				list.add(s);
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.findOtherStatusTypes() : "+e.getMessage());
+			return null;
+		}	
 	}
 }

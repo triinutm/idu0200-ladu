@@ -61,7 +61,10 @@ public class PriceListController extends HttpServlet {
 				view = request.getRequestDispatcher("/newpricelist.jsp");
 			}else{
 			try {
-				request.setAttribute("pricelist",dao.findById(Integer.parseInt(request.getParameter("id"))).convertToPriceListForm());
+				PriceListForm pricelist = dao.findById(Integer.parseInt(request.getParameter("id"))).convertToPriceListForm();
+				request.setAttribute("pricelist",pricelist);
+				List<String> list = dao.findOtherStatusTypes(pricelist.getPriceListStatusType());
+				request.setAttribute("otherstatus", list);
 			} catch (NumberFormatException | ParseException e) {
 				System.out.println("PriceListController.doGet()"+e.getMessage());
 			}view = request.getRequestDispatcher("/pricelist.jsp");
@@ -82,11 +85,12 @@ public class PriceListController extends HttpServlet {
 	}
 
 	private PriceListForm getPriceListFromRequest(HttpServletRequest request) {
+		PriceListDAO dao = new PriceListDAO();
 		PriceListForm priceListForm = new PriceListForm(); 
 		if(request.getParameter("id")!=null){
 		priceListForm.setId(request.getParameter("id"));
 		}
-		priceListForm.setPriceListStatusType(request.getParameter("status"));
+		priceListForm.setPriceListStatusType(""+dao.findStatusType(request.getParameter("status")).getPriceListStatusType());
 		priceListForm.setDefaultDiscountXtra(request.getParameter("discount"));
 		priceListForm.setDateFrom(request.getParameter("date_from"));
 		priceListForm.setDateTo(request.getParameter("date_to"));
