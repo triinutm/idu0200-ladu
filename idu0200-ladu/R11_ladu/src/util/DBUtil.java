@@ -1,6 +1,7 @@
 package util;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,12 +22,16 @@ import db.UserAccount;
 
 import model.AttributeModel;
 import model.ProductModel;
+import model.SearchForm;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import controller.SearchController;
 
 public class DBUtil {
 
@@ -297,6 +302,58 @@ public class DBUtil {
 			session.save(item);
 			trans.commit();
 	return item;
+    }
+    
+    public List<Item> searchItems(SearchForm form){
+	Session session = HibernateUtil.getSessionFactory().openSession();
+	List<Item> items = new ArrayList<Item>();
+	try {
+	    session.beginTransaction();
+	    StringBuilder query = new StringBuilder("select i.item, i.name, i.description, i.sale_price, " +
+	    		" i.store_price, i.producer, i.producer_code from item as i where 1=1 ");
+	    appendLike("name", form.getName(), query);
+	    appendLike("description", form.getDescription(), query);
+	    appendLike("producer", form.getProducer(), query);
+	    appendLike("producer_code", form.getProducerCode(), query);
+	    appendAnd("sale_price", form.getSalePrice(), query);
+	    appendAnd("store_price", form.getStorePrice(), query);
+	    System.out.println(query.toString());
+	    Query q = session.createSQLQuery(query.toString());
+	    
+	   
+	   ScrollableResults results = q.scroll();
+	   while(results.next()){
+	       Object[] row = results.get();
+	       Item item = new Item();
+	       item.setItem(Long.parseLong(row[0].toString()));
+	       item.setName(row[1] != null?row[1].toString():null);
+	       item.setDescription(row[2] != null?row[2].toString():"");
+	       if(row[3] != null){
+		   item.setSalePrice(new BigDecimal(row[3].toString()));
+	       }
+	       if(row[4] != null){
+		   item.setStorePrice(new BigDecimal(row[4].toString()));
+	       }
+	       item.setProducer(row[5] != null?row[5].toString():"");
+	       item.setProducerCode(row[6] != null?row[6].toString():"");
+	       items.add(item);
+	   }	    	    	
+	    	    
+	} catch (RuntimeException e) {
+	    e.printStackTrace();
+	}
+	return items;
+    }
+    private void appendLike(String field, String value, StringBuilder query){
+	if(StringUtils.isNotBlank(value)){
+	    query.append(" and "+field+" ilike '%"+value+"%'");
+	}
+    }
+    
+    private void appendAnd(String field, String value, StringBuilder query){
+	if(StringUtils.isNotBlank(value)){	    
+	    query.append(" and "+field+" = "+value);
+	}
     }
 	
 	/**

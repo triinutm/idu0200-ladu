@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import model.AttributeModel;
 import model.ProductModel;
+import model.SearchForm;
 
 public class FormUtil {
     
@@ -29,6 +30,19 @@ public class FormUtil {
 	    }
 	}
 	return model;
+    }
+    
+    public static SearchForm getSearchFormFromRequestMap(Map<String, String[]> parameterMap){
+	SearchForm form = new SearchForm();
+	form.setName(getValueFromMap("name", parameterMap));
+	form.setDescription(getValueFromMap("description", parameterMap));
+	form.setProducer(getValueFromMap("producer", parameterMap));
+	form.setProducerCode(getValueFromMap("producer_code", parameterMap));
+	form.setQuantity(getValueFromMap("quantity", parameterMap));
+	form.setSalePrice(getValueFromMap("sale_price", parameterMap));
+	form.setStorePrice(getValueFromMap("store_price", parameterMap));
+	form.setAttribute(getValueFromMap("attribute", parameterMap));
+	return form;
     }
 
     private static String getValueFromMap(String key, Map<String, String[]> parameterMap){
