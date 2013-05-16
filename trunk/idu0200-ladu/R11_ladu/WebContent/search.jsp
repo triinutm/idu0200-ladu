@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="model.AttributeModel"%>
 <%@page import="db.Item"%>
 <%@page import="java.util.List"%>
 <%@page import="model.SearchForm"%>
@@ -21,8 +22,17 @@
 		<tr><td>Arv laos</td><td><input type="text" name="quantity" value="<%=form.getQuantity()%>" /></td></tr>
 		<tr><td>Müügihind</td><td><input type="text" name="sale_price" value="<%=form.getSalePrice()%>" /></td></tr>
 		<tr><td>Laohind</td><td><input type="text" name="store_price" value="<%=form.getStorePrice()%>" /></td></tr>
-		<%if(request.getParameter("attributes") == null){
+		<%if(form.getAttributes().size() == 0){
 		    out.println("<tr><td>Attribuut</td><td><input type='text' name='attribute' value='"+form.getAttribute()+"'/></td></tr>");
+		}else{
+		    out.println("<tr><td colspan'2'>------------ attribuudid ---------</td></tr>");
+		    out.println("<tr><td>Toote tüüp</td><td>"+form.getType()+
+			    "<input type='hidden' name='type' value='"+form.getType()+"'/></td></tr>");
+		    for(Long key : form.getAttributes().keySet()){
+			AttributeModel current = form.getAttributes().get(key);
+			out.println("<tr><td>"+current.getAttributeName()+"</td><td><input type='text' name='"+key+"' value='"
+			+current.getAttributeValue()+"' /><input type='hidden' name='"+key+"'value='"+current.getAttributeName()+"' /></td></tr>");
+		    }
 		} %>
 		
 		</table>

@@ -31,6 +31,8 @@ import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
 import controller.SearchController;
 
 public class DBUtil {
@@ -111,7 +113,7 @@ public class DBUtil {
 	 * 
 	 */
     @SuppressWarnings("unchecked")
-	public UserAccount getUserByUsername(String username) {
+    public UserAccount getUserByUsername(String username) {
 	UserAccount userAccount = null;
 	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	try {
@@ -299,99 +301,139 @@ public class DBUtil {
 		}
 	    }
 	}
-			session.save(item);
-			trans.commit();
+	session.save(item);
+	trans.commit();
 	return item;
     }
-    
-    public List<Item> searchItems(SearchForm form){
+
+    public List<Item> searchItems(SearchForm form, String catalog) {
 	Session session = HibernateUtil.getSessionFactory().openSession();
 	List<Item> items = new ArrayList<Item>();
 	try {
 	    session.beginTransaction();
-	    StringBuilder query = new StringBuilder("select i.item, i.name, i.description, i.sale_price, " +
-	    		" i.store_price, i.producer, i.producer_code from item as i where 1=1 ");
+	    StringBuilder query = new StringBuilder("select i.item, i.name, i.description, i.sale_price, "
+		    + " i.store_price, i.producer, i.producer_code, item_type_fk from item as i  where 1=1 ");
 	    appendLike("name", form.getName(), query);
 	    appendLike("description", form.getDescription(), query);
 	    appendLike("producer", form.getProducer(), query);
 	    appendLike("producer_code", form.getProducerCode(), query);
 	    appendAnd("sale_price", form.getSalePrice(), query);
 	    appendAnd("store_price", form.getStorePrice(), query);
+	    if (StringUtils.isNotBlank(form.getAttribute())) {
+		query.append(" and i.item in (SELECT item_fk FROM item_attribute WHERE item_fk=i.item and " + "(value_text like '%" + form.getAttribute()
+			+ "%' or value_number = " + form.getAttribute() + "))");
+	    }
+	    if (form.getAttributes().size() > 0) {
+		if(catalog != null){
+		    appendAnd("item_type_fk", catalog, query);
+		}
+		for (Long key : form.getAttributes().keySet()) {
+		    AttributeModel currentAttribute = form.getAttributes().get(key);
+		    if (StringUtils.isNotBlank(currentAttribute.getAttributeValue())) {
+			query.append(" and i.item in (SELECT item_fk FROM item_attribute WHERE item_fk=i.item " + "and item_attribute_type_fk =" + key
+				+ " and (value_text like '%" + currentAttribute.getAttributeValue() + "%' ");
+			String numeric = isNumeric(currentAttribute.getAttributeValue());
+			if (numeric != null) {
+			    query.append(" or value_number = " + numeric);
+			}
+			query.append("))");
+		    }
+		}
+	    }
 	    System.out.println(query.toString());
 	    Query q = session.createSQLQuery(query.toString());
-	    
-	   
-	   ScrollableResults results = q.scroll();
-	   while(results.next()){
-	       Object[] row = results.get();
-	       Item item = new Item();
-	       item.setItem(Long.parseLong(row[0].toString()));
-	       item.setName(row[1] != null?row[1].toString():null);
-	       item.setDescription(row[2] != null?row[2].toString():"");
-	       if(row[3] != null){
-		   item.setSalePrice(new BigDecimal(row[3].toString()));
-	       }
-	       if(row[4] != null){
-		   item.setStorePrice(new BigDecimal(row[4].toString()));
-	       }
-	       item.setProducer(row[5] != null?row[5].toString():"");
-	       item.setProducerCode(row[6] != null?row[6].toString():"");
-	       items.add(item);
-	   }	    	    	
-	    	    
+
+	    ScrollableResults results = q.scroll();
+	    while (results.next()) {
+		Object[] row = results.get();
+		Item item = new Item();
+		item.setItem(Long.parseLong(row[0].toString()));
+		item.setName(row[1] != null ? row[1].toString() : null);
+		item.setDescription(row[2] != null ? row[2].toString() : "");
+		if (row[3] != null) {
+		    item.setSalePrice(new BigDecimal(row[3].toString()));
+		}
+		if (row[4] != null) {
+		    item.setStorePrice(new BigDecimal(row[4].toString()));
+		}
+		item.setProducer(row[5] != null ? row[5].toString() : "");
+		item.setProducerCode(row[6] != null ? row[6].toString() : "");
+		items.add(item);
+	    }
+
 	} catch (RuntimeException e) {
 	    e.printStackTrace();
 	}
 	return items;
     }
-    private void appendLike(String field, String value, StringBuilder query){
-	if(StringUtils.isNotBlank(value)){
-	    query.append(" and "+field+" ilike '%"+value+"%'");
+
+    private void appendLike(String field, String value, StringBuilder query) {
+	if (StringUtils.isNotBlank(value)) {
+	    query.append(" and " + field + " ilike '%" + value + "%'");
 	}
     }
-    
-    private void appendAnd(String field, String value, StringBuilder query){
-	if(StringUtils.isNotBlank(value)){	    
-	    query.append(" and "+field+" = "+value);
+
+    private void appendAnd(String field, String value, StringBuilder query) {
+	if (StringUtils.isNotBlank(value)) {
+	    String numeric = isNumeric(value);
+	    if(numeric != null){
+		 query.append(" and " + field + " = " + value);
+	    }else{
+		query.append(" and 1=2");
+	    }	   
 	}
     }
-	
-	/**
-	 * Meetod leiab ItemActionType objekti id järgi.
-	 * @param id - otsitava lao toimingu tüübi id
-	 * @return - null kui lao toimingu tüüpi ei leita.
-	 */
-	public ItemActionType getItemActionType(int id) {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		ItemActionType itemActionType = null;
-		try{ 
-			session.getTransaction().begin();
-			itemActionType = (ItemActionType) session.get(ItemActionType.class, new Long(id));
-			session.getTransaction().commit();
-		}catch(Exception e){
-			session.getTransaction().rollback();
-			log.warn("Error: getItemActionType()");
-			e.printStackTrace();
-		}
-		return itemActionType;
+    private String isNumeric(String s) {
+	try {
+	    s = s.replace(",", ".");
+	    new BigDecimal(s);
+	    return s;
+	} catch (Exception e) {
+	    return null;
 	}
-	
-	/**
-	 * Meetod, mis sisestab lao toimingu andmebaasi.
-	 * @param itemAction - sisestatav toiming.
-	 */
-	public void insertItemAction(ItemAction itemAction){
+    }
 
-		Session session = HibernateUtil.buildSessionFactory().openSession();
-		
-		try {
-			session.beginTransaction();
-			session.save(itemAction);
-			session.getTransaction().commit();
-		} catch (Exception e) {
-			log.warn("EventManager: insertItemAction()" + e.getMessage());
-			e.printStackTrace();
-		}
+    /**
+     * Meetod leiab ItemActionType objekti id järgi.
+     * 
+     * @param id
+     *            - otsitava lao toimingu tüübi id
+     * @return - null kui lao toimingu tüüpi ei leita.
+     */
+    public ItemActionType getItemActionType(int id) {
+
+	Session session = HibernateUtil.getSessionFactory().openSession();
+	ItemActionType itemActionType = null;
+	try {
+	    session.getTransaction().begin();
+	    itemActionType = (ItemActionType) session.get(ItemActionType.class, new Long(id));
+	    session.getTransaction().commit();
+	} catch (Exception e) {
+	    session.getTransaction().rollback();
+	    log.warn("Error: getItemActionType()");
+	    e.printStackTrace();
 	}
+	return itemActionType;
+    }
+
+    /**
+     * Meetod, mis sisestab lao toimingu andmebaasi.
+     * 
+     * @param itemAction
+     *            - sisestatav toiming.
+     */
+    public void insertItemAction(ItemAction itemAction) {
+
+	Session session = HibernateUtil.buildSessionFactory().openSession();
+
+	try {
+	    session.beginTransaction();
+	    session.save(itemAction);
+	    session.getTransaction().commit();
+	} catch (Exception e) {
+	    log.warn("EventManager: insertItemAction()" + e.getMessage());
+	    e.printStackTrace();
+	}
+    }
 }

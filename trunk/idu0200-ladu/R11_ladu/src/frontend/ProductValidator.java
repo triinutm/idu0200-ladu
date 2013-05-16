@@ -14,17 +14,28 @@ import model.AttributeModel;
 import model.ProductModel;
 
 public class ProductValidator {
+    
+    private boolean isValid;
+    
+    public ProductValidator() {
+	isValid = true;
+    }
+    
+    private void validate(boolean result){
+	if(isValid == true){
+	    isValid = result;
+	}
+    }
 
     public boolean validateProductModel(ProductModel model) {
-	boolean isValid = true;
 	DBUtil dbUtil = new DBUtil();
-	isValid = checkEmpty(model.getName());
-	isValid = checkEmpty(model.getDescription());
+	validate(checkEmpty(model.getName()));
+	validate(checkEmpty(model.getDescription()));
 	boolean priceNotEmpty = checkEmpty(model.getPrice());
 	if (!priceNotEmpty) {
-	    isValid = false;
+	    validate(false);
 	} else {
-	    isValid = checkNumeric(model.getPrice());
+	    validate(checkNumeric(model.getPrice()));
 	}
 	if (StringUtils.isNotBlank(model.getItemType())) {
 	    // attribuutide definitsioonide küsimine andmebaasist
@@ -41,10 +52,20 @@ public class ProductValidator {
 			AttributeModel insertedAttribute = model.getAttributes().get(currentId);
 			// kas on kohustuslik
 			if (StringUtils.equalsIgnoreCase("Y", attributeDefinition.getRequired())) {
-			    isValid = checkEmpty(insertedAttribute);
-			    // kas vastab defineeritud tüübile
-			} else if (attributeDefinition.getItemAttributeType().getDataType().equals(2L)) {
-			    isValid = checkNumeric(insertedAttribute);
+			    if (attributeDefinition.getItemAttributeType().getDataType().equals(1L)) {
+				validate(checkEmpty(insertedAttribute));
+			    } else if (attributeDefinition.getItemAttributeType().getDataType().equals(2L)) {
+				boolean numericNotEmpty = checkEmpty(insertedAttribute);
+				if (!numericNotEmpty) {
+				    validate(false);
+				} else {
+				    validate(checkNumeric(insertedAttribute));
+				}
+			    }			    
+			} else {
+			    if (attributeDefinition.getItemAttributeType().getDataType().equals(2L)) {
+				validate(checkNumeric(insertedAttribute));
+			    }
 			}
 		    }
 		}
@@ -78,6 +99,9 @@ public class ProductValidator {
      * @return
      */
     private boolean checkNumeric(AttributeModel attribute) {
+	if(StringUtils.isBlank(attribute.getAttributeValue())){
+	    return true;
+	}
 	try {
 	    String price = attribute.getAttributeValue();
 	    price = price.replace(",", ".");

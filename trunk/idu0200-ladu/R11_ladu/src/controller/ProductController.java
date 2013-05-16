@@ -90,7 +90,7 @@ public class ProductController extends BaseController {
 			attributeModel.setAttributeValue(attribute.getValueNumber().toString());
 		    }
 		    typeId = typeAttributeIdMap.get(attribute.getItemAttributeType().getItemAttributeType()).getTypeAttribute();
-		    typeAttributeIdMap.remove(typeId);
+		    typeAttributeIdMap.remove(attribute.getItemAttributeType().getItemAttributeType());
 		    model.getAttributes().put(typeId, attributeModel);
 		}
 		// kui baasi polnud kõiki attribuute kohe lisatud, siis lisame siin ka ülejäänud toote attribuudid
