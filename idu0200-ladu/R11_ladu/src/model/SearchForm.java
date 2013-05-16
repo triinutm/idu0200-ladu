@@ -12,6 +12,7 @@ public class SearchForm {
     private String salePrice = "";
     private String storePrice = "";
     private String attribute = "";
+    private String type = "";
     private Map<Long, AttributeModel> attributes = new HashMap<Long, AttributeModel>();
 
     public String getName() {
@@ -59,12 +60,12 @@ public class SearchForm {
     }
 
     public void setSalePrice(String salePrice) {
-	if(salePrice != null){
+	if (salePrice != null) {
 	    this.salePrice = salePrice.replace(",", ".");
-	}else{
+	} else {
 	    salePrice = "";
 	}
-	
+
     }
 
     public String getStorePrice() {
@@ -72,9 +73,9 @@ public class SearchForm {
     }
 
     public void setStorePrice(String storePrice) {
-	if(storePrice != null){
+	if (storePrice != null) {
 	    this.storePrice = storePrice.replace(",", ".");
-	}else{
+	} else {
 	    this.storePrice = "";
 	}
     }
@@ -93,6 +94,14 @@ public class SearchForm {
 
     public void setAttributes(Map<Long, AttributeModel> attributes) {
 	this.attributes = attributes;
+    }
+
+    public String getType() {
+	return type;
+    }
+
+    public void setType(String type) {
+	this.type = type;
     }
 
 }

@@ -42,6 +42,16 @@ public class FormUtil {
 	form.setSalePrice(getValueFromMap("sale_price", parameterMap));
 	form.setStorePrice(getValueFromMap("store_price", parameterMap));
 	form.setAttribute(getValueFromMap("attribute", parameterMap));
+	form.setType(getValueFromMap("type", parameterMap));
+	for(String parameter : parameterMap.keySet()){
+	    if(StringUtils.isNumeric(parameter)){
+		AttributeModel attribute = new AttributeModel();
+		String[] values = parameterMap.get(parameter);
+		attribute.setAttributeValue(values[0]);
+		attribute.setAttributeName(values[1]);
+		form.getAttributes().put(Long.parseLong(parameter), attribute);
+	    }
+	}
 	return form;
     }
 
