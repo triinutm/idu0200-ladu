@@ -76,7 +76,15 @@ public class WareHouseController extends BaseController {
 			}
 			request.setAttribute("item", item);
 			request.setAttribute("allStores", allStores);
+		}else if(request.getParameter("action").equals("remove") && user != null && item != null && allStores != null){
+			
+			
+		}else if(request.getParameter("action").equals("move") && user != null && item != null && allStores != null){
+			
+		}else{
+			
 		}
+		
 		view.forward(request, response); 	
 	}
 }
