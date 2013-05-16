@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.CustomerModel;
+import model.ItemModel;
 import model.PriceListForm;
 
 import dao.PriceListDAO;
@@ -62,6 +63,12 @@ public class PriceListController extends HttpServlet {
 				List<CustomerModel> searchcustomers = dao.searchCustomer(request.getParameter("customer"));
 				request.setAttribute("searchcustomers",searchcustomers);
 			}
+			if (request.getParameter("action").equals("searchitem")){
+				view = request.getRequestDispatcher("/pricelist.jsp");
+				System.out.println("ITEMSSEARCH:");
+				List<ItemModel> searchitems = dao.searchItem(request.getParameter("item"));
+				request.setAttribute("searchitems",searchitems);
+			}
 			if (request.getParameter("action").equals("addcustomer")){
 				view = request.getRequestDispatcher("/pricelist.jsp");
 				dao.addCustomer(Integer.parseInt(request.getParameter("customer")),Integer.parseInt(request.getParameter("id")));
@@ -69,6 +76,10 @@ public class PriceListController extends HttpServlet {
 			if (request.getParameter("action").equals("deletecustomer")){
 				view = request.getRequestDispatcher("/pricelist.jsp");
 				dao.deleteCustomer(Integer.parseInt(request.getParameter("customer")),Integer.parseInt(request.getParameter("id")));
+			}
+			if (request.getParameter("action").equals("deleteitem")){
+				view = request.getRequestDispatcher("/pricelist.jsp");
+				dao.deleteItem(Integer.parseInt(request.getParameter("item")),Integer.parseInt(request.getParameter("id")));
 			}
 		}
 		if (request.getParameter("id") != null){
@@ -82,6 +93,8 @@ public class PriceListController extends HttpServlet {
 					request.setAttribute("otherstatus", list);
 					List<CustomerModel> customers = dao.findCustomersById(Integer.parseInt(request.getParameter("id")));
 					request.setAttribute("customers", customers);
+					List<ItemModel> items = dao.findItemsById(Integer.parseInt(request.getParameter("id")));
+					request.setAttribute("items", items);
 				} catch (NumberFormatException | ParseException e) {
 					System.out.println("PriceListController.doGet()"+e.getMessage());
 				}view = request.getRequestDispatcher("/pricelist.jsp");
