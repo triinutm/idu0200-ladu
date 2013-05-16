@@ -1,6 +1,9 @@
 package util;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -456,4 +459,27 @@ public class DBUtil {
 		}
 	
     }
+	
+	/**
+	 * Meetod, mis uuendab toote hinna laos (aka modelit ItemStore).
+	 * @param item - toode, mille hinda uuendatakse.
+	 * @param newItemCount - lisatav toodete kogus.
+	 * @param newItemPrice - lisatava toote hind.
+	 */
+	public void updateItemPriceInWareHouse(Item item, int newItemCount, int newItemPrice){
+		
+		long itemId = item.getItem();
+		
+		try {
+			JdbcConnection jdbcDS = new JdbcConnection();
+			Connection connection = jdbcDS.getConnection();
+			Statement statement = connection.createStatement();
+			statement.execute("select f_uuenda_lao_hinda (" + itemId + ", " + newItemCount + ", " + newItemPrice + ");");
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			log.warn("DBUtil: updateItemPriceInWareHouse()" + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }

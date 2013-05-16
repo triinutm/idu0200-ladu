@@ -50,7 +50,7 @@ public class WareHouseService {
 		String itemCount = getString(paramtereMap, "warehouse_register_quantity");
 		long itemCountLong = Integer.parseInt(itemCount);
 		itemAction.setItemCount(itemCountLong);
-		
+
 		return itemAction;
 	}
 	
@@ -69,5 +69,7 @@ public class WareHouseService {
 		}
 		return null;
 	}
+	
+	
 
 }
