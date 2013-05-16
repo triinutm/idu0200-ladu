@@ -41,9 +41,17 @@ if(request.getAttribute("productModel") != null){
 %>
 <tr><td><input type="submit" value="Salvesta" /></td></tr>
 </table>
-</form>
+<div>
+<%if(request.getAttribute("error") != null) {
+    out.println(request.getAttribute("error"));
+}%>
+</div><br>
+<input type="submit" name="delete" value="Kustuta" />
+
 <%}else{
     out.println("<p>Sellist toodet pole olemas!</p>");
 } %>
+</form>
+
 </body>
 </html>

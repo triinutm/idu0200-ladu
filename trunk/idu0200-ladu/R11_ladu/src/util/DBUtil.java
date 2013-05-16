@@ -246,6 +246,7 @@ public class DBUtil {
 	item.setItemAttributes(attributes);
 	session.save(item);
 	trans.commit();
+	session.close();
 	return item;
     }
 
@@ -281,9 +282,18 @@ public class DBUtil {
 	    if (currentAttribute.getAttributeId() != null) {
 		ItemAttribute attr = existingAttributes.get(currentAttribute.getAttributeId());
 		if (attr.getDataType().equals(1L)) {
-		    attr.setValueText(currentAttribute.getAttributeValue());
+		    if (StringUtils.isNotBlank(currentAttribute.getAttributeValue())) {
+			attr.setValueText(currentAttribute.getAttributeValue());
+		    }else{
+			attr.setValueText(null);
+		    }		    
 		} else if (attr.getDataType().equals(2L)) {
-		    attr.setValueNumber(new BigDecimal(currentAttribute.getAttributeValue()));
+		    if (StringUtils.isNotBlank(currentAttribute.getAttributeValue())) {
+			attr.setValueNumber(new BigDecimal(currentAttribute.getAttributeValue()));
+		    }else{
+			attr.setValueNumber(null);
+		    }
+		    
 		}
 	    } else {
 		// tühja väärtust pole mõtet lisada
@@ -307,6 +317,7 @@ public class DBUtil {
 	}
 	session.save(item);
 	trans.commit();
+	session.close();
 	return item;
     }
 
@@ -440,6 +451,18 @@ public class DBUtil {
 	    e.printStackTrace();
 	}
     }
+
+    public void deleteItem(Long id){
+	Session session = HibernateUtil.getSessionFactory().openSession();
+	session.beginTransaction();
+	Item i = (Item) session.get(Item.class, id); 
+	if(i != null){
+	    session.delete(i);
+	    session.getTransaction().commit();
+	}
+	session.close();
+    }
+
     
 	/**
 	 * Meetod, mis uuendab Store Item'i.

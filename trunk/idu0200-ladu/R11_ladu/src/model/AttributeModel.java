@@ -16,7 +16,9 @@ public class AttributeModel {
         return attributeValue;
     }
     public void setAttributeValue(String attributeValue) {
-        this.attributeValue = attributeValue;
+	if(attributeValue != null){
+	    this.attributeValue = attributeValue; 
+	}     
     }
     public String getErrorMessage() {
         return errorMessage;

@@ -102,6 +102,6 @@ public class SearchForm {
 
     public void setType(String type) {
 	this.type = type;
-    }
+    }  
 
 }
