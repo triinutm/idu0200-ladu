@@ -71,6 +71,9 @@ public class WareHouseController extends BaseController {
 			
 			ItemAction itemAction = wareHouseService.createWareHouseRegisterItemAction(user, paramtereMap, allStores, item);
 			if(itemAction != null){
+				String itemCount = wareHouseService.getString(paramtereMap, "warehouse_register_quantity");
+				String actionPrice = wareHouseService.getString(paramtereMap, "warehouse_register_price");
+				dbUtil.updateItemPriceInWareHouse(item, Integer.parseInt(itemCount),Integer.parseInt(actionPrice));
 				dbUtil.insertItemAction(itemAction);
 				request.setAttribute("register_successful", "Toote arvele võtmine õnnestus!");
 			}
