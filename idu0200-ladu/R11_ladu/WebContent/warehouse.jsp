@@ -64,7 +64,7 @@
 </form>
 	<br />
 	<br />
-<form>
+<form method="post" id="warehouse_remove_form" accept-charset="UTF-8" action="?action=remove">
 	<table>
 		<tr>
 			<td colspan="2">MAHA KANDMINE</td>
@@ -108,7 +108,7 @@
 </form>
 	<br />
 	<br />
-<form>
+<form method="post" id="warehouse_remove_form" accept-charset="UTF-8" action="?action=move">
 	<table>
 		<tr>
 			<td colspan="2">LIIGUTAMINE LADUDE VAHEL</td>

@@ -14,6 +14,7 @@ import db.Item;
 import db.ItemAction;
 import db.ItemActionType;
 import db.ItemAttribute;
+import db.ItemStore;
 import db.ItemType;
 import db.Store;
 import db.TypeAttribute;
@@ -435,5 +436,24 @@ public class DBUtil {
 	    log.warn("EventManager: insertItemAction()" + e.getMessage());
 	    e.printStackTrace();
 	}
+    }
+    
+	/**
+	 * Meetod, mis uuendab Store Item'i.
+	 * @param itemStore - sisestatav toiming.
+	 */
+	public void updateItemStore(ItemStore itemStore){
+
+		Session session = HibernateUtil.buildSessionFactory().openSession();
+		
+		try {
+			session.beginTransaction();
+			session.update(itemStore);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			log.warn("DBUtil: updateItemStore()" + e.getMessage());
+			e.printStackTrace();
+		}
+	
     }
 }

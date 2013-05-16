@@ -54,6 +54,8 @@ public class WareHouseService {
 		return itemAction;
 	}
 	
+	
+	
 	/**
 	 * Meetod, mis leiab etteantud mapist atribuudi järgi väärtuse.
 	 * @param map - parameetrite map
