@@ -2,10 +2,12 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List"%>
 <%@ page import="model.CustomerModel"%>
+<%@ page import="model.ItemModel"%>
 <jsp:useBean id="pricelist" scope="request" type="model.PriceListForm" />
 <jsp:useBean id="otherstatus" scope="request"
 	type="List<java.lang.String>" />
 <jsp:useBean id="customers" scope="request" type="List<CustomerModel>" />
+<jsp:useBean id="items" scope="request" type="List<ItemModel>" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -104,6 +106,53 @@
 		} catch (Exception ex) {
 			out.println("Mingi viga" + ex.getMessage());
 		}
+
+		String discount_xtra;
+		String discount_price;
+		String sale_price;
+		out.println("<br>TOOTED:");
+		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>nimi</th><th>hind allahindluseta</th><th>allahindluse protsent</th><th>hind allahindlusega</th><th></th></tr>");
+		try {
+			for (ItemModel i : items) {
+				id = Integer.toString(i.getId());
+				name = i.getName();
+				sale_price = Double.toString(i.getSale_price());
+				discount_price = Double.toString(i.getDiscount_price());
+				discount_xtra = Double.toString(i.getDiscount_xtra());
+				out.println("<tr><td>" + id + "</td><td>" + name +"</td>"
+						+ "<td>"+sale_price+"</td><td>"+discount_xtra+"</td>"
+						+ "<td>"+discount_price+"</td>"
+						+ "<td><a HREF='pricelist?id="+pricelist.getId()+"&action=deleteitem&item="+ id
+						+ "'TARGET='_self'><strong>kustuta</strong></a></td></tr>");
+			}
+			out.println("</table>");
+		} catch (Exception ex) {
+			out.println("Mingi viga" + ex.getMessage());
+		}
 	%>
+	<form action="pricelist?id=<%=pricelist.getId()%>&action=searchitem" method="POST">
+		<input type="text" name="item"> <input type="submit"
+			value="Otsi" />
+	</form>
+	
+	<%
+		List<ItemModel> searchitems;
+		if (request.getAttribute("searchitems")!=null){
+			searchitems = (List<ItemModel>) request.getAttribute("searchitems");
+		}else{
+			searchitems=null;
+		}
+		out.println("Tulemus:");
+		try {
+			for (ItemModel i : searchitems) {
+				id = Integer.toString(i.getId());
+				name = i.getName();
+				out.println("<a HREF='pricelist?id="+pricelist.getId()+"&action=additem&item="+id
+						+ "'TARGET='_self'><strong>"+id+" "+name+"</strong></a>");
+			}
+			out.println("</table>");
+		} catch (Exception ex) {
+			out.println("Mingi viga" + ex.getMessage());
+		}%>
 </body>
 </html>

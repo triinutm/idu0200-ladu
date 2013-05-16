@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.CustomerModel;
+import model.ItemModel;
 
 
 import db.Customer;
@@ -256,6 +257,67 @@ public class PriceListDAO {
 			connection.close();
 		} catch (SQLException e) {
 			System.out.println("PriceListDAO.deletePriceList() : "+e.getMessage());
+		}
+	}
+
+	public List<ItemModel> findItemsById(int price_list) {
+		System.out.println("KÄIVITU meetod");
+		List <ItemModel> list = new LinkedList<ItemModel>();
+		System.out.println("KÄIVITU meetod2");
+		ResultSet result = dbconnection.executeQuery("SELECT I.item, I.name, I.sale_price, P.discount_xtra FROM item AS I INNER JOIN item_price_list AS P ON I.item=P.item_fk WHERE P.price_list_fk="+price_list+" ORDER BY item");
+		System.out.println("KÄIVITU meetod3");
+		if (result == null) {
+			return null;
+		}
+		try {
+			while (result.next()) {
+				ItemModel i = new ItemModel();
+				i.setId(result.getInt("item"));
+				i.setName(result.getString("name"));
+				i.setSale_price(result.getDouble("sale_price"));
+				i.setDiscount_xtra(result.getDouble("discount_xtra"));
+				i.setDiscount_price(result.getDouble("sale_price")+result.getDouble("sale_price")*result.getDouble("discount_xtra")/100);
+				list.add(i);
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.findItemsById() : "+e.getMessage());
+			return null;
+		}
+	}
+
+	public List<ItemModel> searchItem(String itemName) {
+		List <ItemModel> list = new LinkedList<ItemModel>();
+		ResultSet result = dbconnection.executeQuery("SELECT item, name FROM item WHERE UPPER(name) LIKE UPPER('"+itemName+"%') ORDER BY item");
+		
+		if (result == null) {
+			return null;
+		}
+		try {
+			while (result.next()) {
+				ItemModel i = new ItemModel();
+				i.setId(result.getInt("item"));
+				i.setName(result.getString("name"));
+				list.add(i);
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.searchItem() : "+e.getMessage());
+			return null;
+		}
+	}
+
+	public void deleteItem(int item, int price_list) {
+		Connection connection = dbconnection.getConnection();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("DELETE FROM item_price_list WHERE price_list_fk="+price_list+" AND item_fk="+item);
+			statement.execute();
+			System.out.println("delete");
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.deleteItem() : "+e.getMessage());
 		}
 	}
 }
