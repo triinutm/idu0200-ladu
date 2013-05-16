@@ -45,15 +45,34 @@ public class ProductController extends BaseController {
 	RequestDispatcher view = request.getRequestDispatcher("/productEdit.jsp");
 	Map<String, String[]> parameterMap = request.getParameterMap();
 	if (parameterMap.containsKey("id")) {
+	    DBUtil dbUtil = new DBUtil();
 	    ProductModel m = FormUtil.getProductFromParameterMap(parameterMap);
-	    ProductValidator validator = new ProductValidator();
-	    boolean isValid = validator.validateProductModel(m);
-	    if (isValid) {
-		DBUtil dbUtil = new DBUtil();
-		Item item = dbUtil.updateItem(m, new Long(parameterMap.get("id")[0]));
+	    if (parameterMap.containsKey("delete")) {
+		Item item = dbUtil.getItemById(Integer.parseInt(request.getParameter("id")));
 		if (item != null) {
-		    response.sendRedirect(request.getContextPath()+"/product?id="+request.getParameter("id"));
-		    return;
+		    StringBuilder errors = new StringBuilder();
+		    if (item.getItemActions() != null && item.getItemActions().size() > 0) {
+			errors.append("Kustutamine ebaõnnestus, sest tootega on seotud laotoiminguid!<br>");
+		    } else if (item.getItemPriceLists() != null && item.getItemPriceLists().size() > 0) {
+			errors.append("Kustutamine ebaõnnestus, sest tootega on seotud hinnakirjasid!<br>");
+		    } else if (item.getItemStores() != null && item.getItemStores().size() > 0) {
+			errors.append("Kustutamine ebaõnnestus, sest tooted on juba laos arvel!<br>");
+		    } else {
+			dbUtil.deleteItem(item.getItem());
+			response.sendRedirect(request.getContextPath());
+			return;
+		    }
+		    request.setAttribute("error", errors.toString());
+		}
+	    } else {
+		ProductValidator validator = new ProductValidator();
+		boolean isValid = validator.validateProductModel(m);
+		if (isValid) {
+		    Item item = dbUtil.updateItem(m, new Long(parameterMap.get("id")[0]));
+		    if (item != null) {
+			response.sendRedirect(request.getContextPath() + "/product?id=" + request.getParameter("id"));
+			return;
+		    }
 		}
 	    }
 	    request.setAttribute("productModel", m);
@@ -93,7 +112,8 @@ public class ProductController extends BaseController {
 		    typeAttributeIdMap.remove(attribute.getItemAttributeType().getItemAttributeType());
 		    model.getAttributes().put(typeId, attributeModel);
 		}
-		// kui baasi polnud kõiki attribuute kohe lisatud, siis lisame siin ka ülejäänud toote attribuudid
+		// kui baasi polnud kõiki attribuute kohe lisatud, siis lisame
+		// siin ka ülejäänud toote attribuudid
 		for (TypeAttribute t : typeAttributeIdMap.values()) {
 		    AttributeModel attibute = new AttributeModel();
 		    attibute.setAttributeName(t.getItemAttributeType().getTypeName());
