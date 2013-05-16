@@ -320,4 +320,21 @@ public class PriceListDAO {
 			System.out.println("PriceListDAO.deleteItem() : "+e.getMessage());
 		}
 	}
+
+	public void addItem(int item, int price_list) {
+		System.out.println("SIIN");
+		Connection connection = dbconnection.getConnection();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("INSERT INTO item_price_list(item_fk, price_list_fk)" +
+							"VALUES (?,?)");
+			statement.setInt(1,item);
+			statement.setInt(2, price_list);
+			statement.execute();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.addItem()"+e.getMessage());
+		}
+	}
 }
