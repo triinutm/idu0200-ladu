@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import db.Item;
 import db.ItemAction;
+import db.ItemStore;
 import db.Store;
 import db.UserAccount;
 import frontend.WareHouseService;
@@ -74,7 +75,7 @@ public class WareHouseController extends BaseController {
 				String itemCount = wareHouseService.getString(paramtereMap, "warehouse_register_quantity");
 				String actionPrice = wareHouseService.getString(paramtereMap, "warehouse_register_price");
 				dbUtil.updateItemPriceInWareHouse(item, Integer.parseInt(itemCount),Integer.parseInt(actionPrice));
-				dbUtil.insertItemAction(itemAction);
+				dbUtil.insertItemAction(itemAction);				
 				request.setAttribute("register_successful", "Toote arvele võtmine õnnestus!");
 			}
 			request.setAttribute("item", item);

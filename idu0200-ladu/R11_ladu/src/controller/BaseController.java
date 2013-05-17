@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 	public abstract class BaseController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -17,19 +16,24 @@ import javax.servlet.http.HttpServletResponse;
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		try{
-			doOnGet(req,resp);
-		}catch (Exception e){
-			resp.sendRedirect("/R11_ladu/viga");
-			e.printStackTrace();
+		if(req.getSession().getAttribute("user") == null){
+				
 		}
-		
+			try{
+				doOnGet(req,resp);
+			}catch (Exception e){
+				resp.sendRedirect("/R11_ladu/viga");
+				e.printStackTrace();
+			}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {	
 		
+		if(req.getSession().getAttribute("user") == null){
+			
+		}
 		try{
 			doOnPost(req,resp);
 		}catch (Exception e){

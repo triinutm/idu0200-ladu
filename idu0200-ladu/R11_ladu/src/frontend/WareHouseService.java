@@ -9,6 +9,7 @@ import java.util.Map;
 import util.DBUtil;
 import db.Item;
 import db.ItemAction;
+import db.ItemStore;
 import db.Store;
 import db.UserAccount;
 
@@ -36,12 +37,9 @@ public class WareHouseService {
 		
 		String selectedStore = getString(paramtereMap, "register_select_store");
 		long selectedStoreId = Integer.parseInt(selectedStore);
-		for(Store store : allStores){
-			if(store.getStore() == selectedStoreId){
-				itemAction.setStoreByStoreToFk(store);
-			}
-		}
-		
+		Store store = getSelectedStore(allStores, selectedStoreId);
+		itemAction.setStoreByStoreToFk(store);
+
 		Calendar today = Calendar.getInstance();
 		today.clear(Calendar.HOUR); today.clear(Calendar.MINUTE); today.clear(Calendar.SECOND);
 		Date actionDate = new Date(today.getTime().getTime());
@@ -50,12 +48,25 @@ public class WareHouseService {
 		String itemCount = getString(paramtereMap, "warehouse_register_quantity");
 		long itemCountLong = Integer.parseInt(itemCount);
 		itemAction.setItemCount(itemCountLong);
-
+		
+		ItemStore itemStore = dbUtil.getItemStoreByItemAndStore(item, store);
+		
+		BigDecimal itemCountAdded = new BigDecimal(itemCount);
+		
+		if(itemStore != null){
+			BigDecimal itemCountBefore = itemStore.getItemCount();
+			itemStore.setItemCount(itemCountBefore.add(itemCountAdded));
+			dbUtil.updateItemStore(itemStore);
+		}else{
+			ItemStore newItemStore = new ItemStore();
+			newItemStore.setItem(item);
+			newItemStore.setItemCount(itemCountAdded);
+			newItemStore.setStore(store);
+			dbUtil.insertItemStore(newItemStore);
+		}
 		return itemAction;
 	}
-	
-	
-	
+
 	/**
 	 * Meetod, mis leiab etteantud mapist atribuudi järgi väärtuse.
 	 * @param map - parameetrite map
@@ -70,6 +81,14 @@ public class WareHouseService {
 		return null;
 	}
 	
-	
-
+	public Store getSelectedStore(List<Store> allStores, long selectedStore){
+		Store restultStore = null;
+		
+		for(Store store : allStores){
+			if(store.getStore() == selectedStore){
+				restultStore = store;
+			}
+		}
+		return restultStore;
+	}
 }
