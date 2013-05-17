@@ -261,11 +261,11 @@ public class PriceListDAO {
 	}
 
 	public List<ItemModel> findItemsById(int price_list) {
-		System.out.println("KÄIVITU meetod");
+		System.out.println("K2ivitus meetod1");
 		List <ItemModel> list = new LinkedList<ItemModel>();
-		System.out.println("KÄIVITU meetod2");
+		System.out.println("K2ivitus meetod2");
 		ResultSet result = dbconnection.executeQuery("SELECT I.item, I.name, I.sale_price, P.discount_xtra FROM item AS I INNER JOIN item_price_list AS P ON I.item=P.item_fk WHERE P.price_list_fk="+price_list+" ORDER BY item");
-		System.out.println("KÄIVITU meetod3");
+		System.out.println("K2ivitus meetod3");
 		if (result == null) {
 			return null;
 		}
