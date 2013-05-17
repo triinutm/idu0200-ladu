@@ -29,5 +29,10 @@ if(request.getAttribute("lastCatalog") != null){
 <%}else{
     out.println("<a href='" + request.getContextPath()+"/search'>Otsi</a>");
 }%>
+<% if(user!=null) {%>
+<form method="post">
+<% out.println("<input type=\"submit\" value=\"Logi välja!\"/>"); %>
+</form>
+<%} %>
 </body>
 </html>
