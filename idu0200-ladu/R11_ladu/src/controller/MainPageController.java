@@ -50,7 +50,10 @@ public class MainPageController extends BaseController {
 	protected void doOnPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException {
-		// TODO Auto-generated method stub
+		
+		request.getSession().invalidate();
+		//String logoutPage = request.getParameter("/login.jsp");
+		response.sendRedirect("/R11_ladu/login");
 		
 	}
 
