@@ -12,11 +12,17 @@
 <%Item item = (Item)request.getAttribute("item");%>
 <%List<Store> allStores = (List<Store>)request.getAttribute("allStores");%>
 <%String registerSuccessful = (String)request.getAttribute("register_successful"); %>
+<%String removeSuccessful = (String)request.getAttribute("remove_successful"); %>
 <body>
 <h1>Lao toimingud</h1>
 <%if(item != null){ %>
 <%if(registerSuccessful != null){ %>
 	<%out.println(registerSuccessful); %>
+	<br />
+	<br />
+<%} %>
+<%if(removeSuccessful != null){ %>
+	<%out.println(removeSuccessful); %>
 	<br />
 	<br />
 <%} %>
@@ -78,17 +84,13 @@
 		<tr>
 			<td>Ladu:</td>
 			<td>
-				<select>
+				<select name="remove_from_store">
     				<option value="" disabled="disabled" selected="selected">--Vali ladu--</option>
     				<%for(Store store : allStores){ %>
     					<option value="<%out.print(store.getStore());%>"><%out.print(store.getName());%></option>
     				<%} %>
 				</select>
 			</td>
-		</tr>
-		<tr>
-			<td>Laohind:</td>
-			<td><input type="text" name="warehouse_remove_price" /></td>
 		</tr>
 		<tr>
 			<td>Kogus:</td>

@@ -140,5 +140,34 @@ public class WareHouseService {
 		return itemAction;
 		
 	}
+	public ItemAction createWareHouseRemoveItemAction(UserAccount userAccount, Map<String,String[]> paramtereMap, List<Store> allStores, Item item){
+		ItemAction itemAction=new ItemAction();
+		DBUtil dbUtil = new DBUtil();
+		String selectedStoreFrom = getString(paramtereMap, "remove_from_store");
+		long selectedStoreFromId = Integer.parseInt(selectedStoreFrom);
+		Store storeFrom = getSelectedStore(allStores, selectedStoreFromId);
+		
+		itemAction.setStoreByStoreFromFk(storeFrom);
+		
+		itemAction.setEmployee(userAccount.getEmployeeBySubjectFk());
+		itemAction.setItem(item);
+		
+		itemAction.setItemActionType(dbUtil.getItemActionType(2));
+		
+		Calendar today = Calendar.getInstance();
+		today.clear(Calendar.HOUR); today.clear(Calendar.MINUTE); today.clear(Calendar.SECOND);
+		Date actionDate = new Date(today.getTime().getTime());
+		itemAction.setActionDate(actionDate);
+		itemAction.setCreated(actionDate);
+		
+		String itemCount = getString(paramtereMap, "warehouse_remove_quantity");
+		long itemCountLong = Integer.parseInt(itemCount);
+		itemAction.setItemCount(itemCountLong);
+		
+		String removeNotes = getString(paramtereMap, "warehouse_remove_notes");
+		itemAction.setActionNote(removeNotes);
+		
+		return itemAction;
+	}
 	
 }
