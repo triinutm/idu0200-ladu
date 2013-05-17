@@ -131,4 +131,19 @@ Author:  Raul Liivrand
     
 <target name="all" depends="deploy_war_local"/>
 	
+<path id="test.class.path">
+	<pathelement location="ant/WEB-INF/classes/" />
+	<fileset dir="WebContent/WEB-INF/lib">
+		        <include name="*.jar"/>
+	</fileset>
+</path>
+		
+<target name="test" depends="compile">
+	<junit printsummary="yes" fork="yes">
+		<classpath refid="test.class.path"/>
+		<formatter type="plain"/>
+	<test name="test.TestDbUtil" outfile="result" />
+	</junit>
+</target>
+	
 </project>
