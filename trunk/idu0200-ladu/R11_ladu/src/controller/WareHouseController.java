@@ -65,17 +65,17 @@ public class WareHouseController extends BaseController {
 		WareHouseService wareHouseService = new WareHouseService();
 		
 		List<Store> allStores = dbUtil.getAllWareHouses();
-		int itemId = Integer.parseInt(wareHouseService.getString(paramtereMap, "register_item_id"));
+		int itemId = Integer.parseInt(wareHouseService.getString(paramtereMap, "item_id"));
 		Item item = dbUtil.getItemById(itemId);
 		
 		if(request.getParameter("action").equals("register") && user != null && item != null && allStores != null){
 			
-			ItemAction itemAction = wareHouseService.createWareHouseRegisterItemAction(user, paramtereMap, allStores, item);
-			if(itemAction != null){
+			ItemAction itemActionRegister = wareHouseService.createWareHouseRegisterItemAction(user, paramtereMap, allStores, item);
+			if(itemActionRegister != null){
 				String itemCount = wareHouseService.getString(paramtereMap, "warehouse_register_quantity");
 				String actionPrice = wareHouseService.getString(paramtereMap, "warehouse_register_price");
 				dbUtil.updateItemPriceInWareHouse(item, Integer.parseInt(itemCount),Integer.parseInt(actionPrice));
-				dbUtil.insertItemAction(itemAction);				
+				dbUtil.insertItemAction(itemActionRegister);				
 				request.setAttribute("register_successful", "Toote arvele võtmine õnnestus!");
 			}
 			request.setAttribute("item", item);
@@ -85,6 +85,13 @@ public class WareHouseController extends BaseController {
 			
 		}else if(request.getParameter("action").equals("move") && user != null && item != null && allStores != null){
 			
+			ItemAction itemActionMove = wareHouseService.createWareHouseMoveItemAction(user, paramtereMap, allStores, item);
+			if(itemActionMove != null){
+				dbUtil.insertItemAction(itemActionMove);
+				request.setAttribute("move_successful", "Toote ladude vahel liigutamine õnnestus!");
+			}
+			request.setAttribute("item", item);
+			request.setAttribute("allStores", allStores);
 		}else{
 			
 		}

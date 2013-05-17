@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import dao.dbconnection;
 import db.Enterprise;
 import db.Item;
 import db.ItemAction;
@@ -473,7 +474,7 @@ public class DBUtil {
 	 */
 	public void insertItemAction(ItemAction itemAction) {
 
-		Session session = HibernateUtil.buildSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 
 		try {
 			session.beginTransaction();
@@ -504,7 +505,7 @@ public class DBUtil {
 	 */
 	public void updateItemStore(ItemStore itemStore) {
 
-		Session session = HibernateUtil.buildSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		try {
 			session.beginTransaction();
@@ -517,7 +518,7 @@ public class DBUtil {
 	}
 	
 	public void insertItemStore(ItemStore itemStore){
-		Session session = HibernateUtil.buildSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		try {
 			session.beginTransaction();
@@ -546,8 +547,8 @@ public class DBUtil {
 		long itemId = item.getItem();
 
 		try {
-			JdbcConnection jdbcDS = new JdbcConnection();
-			Connection connection = jdbcDS.getConnection();
+			dbconnection dbConnection = new dbconnection();
+			Connection connection = dbConnection.getConnection();
 			Statement statement = connection.createStatement();
 			statement.execute("select f_uuenda_lao_hinda (" + itemId + ", "
 					+ newItemCount + ", " + newItemPrice + ");");
