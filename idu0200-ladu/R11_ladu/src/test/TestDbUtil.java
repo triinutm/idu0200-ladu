@@ -1,10 +1,9 @@
 package test;
 
+import static org.junit.Assert.*;
+
 import java.math.BigDecimal;
-
-import junit.framework.Assert;
 import org.junit.Test;
-
 import db.Item;
 
 import util.DBUtil;
@@ -26,9 +25,9 @@ public class TestDbUtil {
 		
 		Item itemAfter = dbUtil.getItemById(3);
 		BigDecimal itemStorePriceAfter = itemAfter.getStorePrice();
-		Assert.assertNotNull(itemBefore);
-		Assert.assertNotNull(itemAfter);
-		Assert.assertFalse(itemStorePriceBefore.equals(itemStorePriceAfter));
+		assertNotNull(itemBefore);
+		assertNotNull(itemAfter);
+		assertFalse(itemStorePriceBefore.equals(itemStorePriceAfter));
 	}
 
 }

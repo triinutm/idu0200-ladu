@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -90,15 +91,55 @@ public class WareHouseController extends BaseController {
 			request.setAttribute("allStores", allStores);
 		}else if(request.getParameter("action").equals("move") && user != null && item != null && allStores != null){
 			
-			ItemAction itemActionMove = wareHouseService.createWareHouseMoveItemAction(user, paramtereMap, allStores, item);
-			if(itemActionMove != null){
-				dbUtil.insertItemAction(itemActionMove);
-				request.setAttribute("move_successful", "Toote ladude vahel liigutamine õnnestus!");
+			String selectedStoreFrom = wareHouseService.getString(paramtereMap, "move_from_store");
+			long selectedStoreFromId = Integer.parseInt(selectedStoreFrom);
+			
+			String selectedStoreTo = wareHouseService.getString(paramtereMap, "move_to_store");
+			long selectedStoreToId = Integer.parseInt(selectedStoreTo);
+			
+			String itemCountOnMove =  wareHouseService.getString(paramtereMap, "warehouse_move_quantity");
+			BigDecimal itemCountOnMoveBigDecimal = new BigDecimal(itemCountOnMove); 
+			
+			ItemStore itemStoreFrom = wareHouseService.getItemStore(item, allStores, selectedStoreFromId);
+			ItemStore itemStoreTo = wareHouseService.getItemStore(item, allStores, selectedStoreToId);
+			
+			if(itemStoreFrom.getItemCount() == null){ //kontrollime, kas saadud lao kirjes on tootel kogus olemas.
+				request.setAttribute("move_from_err", "Antud toodet selles laos pole!");
+			}
+			else if(itemCountOnMoveBigDecimal.compareTo(itemStoreFrom.getItemCount()) == 1){ //kontrollime, kas laos on piisavalt tooteid mida liigutada
+				request.setAttribute("move_from_err_counts", "Toodet pole laos piisavalt!");
+			}else{
+				if(itemStoreTo != null){ //kui toode on olemas laos, siis lisame kogust.
+					
+					itemStoreFrom.setItemCount(itemStoreFrom.getItemCount().subtract(itemCountOnMoveBigDecimal)); //lahutame olemasolevast laost toodete koguse maha
+					itemStoreTo.setItemCount(itemStoreTo.getItemCount().add(itemCountOnMoveBigDecimal)); //lisame uude lattu toodete koguse juurde
+					
+					dbUtil.updateItemStore(itemStoreFrom);
+					dbUtil.updateItemStore(itemStoreTo);
+					
+					ItemAction itemActionMove = wareHouseService.createWareHouseMoveItemAction(user, paramtereMap, allStores, item);
+					if(itemActionMove != null){
+						dbUtil.insertItemAction(itemActionMove);
+						request.setAttribute("move_successful", "Toote ladude vahel liigutamine õnnestus!");
+					}
+				}else{ //kui toodet lisatavas laos pole, siis loome uue lao kirje
+					ItemStore newItemStore = new ItemStore();
+					newItemStore.setItem(item);
+					newItemStore.setItemCount(itemCountOnMoveBigDecimal);
+					newItemStore.setStore(wareHouseService.getSelectedStore(allStores, selectedStoreToId));
+					dbUtil.insertItemStore(newItemStore);
+					
+					ItemAction itemActionMove = wareHouseService.createWareHouseMoveItemAction(user, paramtereMap, allStores, item);
+					if(itemActionMove != null){
+						dbUtil.insertItemAction(itemActionMove);
+						request.setAttribute("move_successful", "Toote ladude vahel liigutamine õnnestus!");
+					}
+				}
 			}
 			request.setAttribute("item", item);
 			request.setAttribute("allStores", allStores);
 		}else{
-			
+			request.setAttribute("parameter_needed", "Laotoimingute tegemiseks on parameeter action vajalik!");
 		}
 		
 		view.forward(request, response); 	

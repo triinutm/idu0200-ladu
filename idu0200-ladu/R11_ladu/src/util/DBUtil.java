@@ -524,6 +524,7 @@ public class DBUtil {
 			session.beginTransaction();
 			session.save(itemStore);
 			session.getTransaction().commit();
+			
 		} catch (Exception e) {
 			log.warn("DBUtil: insertItemStore()" + e.getMessage());
 			e.printStackTrace();

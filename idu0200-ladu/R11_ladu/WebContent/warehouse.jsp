@@ -13,6 +13,10 @@
 <%List<Store> allStores = (List<Store>)request.getAttribute("allStores");%>
 <%String registerSuccessful = (String)request.getAttribute("register_successful"); %>
 <%String removeSuccessful = (String)request.getAttribute("remove_successful"); %>
+<%String moveFailed = (String)request.getAttribute("move_from_err"); %>
+<%String moveSuccessful = (String)request.getAttribute("move_successful"); %>
+<%String moveCountError = (String)request.getAttribute("move_from_err_counts"); %>
+<%String paramActionNeeded = (String)request.getAttribute("parameter_needed"); %>
 <body>
 <%@ include file="logout.jsp" %>
 <h1>Lao toimingud</h1>
@@ -24,6 +28,26 @@
 <%} %>
 <%if(removeSuccessful != null){ %>
 	<%out.println(removeSuccessful); %>
+	<br />
+	<br />
+<%} %>
+<%if(moveFailed != null){ %>
+	<%out.println(moveFailed); %>
+	<br />
+	<br />
+<%} %>
+<%if(moveCountError != null){ %>
+	<%out.println(moveCountError); %>
+	<br />
+	<br />
+<%} %>
+<%if(paramActionNeeded != null){ %>
+	<%out.println(paramActionNeeded); %>
+	<br />
+	<br />
+<%} %>
+<%if(moveSuccessful != null){ %>
+	<%out.println(moveSuccessful); %>
 	<br />
 	<br />
 <%} %>
@@ -55,7 +79,7 @@
 		</tr>
 		<tr>
 			<td>Kogus:</td>
-			<td><input type="text" name="warehouse_register_quantity" />tk. (yhik tabelist [unit_type])</td>
+			<td><input type="text" name="warehouse_register_quantity" /><%out.print(item.getUnitType().getTypeName());%></td>
 		</tr>
 		<tr>
 			<td>Märkus:</td>
@@ -95,7 +119,7 @@
 		</tr>
 		<tr>
 			<td>Kogus:</td>
-			<td><input type="text" name="warehouse_remove_quantity" />tk. (yhik tabelist [unit_type])</td>
+			<td><input type="text" name="warehouse_remove_quantity" /><%out.print(item.getUnitType().getTypeName());%></td>
 		</tr>
 		<tr>
 			<td>Märkus:</td>
@@ -146,7 +170,7 @@
 		</tr>
 		<tr>
 			<td>Kogus:</td>
-			<td><input type="text" name="warehouse_move_quantity" />tk. (yhik tabelist [unit_type])</td>
+			<td><input type="text" name="warehouse_move_quantity" /><%out.print(item.getUnitType().getTypeName());%></td>
 		</tr>
 		<tr>
 			<td>Märkus:</td>
