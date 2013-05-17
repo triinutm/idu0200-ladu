@@ -14,6 +14,7 @@
 <%String registerSuccessful = (String)request.getAttribute("register_successful"); %>
 <%String removeSuccessful = (String)request.getAttribute("remove_successful"); %>
 <body>
+<%@ include file="logout.jsp" %>
 <h1>Lao toimingud</h1>
 <%if(item != null){ %>
 <%if(registerSuccessful != null){ %>

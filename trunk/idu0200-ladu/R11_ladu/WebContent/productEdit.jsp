@@ -11,6 +11,7 @@
 <title>Toote andemete muutmine</title>
 </head>
 <body>
+<%@ include file="logout.jsp" %>
 <h3>R11 LADU</h3>
 <%
 if(request.getAttribute("productModel") != null){

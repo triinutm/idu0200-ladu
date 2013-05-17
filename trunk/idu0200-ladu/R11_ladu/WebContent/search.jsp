@@ -9,6 +9,7 @@
 <title>Toote otsing</title>
 </head>
 <body>
+<%@ include file="logout.jsp" %>
 	<h3>Toote otsing</h3>
 	<%if(request.getAttribute("form") != null){
 	    SearchForm form = (SearchForm) request.getAttribute("form");%>

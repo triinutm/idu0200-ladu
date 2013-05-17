@@ -26,6 +26,7 @@
 </script>
 </head>
 <body>
+<%@ include file="logout.jsp" %>
 	<form action="pricelist?action=update" method="POST">
 		<input type="hidden" name="id" value='<%=pricelist.getId()%>'>
 		<table border="1">

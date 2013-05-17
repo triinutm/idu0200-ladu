@@ -13,6 +13,7 @@
 <title>Hinnakirjad</title>
 </head>
 <body>
+<%@ include file="logout.jsp" %>
 	<%
 		String id = "";
 		String status = "";
