@@ -17,14 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 			throws ServletException, IOException {
 		
 		if(req.getSession().getAttribute("user") == null){
-				
-		}
+			resp.sendRedirect("/R11_ladu/login");	
+		}else{
 			try{
 				doOnGet(req,resp);
 			}catch (Exception e){
 				resp.sendRedirect("/R11_ladu/viga");
 				e.printStackTrace();
 			}
+		}
 	}
 
 	@Override
@@ -32,15 +33,15 @@ import javax.servlet.http.HttpServletResponse;
 			throws ServletException, IOException {	
 		
 		if(req.getSession().getAttribute("user") == null){
-			
+			resp.sendRedirect("/R11_ladu/login");
+		}else{
+			try{
+				doOnPost(req,resp);
+			}catch (Exception e){
+				resp.sendRedirect("/R11_ladu/viga");
+				e.printStackTrace();
+			}
 		}
-		try{
-			doOnPost(req,resp);
-		}catch (Exception e){
-			resp.sendRedirect("/R11_ladu/viga");
-			e.printStackTrace();
-		}
-		
 	}
 	
 	protected abstract void doOnPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException;

@@ -1,11 +1,11 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,14 +16,13 @@ import db.UserAccount;
 import frontend.LoginService;
 
 @WebServlet("/login")
-public class LoginPageController extends BaseController {
+public class LoginPageController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Override
-	protected void doOnGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = request.getRequestDispatcher("/login.jsp");
 		view.forward(request, response);	
 	}
@@ -33,9 +32,8 @@ public class LoginPageController extends BaseController {
 	 */
 	
 	@Override
-	protected void doOnPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = request.getRequestDispatcher("/login.jsp");
 		request.setCharacterEncoding("UTF-8");
 		UserAccount userAccount=new UserAccount();

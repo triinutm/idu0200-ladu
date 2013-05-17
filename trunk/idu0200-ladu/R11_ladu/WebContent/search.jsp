@@ -57,6 +57,7 @@
 					<th>Tootja</th>
 					<th>Tootja kood</th>
 					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -70,6 +71,7 @@
 			    out.println("<td>"+item.getProducer()+"</td>");
 			    out.println("<td>"+item.getProducerCode()+"</td>");
 			    out.println("<td><a href='"+request.getContextPath()+"/product?id="+item.getItem()+"'>Muuda</a></td>");
+			    out.println("<td><a href='"+request.getContextPath()+"/warehouse?item="+item.getItem()+"'>Lao toiming</a></td>");
 			    out.println("</tr>");
 			} %>
 			</tbody>

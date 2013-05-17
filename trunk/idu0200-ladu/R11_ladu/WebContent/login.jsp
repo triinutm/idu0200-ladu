@@ -14,8 +14,8 @@
 	
 	<form action="login" method="post">
 <table>
-<tr><td>Kasutajanimi:</td><td><input type="text" name="userName"/></td></tr>
-<tr><td>Parool:</td><td><input type="password" name="password"/></td></tr>
+<tr><td>Kasutajanimi:</td><td><input type="text" name="userName"/>juhan</td></tr>
+<tr><td>Parool:</td><td><input type="password" name="password"/> juurikas34metsX</td></tr>
 <tr><td></td><td><input type="submit" value="Logi sisse"/></td></tr>
 </table>
 </form>
