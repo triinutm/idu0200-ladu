@@ -73,7 +73,7 @@ public class ItemAction implements java.io.Serializable {
 		this.itemAction = itemAction;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "store_from_fk")
 	public Store getStoreByStoreFromFk() {
 		return this.storeByStoreFromFk;
@@ -83,7 +83,7 @@ public class ItemAction implements java.io.Serializable {
 		this.storeByStoreFromFk = storeByStoreFromFk;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "item_action_type_fk")
 	public ItemActionType getItemActionType() {
 		return this.itemActionType;
@@ -93,7 +93,7 @@ public class ItemAction implements java.io.Serializable {
 		this.itemActionType = itemActionType;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "store_to_fk")
 	public Store getStoreByStoreToFk() {
 		return this.storeByStoreToFk;
@@ -103,7 +103,7 @@ public class ItemAction implements java.io.Serializable {
 		this.storeByStoreToFk = storeByStoreToFk;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "created_by")
 	public Employee getEmployee() {
 		return this.employee;
@@ -113,7 +113,7 @@ public class ItemAction implements java.io.Serializable {
 		this.employee = employee;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "item_fk")
 	public Item getItem() {
 		return this.item;
