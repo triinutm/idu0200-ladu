@@ -10,6 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <%
 UserAccount currentuser=(UserAccount)request.getSession().getAttribute("user");
 %>

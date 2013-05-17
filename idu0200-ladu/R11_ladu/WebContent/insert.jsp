@@ -11,6 +11,7 @@
 <title>Toote lisamine</title>
 </head>
 <body>
+<%@ include file="logout.jsp" %>
 <h3>R11 LADU</h3>
 <form action="" method="POST">
 <table>
