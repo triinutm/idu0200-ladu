@@ -19,5 +19,6 @@ UserAccount currentuser=(UserAccount)request.getSession().getAttribute("user");
 <% out.println("<input type=\"submit\" value=\"Logi välja!\"/>"); %>
 </form>
 <%} %>
+<% out.println("<a href='" + request.getContextPath()+"/'>Pealeht</a>"); %>
 </body>
 </html>
