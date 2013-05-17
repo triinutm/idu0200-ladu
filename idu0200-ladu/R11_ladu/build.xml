@@ -28,6 +28,7 @@ Author:  Raul Liivrand
 		<property name="src_web_inf.dir"   value="WebContent/WEB-INF"              /> 
 		<property name="src.dir"        value="src"              /> 
 		<property name="prop.dir"       value="WebContent/WEB-INF/lib"              /> 
+   		<property name="connection.dir"       value="WebContent/WEB-INF/classes"              /> 
 		<property name="web-inf.dir"     value="ant/WEB-INF"            /> 
 		<property name="classes.dir"     value="ant/WEB-INF/classes"            /> 
 		<property name="jsp.dir"        value="ant/."            /> 
@@ -88,6 +89,9 @@ Author:  Raul Liivrand
        	<copy todir="${classes.dir}"> 
           	<fileset dir="${prop.dir}" includes="**/*.properties" /> 
        	</copy>
+   		<copy todir="${classes.dir}"> 
+   	          	<fileset dir="${connection.dir}" includes="**/*.properties" /> 
+   	       	</copy>
    		<copy todir="${web-inf.dir}/classes">
    	       		<fileset dir="${src_hibernate_xml.dir}" includes="**/*.xml" />
    	    </copy>
