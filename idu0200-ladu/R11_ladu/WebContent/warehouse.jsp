@@ -28,7 +28,7 @@
 		<tr>
 			<td>Toode:</td>
 			<td><%out.println(item.getName() + "- " + item.getDescription() );%>
-				<input type="hidden" name="register_item_id" value="<%out.print(item.getItem());%>" />
+				<input type="hidden" name="item_id" value="<%out.print(item.getItem());%>" />
 			</td>
 		</tr>
 		<tr>
@@ -72,7 +72,7 @@
 		<tr>
 			<td>Toode:</td>
 			<td><%out.println(item.getName() + "- " + item.getDescription() );%>
-				<input type="hidden" name="remove_item_id" value="<%out.print(item.getItem());%>" />
+				<input type="hidden" name="item_id" value="<%out.print(item.getItem());%>" />
 			</td>
 		</tr>
 		<tr>
@@ -116,13 +116,13 @@
 		<tr>
 			<td>Toode:</td>
 			<td><%out.println(item.getName() + "- " + item.getDescription() );%>
-				<input type="hidden" name="move_item_id" value="<%out.print(item.getItem());%>" />
+				<input type="hidden" name="item_id" value="<%out.print(item.getItem());%>" />
 			</td>
 		</tr>
 		<tr>
 			<td>Laost:</td>
 			<td>
-				<select>
+				<select name="move_from_store">
     				<option value="" disabled="disabled" selected="selected">--Vali ladu--</option>
     				<%for(Store store : allStores){ %>
     					<option value="<%out.print(store.getStore());%>"><%out.print(store.getName());%></option>
@@ -133,7 +133,7 @@
 		<tr>
 			<td>Lattu:</td>
 			<td>
-				<select>
+				<select name="move_to_store">
     				<option value="" disabled="disabled" selected="selected">--Vali ladu--</option>
     				<%for(Store store : allStores){ %>
     					<option value="<%out.print(store.getStore());%>"><%out.print(store.getName());%></option>

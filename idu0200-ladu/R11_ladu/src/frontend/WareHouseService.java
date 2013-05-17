@@ -39,6 +39,9 @@ public class WareHouseService {
 		long selectedStoreId = Integer.parseInt(selectedStore);
 		Store store = getSelectedStore(allStores, selectedStoreId);
 		itemAction.setStoreByStoreToFk(store);
+		
+		String moveNotes = getString(paramtereMap, "warehouse_register_notes");
+		itemAction.setActionNote(moveNotes);
 
 		Calendar today = Calendar.getInstance();
 		today.clear(Calendar.HOUR); today.clear(Calendar.MINUTE); today.clear(Calendar.SECOND);
@@ -91,4 +94,51 @@ public class WareHouseService {
 		}
 		return restultStore;
 	}
+	
+	/**
+	 * Toote laost lattu liigutamise meetod.
+	 * @param userAccount
+	 * @param paramtereMap
+	 * @param allStores
+	 * @param item
+	 * @return
+	 */
+	public ItemAction createWareHouseMoveItemAction(UserAccount userAccount, Map<String,String[]> paramtereMap, List<Store> allStores, Item item){
+		
+		ItemAction itemAction = new ItemAction();
+		DBUtil dbUtil = new DBUtil();
+		
+		String selectedStoreFrom = getString(paramtereMap, "move_from_store");
+		long selectedStoreFromId = Integer.parseInt(selectedStoreFrom);
+		Store storeFrom = getSelectedStore(allStores, selectedStoreFromId);
+		
+		String selectedStoreTo = getString(paramtereMap, "move_to_store");
+		long selectedStoreToId = Integer.parseInt(selectedStoreTo);
+		Store storeTo = getSelectedStore(allStores, selectedStoreToId);
+		
+		itemAction.setStoreByStoreFromFk(storeFrom);
+		itemAction.setStoreByStoreToFk(storeTo);
+		
+		itemAction.setEmployee(userAccount.getEmployeeBySubjectFk());
+		itemAction.setItem(item);
+		
+		String itemCount = getString(paramtereMap, "warehouse_move_quantity");
+		long itemCountLong = Integer.parseInt(itemCount);
+		itemAction.setItemCount(itemCountLong);
+		
+		String moveNotes = getString(paramtereMap, "warehouse_move_notes");
+		itemAction.setActionNote(moveNotes);
+		
+		Calendar today = Calendar.getInstance();
+		today.clear(Calendar.HOUR); today.clear(Calendar.MINUTE); today.clear(Calendar.SECOND);
+		Date actionDate = new Date(today.getTime().getTime());
+		itemAction.setActionDate(actionDate);
+		itemAction.setCreated(actionDate);
+		
+		itemAction.setItemActionType(dbUtil.getItemActionType(3));
+		
+		return itemAction;
+		
+	}
+	
 }
