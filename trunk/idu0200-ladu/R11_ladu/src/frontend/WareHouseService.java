@@ -136,8 +136,16 @@ public class WareHouseService {
 		itemAction.setCreated(actionDate);
 		
 		itemAction.setItemActionType(dbUtil.getItemActionType(3));
+		return itemAction;	
+	}
+	
+	public ItemStore getItemStore(Item item, List<Store> allStores, long selectedStore){
 		
-		return itemAction;
+		DBUtil dbUtil = new DBUtil();
+		ItemStore itemStore = new ItemStore();
+		Store store = getSelectedStore(allStores, selectedStore);
+		itemStore = dbUtil.getItemStoreByItemAndStore(item, store);
+		return itemStore;
 		
 	}
 	public ItemAction createWareHouseRemoveItemAction(UserAccount userAccount, Map<String,String[]> paramtereMap, List<Store> allStores, Item item){
