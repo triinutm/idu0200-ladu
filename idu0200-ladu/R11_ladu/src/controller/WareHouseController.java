@@ -81,14 +81,37 @@ public class WareHouseController extends BaseController {
 			}
 			request.setAttribute("item", item);
 			request.setAttribute("allStores", allStores);
+			
 		}else if(request.getParameter("action").equals("remove") && user != null && item != null && allStores != null){
-			ItemAction itemActionRemove = wareHouseService.createWareHouseRemoveItemAction(user, paramtereMap, allStores, item);
-			if(itemActionRemove != null){
-				dbUtil.insertItemAction(itemActionRemove);
-				request.setAttribute("remove_successful", "Toote eemaldamine õnnestus!");
+			String selectedStoreFrom = wareHouseService.getString(paramtereMap, "remove_from_store");
+			long selectedStoreFromId = Integer.parseInt(selectedStoreFrom);
+			
+			String itemCountOnMove =  wareHouseService.getString(paramtereMap, "warehouse_remove_quantity");
+			BigDecimal itemCountOnMoveBigDecimal = new BigDecimal(itemCountOnMove); 
+			
+			ItemStore itemStoreFrom = wareHouseService.getItemStore(item, allStores, selectedStoreFromId);
+			
+			if(itemStoreFrom.getItemCount() == null){ //kontrollime, kas saadud lao kirjes on tootel kogus olemas.
+				request.setAttribute("move_from_err", "Antud toodet selles laos pole!");
 			}
+			else if(itemCountOnMoveBigDecimal.compareTo(itemStoreFrom.getItemCount()) == 1){ //kontrollime, kas laos on piisavalt tooteid mida liigutada
+				request.setAttribute("move_from_err_counts", "Toodet pole laos piisavalt!");
+			}else{
+				itemStoreFrom.setItemCount(itemStoreFrom.getItemCount().subtract(itemCountOnMoveBigDecimal)); //lahutame olemasolevast laost toodete koguse maha
+					
+					dbUtil.updateItemStore(itemStoreFrom);
+					ItemAction itemActionRemove = wareHouseService.createWareHouseRemoveItemAction(user, paramtereMap, allStores, item);
+					if(itemActionRemove != null){
+						dbUtil.insertItemAction(itemActionRemove);
+						request.setAttribute("remove_successful", "Toote eemaldamine õnnestus!");
+					}
+				
+				}
+			
 			request.setAttribute("item", item);
 			request.setAttribute("allStores", allStores);
+			
+			
 		}else if(request.getParameter("action").equals("move") && user != null && item != null && allStores != null){
 			
 			String selectedStoreFrom = wareHouseService.getString(paramtereMap, "move_from_store");
