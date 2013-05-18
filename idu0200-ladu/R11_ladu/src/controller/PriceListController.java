@@ -23,7 +23,7 @@ import db.PriceList;
  * Servlet implementation class PriceListController
  */
 @WebServlet("/pricelist")
-public class PriceListController extends HttpServlet {
+public class PriceListController extends BaseController {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -36,7 +36,7 @@ public class PriceListController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doOnGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PriceListDAO dao = new PriceListDAO();
 		RequestDispatcher view = request.getRequestDispatcher("/pricelists.jsp");
 		System.out.println(request.getParameter("action"));
@@ -114,7 +114,7 @@ public class PriceListController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doOnPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request,response);
 	}
 

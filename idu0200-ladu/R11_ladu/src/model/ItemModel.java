@@ -1,11 +1,19 @@
 package model;
 
 public class ItemModel {
+	private int item_price_list;
 	private int id;
 	private String name;
 	private Double discount_price;
 	private Double sale_price;
 	private Double discount_xtra;
+
+	public int getItem_price_list() {
+		return item_price_list;
+	}
+	public void setItem_price_list(int item_price_list) {
+		this.item_price_list = item_price_list;
+	}
 	
 	public int getId() {
 		return id;
