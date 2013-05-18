@@ -180,27 +180,26 @@ public class PriceListDAO {
 			return null;
 		}	
 	}
-	
+
 
 	public List <CustomerModel> searchCustomer(String name) {
 		List <CustomerModel> list = new LinkedList<CustomerModel>();
-		ResultSet result = dbconnection.executeQuery("SELECT R.subject_id ,R.subject_name FROM " +
-				"(SELECT customer AS subject_id, (first_name || ' ' || last_name) AS subject_name " +
-				"FROM person AS P INNER JOIN customer C ON C.subject_fk = P.person " +
-				"WHERE UPPER(last_name) LIKE UPPER('"+name+"%') " +
-						"UNION SELECT customer AS subject_id, name AS subject_name FROM " +
-						"enterprise AS E INNER JOIN customer C ON C.subject_fk = E.enterprise " +
-						"WHERE UPPER(name) LIKE UPPER('"+name+"%')) AS R");
-		
+		ResultSet result = dbconnection.executeQuery("SELECT P.subject_id ,P.subject_name, P.subject_type FROM"+
+		"(SELECT customer AS subject_id, 'isik'  AS subject_type, (first_name || ' ' || last_name) AS subject_name " +
+		" FROM person INNER JOIN customer ON person=subject_fk WHERE subject_type_fk=1 AND UPPER(last_name) LIKE UPPER('"+name+"%')"+
+			"UNION SELECT customer AS subject_id, 'ettevote'  AS subject_type, name AS subject_name FROM enterprise INNER JOIN "+
+		"customer ON enterprise=subject_fk WHERE subject_type_fk=2 AND UPPER(name) LIKE UPPER('"+name+"%' )) AS P");
+
 		if (result == null) {
-			return null;
+			return null;			
 		}
 		try {
 			while (result.next()) {
 				CustomerModel c = new CustomerModel();
 				c.setId(result.getInt("subject_id"));
 				c.setName(result.getString("subject_name"));
-				System.out.println("LEITUD"+c.getName());
+				c.setType(result.getString("subject_type"));
+				System.out.println(c.getName());
 				list.add(c);
 			}
 			return list;
@@ -264,7 +263,7 @@ public class PriceListDAO {
 		System.out.println("K2ivitus meetod1");
 		List <ItemModel> list = new LinkedList<ItemModel>();
 		System.out.println("K2ivitus meetod2");
-		ResultSet result = dbconnection.executeQuery("SELECT I.item, I.name, I.sale_price, P.discount_xtra FROM item AS I INNER JOIN item_price_list AS P ON I.item=P.item_fk WHERE P.price_list_fk="+price_list+" ORDER BY item");
+		ResultSet result = dbconnection.executeQuery("SELECT P.item_price_list, I.item, I.name, I.sale_price, P.discount_xtra FROM item AS I INNER JOIN item_price_list AS P ON I.item=P.item_fk WHERE P.price_list_fk="+price_list+" ORDER BY item");
 		System.out.println("K2ivitus meetod3");
 		if (result == null) {
 			return null;
@@ -272,6 +271,7 @@ public class PriceListDAO {
 		try {
 			while (result.next()) {
 				ItemModel i = new ItemModel();
+				i.setItem_price_list(result.getInt("item_price_list"));
 				i.setId(result.getInt("item"));
 				i.setName(result.getString("name"));
 				i.setSale_price(result.getDouble("sale_price"));
@@ -289,7 +289,7 @@ public class PriceListDAO {
 	public List<ItemModel> searchItem(String itemName) {
 		List <ItemModel> list = new LinkedList<ItemModel>();
 		ResultSet result = dbconnection.executeQuery("SELECT item, name FROM item WHERE UPPER(name) LIKE UPPER('"+itemName+"%') ORDER BY item");
-		
+
 		if (result == null) {
 			return null;
 		}

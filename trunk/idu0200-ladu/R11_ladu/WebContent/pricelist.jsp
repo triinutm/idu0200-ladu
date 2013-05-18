@@ -89,29 +89,30 @@
 	</form>
 	
 		<%
+		String type;
 		List<CustomerModel> searchcustomers;
 		if (request.getAttribute("searchcustomers")!=null){
+			out.println("Tulemus:");
 			searchcustomers = (List<CustomerModel>) request.getAttribute("searchcustomers");
 		}else{
 			searchcustomers=null;
-		}
-		out.println("Tulemus:");
+		}	
 		try {
 			for (CustomerModel c : searchcustomers) {
 				id = Integer.toString(c.getId());
 				name = c.getName();
-				out.println("<a HREF='pricelist?id="+pricelist.getId()+"&action=addcustomer&customer="+id
-						+ "'TARGET='_self'><strong>"+id+" "+name+"</strong></a>");
+				type = c.getType();
+				out.println("<a HREF='pricelist?id="+pricelist.getId()+"&action=addcustomer&customer="+id+"&type="+type
+						+ "'TARGET='_self'><strong>"+id+" "+name+" ("+type+")</strong></a>");
 			}
 			out.println("</table>");
-		} catch (Exception ex) {
-			out.println("Mingi viga" + ex.getMessage());
-		}
-
+		} catch (Exception ex) {}
+		
+		String item_price_list;
 		String discount_xtra;
 		String discount_price;
 		String sale_price;
-		out.println("<br>TOOTED:");
+		out.println("<br><br>TOOTED:");
 		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>nimi</th><th>hind allahindluseta</th><th>allahindluse protsent</th><th>hind allahindlusega</th><th></th></tr>");
 		try {
 			for (ItemModel i : items) {
@@ -120,9 +121,11 @@
 				sale_price = Double.toString(i.getSale_price());
 				discount_price = Double.toString(i.getDiscount_price());
 				discount_xtra = Double.toString(i.getDiscount_xtra());
+				item_price_list = Integer.toString(i.getItem_price_list());
 				out.println("<tr><td>" + id + "</td><td>" + name +"</td>"
-						+ "<td>"+sale_price+"</td><td>"+discount_xtra+"</td>"
+						+ "<td>"+sale_price+ "</td><td><input type='text' name='discount' value='"+discount_xtra+"'/></td>"
 						+ "<td>"+discount_price+"</td>"
+						+"<td>"+discount_xtra+"</td>"
 						+ "<td><a HREF='pricelist?id="+pricelist.getId()+"&action=deleteitem&item="+ id
 						+ "'TARGET='_self'><strong>kustuta</strong></a></td></tr>");
 			}
@@ -139,11 +142,12 @@
 	<%
 		List<ItemModel> searchitems;
 		if (request.getAttribute("searchitems")!=null){
+			out.println("Tulemus:");
 			searchitems = (List<ItemModel>) request.getAttribute("searchitems");
 		}else{
 			searchitems=null;
 		}
-		out.println("Tulemus:");
+		
 		try {
 			for (ItemModel i : searchitems) {
 				id = Integer.toString(i.getId());
@@ -152,8 +156,6 @@
 						+ "'TARGET='_self'><strong>"+id+" "+name+"</strong></a>");
 			}
 			out.println("</table>");
-		} catch (Exception ex) {
-			out.println("Mingi viga" + ex.getMessage());
-		}%>
+		} catch (Exception ex) {}%>
 </body>
 </html>
