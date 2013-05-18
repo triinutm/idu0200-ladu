@@ -81,7 +81,7 @@ public class PriceListDAO {
 		}	
 	}
 
-	public void createNewPriceList(PriceList priceList) {
+	public void createNewPriceList(PriceList priceList, int created_by) {
 		if (priceList == null) {
 			return;
 		}
@@ -95,7 +95,7 @@ public class PriceListDAO {
 			statement.setDate(3, new java.sql.Date(priceList.getDateFrom().getTime()));
 			statement.setDate(4, new java.sql.Date(priceList.getDateTo().getTime()));
 			statement.setString(5, priceList.getNote());
-			statement.setLong(6, 1); //sisse loginud kasutaja
+			statement.setLong(6, created_by); //sisse loginud kasutaja
 			statement.execute();
 			statement.close();
 			connection.close();
@@ -263,7 +263,7 @@ public class PriceListDAO {
 		System.out.println("K2ivitus meetod1");
 		List <ItemModel> list = new LinkedList<ItemModel>();
 		System.out.println("K2ivitus meetod2");
-		ResultSet result = dbconnection.executeQuery("SELECT P.item_price_list, I.item, I.name, I.sale_price, P.discount_xtra FROM item AS I INNER JOIN item_price_list AS P ON I.item=P.item_fk WHERE P.price_list_fk="+price_list+" ORDER BY item");
+		ResultSet result = dbconnection.executeQuery("SELECT P.item_price_list, I.item, I.name, I.sale_price, P.discount_xtra, P.sale_price AS price_list_sale_price FROM item AS I INNER JOIN item_price_list AS P ON I.item=P.item_fk WHERE P.price_list_fk="+price_list+" ORDER BY item");
 		System.out.println("K2ivitus meetod3");
 		if (result == null) {
 			return null;
@@ -276,7 +276,7 @@ public class PriceListDAO {
 				i.setName(result.getString("name"));
 				i.setSale_price(result.getDouble("sale_price"));
 				i.setDiscount_xtra(result.getDouble("discount_xtra"));
-				i.setDiscount_price(result.getDouble("sale_price")+result.getDouble("sale_price")*result.getDouble("discount_xtra")/100);
+				i.setDiscount_price(result.getDouble("price_list_sale_price"));
 				list.add(i);
 			}
 			return list;
@@ -325,15 +325,52 @@ public class PriceListDAO {
 		Connection connection = dbconnection.getConnection();
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("INSERT INTO item_price_list (item_fk, price_list_fk, discount_xtra) VALUES (?,?, (SELECT default_discount_xtra FROM price_list WHERE price_list=?))");
+					.prepareStatement("INSERT INTO item_price_list (item_fk, price_list_fk, discount_xtra, created) VALUES (?,?, (SELECT default_discount_xtra FROM price_list WHERE price_list=?),LOCALTIMESTAMP(0))");
 			statement.setInt(1,item);
 			statement.setInt(2, price_list);
 			statement.setInt(3, price_list);
 			statement.execute();
 			statement.close();
 			connection.close();
+			calculateSalePrice(item, price_list);
 		} catch (SQLException e) {
 			System.out.println("PriceListDAO.addItem()"+e.getMessage());
+		}
+	}
+
+	private void calculateSalePrice(int item, int price_list) {
+		Connection connection = dbconnection.getConnection();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("UPDATE item_price_list SET sale_price=(SELECT round(I.sale_price+(IP.discount_xtra*I.sale_price/100),2) FROM item_price_list AS IP INNER JOIN item AS I ON I.item=IP.item_fk WHERE price_list_fk=? AND item_fk=? )"+
+							"WHERE price_list_fk=? AND item_fk=?" );
+			statement.setInt(1, price_list);
+			statement.setInt(2, item);
+			statement.setInt(3, price_list);
+			statement.setInt(4, item);
+			statement.execute();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.calculateSalePrice() : "+e.getMessage());
+		}
+	}
+
+	public void changeDiscount(int item, int price_list, Long discount) {
+		Connection connection = dbconnection.getConnection();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("UPDATE item_price_list SET discount_xtra=?" +
+							"WHERE price_list_fk=? AND item_fk=?");
+			statement.setLong(1, discount);
+			statement.setInt(2, price_list);
+			statement.setInt(3, item);
+			statement.execute();
+			statement.close();
+			connection.close();
+			calculateSalePrice(item, price_list);
+		} catch (SQLException e) {
+			System.out.println("PriceListDAO.changeDiscount() : "+e.getMessage());
 		}
 	}
 }
