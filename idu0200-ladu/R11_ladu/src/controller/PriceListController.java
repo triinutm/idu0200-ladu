@@ -18,6 +18,7 @@ import model.PriceListForm;
 import dao.PriceListDAO;
 import db.Customer;
 import db.PriceList;
+import db.UserAccount;
 
 /**
  * Servlet implementation class PriceListController
@@ -43,7 +44,8 @@ public class PriceListController extends BaseController {
 		if (request.getParameter("action") != null){
 			if (request.getParameter("action").equals("new")){
 				try {
-					dao.createNewPriceList(getPriceListFromRequest(request).convertToPriceList());
+					UserAccount user = (UserAccount) request.getSession().getAttribute("user");
+					dao.createNewPriceList(getPriceListFromRequest(request).convertToPriceList(),user.getEmployeeBySubjectFk().getEmployee());
 				} catch (ParseException e) {
 					System.out.println("PriceListController.doGet()"+e.getMessage());
 				}	
@@ -84,6 +86,10 @@ public class PriceListController extends BaseController {
 			if (request.getParameter("action").equals("deleteitem")){
 				view = request.getRequestDispatcher("/pricelist.jsp");
 				dao.deleteItem(Integer.parseInt(request.getParameter("item")),Integer.parseInt(request.getParameter("id")));
+			}
+			if (request.getParameter("action").equals("changediscount")){
+				view = request.getRequestDispatcher("/pricelist.jsp");
+				dao.changeDiscount(Integer.parseInt(request.getParameter("item")),Integer.parseInt(request.getParameter("id")), Long.parseLong(request.getParameter("discount")));
 			}
 		}
 		if (request.getParameter("id") != null){

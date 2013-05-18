@@ -23,6 +23,7 @@
 		$("#date_from").datepicker();
 		$("#date_to").datepicker();
 	});
+	
 </script>
 </head>
 <body>
@@ -113,7 +114,7 @@
 		String discount_price;
 		String sale_price;
 		out.println("<br><br>TOOTED:");
-		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>nimi</th><th>hind allahindluseta</th><th>allahindluse protsent</th><th>hind allahindlusega</th><th></th></tr>");
+		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>nimi</th><th>hind allahindluseta</th><th>allahindluse protsent</th><th>hind allahindlusega</th><th></th><th></th></tr>");
 		try {
 			for (ItemModel i : items) {
 				id = Integer.toString(i.getId());
@@ -125,6 +126,8 @@
 				out.println("<tr><td>" + id + "</td><td>" + name +"</td>"
 						+ "<td>"+sale_price+ "</td><td><input type='text' name='discount' value='"+discount_xtra+"'/></td>"
 						+ "<td>"+discount_price+"</td>"
+						+ "<td><a HREF='pricelist?id="+pricelist.getId()+"&action=changediscount&item="+ id+"&discount=50"
+						+ "'TARGET='_self'><strong>muuda</strong></a></td>"
 						+ "<td><a HREF='pricelist?id="+pricelist.getId()+"&action=deleteitem&item="+ id
 						+ "'TARGET='_self'><strong>kustuta</strong></a></td></tr>");
 			}
