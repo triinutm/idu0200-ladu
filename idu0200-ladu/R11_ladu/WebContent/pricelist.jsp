@@ -125,7 +125,6 @@
 				out.println("<tr><td>" + id + "</td><td>" + name +"</td>"
 						+ "<td>"+sale_price+ "</td><td><input type='text' name='discount' value='"+discount_xtra+"'/></td>"
 						+ "<td>"+discount_price+"</td>"
-						+"<td>"+discount_xtra+"</td>"
 						+ "<td><a HREF='pricelist?id="+pricelist.getId()+"&action=deleteitem&item="+ id
 						+ "'TARGET='_self'><strong>kustuta</strong></a></td></tr>");
 			}
