@@ -322,14 +322,13 @@ public class PriceListDAO {
 	}
 
 	public void addItem(int item, int price_list) {
-		System.out.println("SIIN");
 		Connection connection = dbconnection.getConnection();
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("INSERT INTO item_price_list(item_fk, price_list_fk)" +
-							"VALUES (?,?)");
+					.prepareStatement("INSERT INTO item_price_list (item_fk, price_list_fk, discount_xtra) VALUES (?,?, (SELECT default_discount_xtra FROM price_list WHERE price_list=?))");
 			statement.setInt(1,item);
 			statement.setInt(2, price_list);
+			statement.setInt(3, price_list);
 			statement.execute();
 			statement.close();
 			connection.close();
