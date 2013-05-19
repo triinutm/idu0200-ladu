@@ -6,7 +6,7 @@ public class ItemModel {
 	private String name;
 	private Double discount_price;
 	private Double sale_price;
-	private Double discount_xtra;
+	private Long discount_xtra;
 
 	public int getItem_price_list() {
 		return item_price_list;
@@ -39,10 +39,10 @@ public class ItemModel {
 	public void setSale_price(Double sale_price) {
 		this.sale_price = sale_price;
 	}
-	public Double getDiscount_xtra() {
+	public Long getDiscount_xtra() {
 		return discount_xtra;
 	}
-	public void setDiscount_xtra(Double discount_xtra) {
+	public void setDiscount_xtra(Long discount_xtra) {
 		this.discount_xtra = discount_xtra;
 	}
 	

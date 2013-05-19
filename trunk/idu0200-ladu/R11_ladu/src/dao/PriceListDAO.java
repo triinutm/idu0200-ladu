@@ -275,7 +275,7 @@ public class PriceListDAO {
 				i.setId(result.getInt("item"));
 				i.setName(result.getString("name"));
 				i.setSale_price(result.getDouble("sale_price"));
-				i.setDiscount_xtra(result.getDouble("discount_xtra"));
+				i.setDiscount_xtra(result.getLong("discount_xtra"));
 				i.setDiscount_price(result.getDouble("price_list_sale_price"));
 				list.add(i);
 			}
