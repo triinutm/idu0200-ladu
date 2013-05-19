@@ -28,6 +28,7 @@
 </head>
 <body>
 <%@ include file="logout.jsp" %>
+<a href='<%=request.getContextPath()%>/pricelist'>Hinnakirjad</a>
 	<form action="pricelist?action=update" method="POST">
 		<input type="hidden" name="id" value='<%=pricelist.getId()%>'>
 		<table border="1">
@@ -125,7 +126,7 @@
 				item_price_list = Integer.toString(i.getItem_price_list());
 				out.println("<tr><form action='pricelist?id="+pricelist.getId()+"&action=changediscount' method='POST'><input hidden name='item' value='"+id+"'/>");
 				out.println("<td><input disabled value='"+id+"'/></td>"
-						+"<td><input disabled value='" + name +"'/></td>"
+						+"<td><a href="+request.getContextPath()+"/product?id="+id+">"+name+"</a></td>"
 						+ "<td><input disabled value='"+sale_price+ "'/></td>"
 						+"<td><input type='text' name='discount' value='"+discount_xtra+"'/></td>"
 						+ "<td><input disabled value='"+discount_price+"'/></td>"

@@ -12,6 +12,7 @@
 
 <body>
 <%@ include file="logout.jsp" %>
+<a href='<%=request.getContextPath()%>/pricelist'>Hinnakirjad</a>
 <%
 UserAccount user=(UserAccount)request.getSession().getAttribute("user");
 %>
