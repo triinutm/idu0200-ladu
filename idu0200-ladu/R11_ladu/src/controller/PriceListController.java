@@ -89,7 +89,7 @@ public class PriceListController extends BaseController {
 			}
 			if (request.getParameter("action").equals("changediscount")){
 				view = request.getRequestDispatcher("/pricelist.jsp");
-				dao.changeDiscount(Integer.parseInt(request.getParameter("item")),Integer.parseInt(request.getParameter("id")), Long.parseLong(request.getParameter("discount")));
+				dao.changeDiscount(Integer.parseInt(request.getParameter("item")),Integer.parseInt(request.getParameter("id")),Long.parseLong(request.getParameter("discount")));
 			}
 		}
 		if (request.getParameter("id") != null){

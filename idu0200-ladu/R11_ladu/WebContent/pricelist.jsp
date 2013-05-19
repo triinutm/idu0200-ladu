@@ -93,7 +93,7 @@
 		String type;
 		List<CustomerModel> searchcustomers;
 		if (request.getAttribute("searchcustomers")!=null){
-			out.println("Tulemus:");
+			out.println("Tulemus:<br>");
 			searchcustomers = (List<CustomerModel>) request.getAttribute("searchcustomers");
 		}else{
 			searchcustomers=null;
@@ -104,7 +104,7 @@
 				name = c.getName();
 				type = c.getType();
 				out.println("<a HREF='pricelist?id="+pricelist.getId()+"&action=addcustomer&customer="+id+"&type="+type
-						+ "'TARGET='_self'><strong>"+id+" "+name+" ("+type+")</strong></a>");
+						+ "'TARGET='_self'><strong>"+id+" "+name+" ("+type+")</strong></a><br>");
 			}
 			out.println("</table>");
 		} catch (Exception ex) {}
@@ -121,15 +121,17 @@
 				name = i.getName();
 				sale_price = Double.toString(i.getSale_price());
 				discount_price = Double.toString(i.getDiscount_price());
-				discount_xtra = Double.toString(i.getDiscount_xtra());
+				discount_xtra = Long.toString(i.getDiscount_xtra());
 				item_price_list = Integer.toString(i.getItem_price_list());
-				out.println("<tr><td>" + id + "</td><td>" + name +"</td>"
-						+ "<td>"+sale_price+ "</td><td><input type='text' name='discount' value='"+discount_xtra+"'/></td>"
-						+ "<td>"+discount_price+"</td>"
-						+ "<td><a HREF='pricelist?id="+pricelist.getId()+"&action=changediscount&item="+ id+"&discount=50"
-						+ "'TARGET='_self'><strong>muuda</strong></a></td>"
+				out.println("<tr><form action='pricelist?id="+pricelist.getId()+"&action=changediscount' method='POST'><input hidden name='item' value='"+id+"'/>");
+				out.println("<td><input disabled value='"+id+"'/></td>"
+						+"<td><input disabled value='" + name +"'/></td>"
+						+ "<td><input disabled value='"+sale_price+ "'/></td>"
+						+"<td><input type='text' name='discount' value='"+discount_xtra+"'/></td>"
+						+ "<td><input disabled value='"+discount_price+"'/></td>"
+						+ "<td><input type='submit' value='muuda'/></td>"
 						+ "<td><a HREF='pricelist?id="+pricelist.getId()+"&action=deleteitem&item="+ id
-						+ "'TARGET='_self'><strong>kustuta</strong></a></td></tr>");
+						+ "'TARGET='_self'><strong>kustuta</strong></a></td></form></tr>");
 			}
 			out.println("</table>");
 		} catch (Exception ex) {
@@ -144,7 +146,7 @@
 	<%
 		List<ItemModel> searchitems;
 		if (request.getAttribute("searchitems")!=null){
-			out.println("Tulemus:");
+			out.println("Tulemus:<br>");
 			searchitems = (List<ItemModel>) request.getAttribute("searchitems");
 		}else{
 			searchitems=null;
@@ -155,7 +157,7 @@
 				id = Integer.toString(i.getId());
 				name = i.getName();
 				out.println("<a HREF='pricelist?id="+pricelist.getId()+"&action=additem&item="+id
-						+ "'TARGET='_self'><strong>"+id+" "+name+"</strong></a>");
+						+ "'TARGET='_self'><strong>"+id+" "+name+"</strong></a><br>");
 			}
 			out.println("</table>");
 		} catch (Exception ex) {}%>
