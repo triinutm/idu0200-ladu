@@ -54,12 +54,12 @@
 					value="<%=pricelist.getDateFrom()%>" /></td>
 			</tr>
 			<tr>
-				<th>kehtimise lõpp</th>
+				<th>kehtimise l6pp</th>
 				<td><input READONLY type="text" name="date_to" id="date_to"
 					value="<%=pricelist.getDateTo()%>" /></td>
 			</tr>
 			<tr>
-				<th>märkus</th>
+				<th>m2rkus</th>
 				<td><textarea name="note" rows="8" cols="35"><%=pricelist.getNote()%></textarea></td>
 			</tr>
 		</table>

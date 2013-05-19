@@ -13,7 +13,7 @@
 <title>Hinnakirjad</title>
 </head>
 <body>
-<%@ include file="logout.jsp" %>
+	<%@ include file="logout.jsp"%>
 	<%
 		String id = "";
 		String status = "";
@@ -22,7 +22,7 @@
 		String date_to = "";
 		String note = "";
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>staatus</th><th>allahindluse protsent</th><th>kehtimise algus</th><th>kehtimise lõpp</th><th>märkus</th><th></th><th></th></tr>");
+		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>staatus</th><th>allahindluse protsent</th><th>kehtimise algus</th><th>kehtimise l6pp</th><th>m2rkus</th><th></th><th></th></tr>");
 		try {
 			for (PriceList p : pricelistElements) {
 				id = Long.toString(p.getPriceList());
@@ -41,10 +41,9 @@
 			}
 			out.println("</table><input type=button onclick=\"window.location.href='/R11_ladu/pricelist?id=new'\"value='Loo uus'>");
 		} catch (Exception ex) {
-			out.println("Mingi viga" + ex.getMessage());
-		}
-		
+			out.println("Mingi viga: " + ex.getMessage());
+		}		
 	%>
-	
+
 </body>
 </html>

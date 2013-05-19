@@ -38,11 +38,11 @@
 				<td><input readonly type="text" name="date_from" id="date_from"/></td>
 			</tr>
 			<tr>
-				<th>kehtimise lõpp</th>
+				<th>kehtimise l6pp</th>
 				<td><input readonly type="text" name="date_to" id="date_to"/></td>
 			</tr>
 			<tr>
-				<th>märkus</th>
+				<th>m2rkus</th>
 				<td><textarea name="note" rows="8" cols="35"></textarea></td>
 			</tr>
 		</table>
