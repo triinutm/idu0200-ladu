@@ -186,7 +186,7 @@ public class PriceList implements java.io.Serializable {
 		this.itemPriceLists = itemPriceLists;
 	}
 	
-	public PriceListForm convertToPriceListForm() throws ParseException{
+	public PriceListForm convertToPriceListForm(){
 		PriceListForm p = new PriceListForm();
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		p.setId(""+priceList);

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import model.CustomerModel;
 import model.ItemModel;
 
@@ -20,6 +22,8 @@ import db.PriceListStatusType;
 import dao.dbconnection;
 
 public class PriceListDAO {
+	static Logger logger = Logger.getLogger(dbconnection.class);
+	
 	public List<PriceList> findAll(){
 		List<PriceList> list = new LinkedList<PriceList>();
 		ResultSet result = dbconnection.executeQuery("SELECT price_list, price_list_status_type_fk, default_discount_xtra, date_from, date_to, note FROM price_list ORDER BY price_list");
@@ -39,7 +43,7 @@ public class PriceListDAO {
 			}
 			return list;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.findAll() : "+e.getMessage());
+			logger.error("PriceListDAO.findAll() : "+e.getMessage());
 			return null;
 		}	
 	}
@@ -58,7 +62,7 @@ public class PriceListDAO {
 			}
 			return s;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.findStatusType() : "+e.getMessage());
+			logger.error("PriceListDAO.findStatusType() : "+e.getMessage());
 			return null;
 		}	
 	}
@@ -76,7 +80,7 @@ public class PriceListDAO {
 			}
 			return s;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.findStatusType() : "+e.getMessage());
+			logger.error("PriceListDAO.findStatusType() : "+e.getMessage());
 			return null;
 		}	
 	}
@@ -95,12 +99,12 @@ public class PriceListDAO {
 			statement.setDate(3, new java.sql.Date(priceList.getDateFrom().getTime()));
 			statement.setDate(4, new java.sql.Date(priceList.getDateTo().getTime()));
 			statement.setString(5, priceList.getNote());
-			statement.setLong(6, created_by); //sisse loginud kasutaja
+			statement.setLong(6, created_by);
 			statement.execute();
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.createNewPriceList()"+e.getMessage());
+			logger.error("PriceListDAO.createNewPriceList() : "+e.getMessage());
 		}
 	}
 
@@ -121,12 +125,12 @@ public class PriceListDAO {
 			}
 			return p;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.findById() : "+e.getMessage());
+			logger.error("PriceListDAO.findById() : "+e.getMessage());
 			return null;
 		}	
 	}
 
-	public void udatePriceList(PriceList priceList) {
+	public void updatePriceList(PriceList priceList) {
 		if (priceList == null) {
 			return;
 		}
@@ -146,11 +150,12 @@ public class PriceListDAO {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.updateNewPriceList()"+e.getMessage());
+			logger.error("PriceListDAO.updatePriceList() : "+e.getMessage());
 		}
 	}
 
 	public void deletePriceList(int id) {
+		deletePriceListRelations(id);
 		Connection connection = dbconnection.getConnection();
 		try {
 			PreparedStatement statement = connection
@@ -159,7 +164,38 @@ public class PriceListDAO {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.deletePriceList() : "+e.getMessage());
+			logger.error("PriceListDAO.deletePriceList() : "+e.getMessage());
+		}
+	}
+
+	private void deletePriceListRelations(int id) {
+		deleteAllPriceListCustomers(id);
+		deleteAllPriceListItems(id);
+	}
+
+	private void deleteAllPriceListItems(int price_list) {
+		Connection connection = dbconnection.getConnection();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("DELETE FROM item_price_list WHERE price_list_fk="+price_list);
+			statement.execute();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			logger.error("PriceListDAO.deleteAllPriceListItems() : "+e.getMessage());
+		}
+	}
+
+	private void deleteAllPriceListCustomers(int price_list) {
+		Connection connection = dbconnection.getConnection();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("DELETE FROM customer_price_list WHERE price_list_fk="+price_list);
+			statement.execute();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			logger.error("PriceListDAO.deleteAllPriceListCustomers() : "+e.getMessage());
 		}
 	}
 
@@ -176,7 +212,7 @@ public class PriceListDAO {
 			}
 			return list;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.findOtherStatusTypes() : "+e.getMessage());
+			logger.error("PriceListDAO.findOtherStatusTypes() : "+e.getMessage());
 			return null;
 		}	
 	}
@@ -199,12 +235,11 @@ public class PriceListDAO {
 				c.setId(result.getInt("subject_id"));
 				c.setName(result.getString("subject_name"));
 				c.setType(result.getString("subject_type"));
-				System.out.println(c.getName());
 				list.add(c);
 			}
 			return list;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.searchCustomer() : "+e.getMessage());
+			logger.error("PriceListDAO.searchCustomer() : "+e.getMessage());
 			return null;
 		}
 	}
@@ -224,7 +259,7 @@ public class PriceListDAO {
 			}
 			return list;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.findCustomersById() : "+e.getMessage());
+			logger.error("PriceListDAO.findCustomersById() : "+e.getMessage());
 			return null;
 		}
 	}
@@ -241,12 +276,11 @@ public class PriceListDAO {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.addCustomer()"+e.getMessage());
+			logger.error("PriceListDAO.addCustomer() : "+e.getMessage());
 		}
 	}
 
 	public void deleteCustomer(int customer, int price_list) {
-		System.out.println("SISU: "+customer+" "+price_list);
 		Connection connection = dbconnection.getConnection();
 		try {
 			PreparedStatement statement = connection
@@ -255,16 +289,13 @@ public class PriceListDAO {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.deletePriceList() : "+e.getMessage());
+			logger.error("PriceListDAO.deleteCustomer() : "+e.getMessage());
 		}
 	}
 
 	public List<ItemModel> findItemsById(int price_list) {
-		System.out.println("K2ivitus meetod1");
 		List <ItemModel> list = new LinkedList<ItemModel>();
-		System.out.println("K2ivitus meetod2");
 		ResultSet result = dbconnection.executeQuery("SELECT P.item_price_list, I.item, I.name, I.sale_price, P.discount_xtra, P.sale_price AS price_list_sale_price FROM item AS I INNER JOIN item_price_list AS P ON I.item=P.item_fk WHERE P.price_list_fk="+price_list+" ORDER BY item");
-		System.out.println("K2ivitus meetod3");
 		if (result == null) {
 			return null;
 		}
@@ -281,7 +312,7 @@ public class PriceListDAO {
 			}
 			return list;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.findItemsById() : "+e.getMessage());
+			logger.error("PriceListDAO.findItemsById() : "+e.getMessage());
 			return null;
 		}
 	}
@@ -302,7 +333,7 @@ public class PriceListDAO {
 			}
 			return list;
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.searchItem() : "+e.getMessage());
+			logger.error("PriceListDAO.searchItem() : "+e.getMessage());
 			return null;
 		}
 	}
@@ -313,11 +344,10 @@ public class PriceListDAO {
 			PreparedStatement statement = connection
 					.prepareStatement("DELETE FROM item_price_list WHERE price_list_fk="+price_list+" AND item_fk="+item);
 			statement.execute();
-			System.out.println("delete");
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.deleteItem() : "+e.getMessage());
+			logger.error("PriceListDAO.deleteItem() : "+e.getMessage());
 		}
 	}
 
@@ -334,7 +364,7 @@ public class PriceListDAO {
 			connection.close();
 			calculateSalePrice(item, price_list);
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.addItem()"+e.getMessage());
+			logger.error("PriceListDAO.addItem() : "+e.getMessage());
 		}
 	}
 
@@ -352,7 +382,7 @@ public class PriceListDAO {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.calculateSalePrice() : "+e.getMessage());
+			logger.error("PriceListDAO.calculateSalePrice() : "+e.getMessage());
 		}
 	}
 
@@ -370,7 +400,7 @@ public class PriceListDAO {
 			connection.close();
 			calculateSalePrice(item, price_list);
 		} catch (SQLException e) {
-			System.out.println("PriceListDAO.changeDiscount() : "+e.getMessage());
+			logger.error("PriceListDAO.changeDiscount() : "+e.getMessage());
 		}
 	}
 }
