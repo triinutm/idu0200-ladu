@@ -1,0 +1,38 @@
+body{
+	font-family: "HelveticaNeue-Light", Helvetica, Arial,sans-serif; 
+	font-size: 14px;
+	line-height: 1.4;
+	color: #4C3D2B;
+}
+
+.cl-main-box{
+	width:1000px;
+	background-color:#ededed;
+	padding:20px 50px 0;
+	margin:25px auto;
+	border-color:#dddddd;
+	border-style:solid;
+	border-width:1px;
+	min-height: 500px;
+}
+
+.message{
+	
+}
+
+input[type="submit"]{
+	padding: 5px;
+	margin: 10px;
+	color: #4C3D2B;
+	border-radius: .5em;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(rgb(233, 237, 238)));
+}
+
+a{
+	color: #4C3D2B;
+	font-size: 16px;
+}
+
+a:visited{
+	color: #4C3D2B;
+}

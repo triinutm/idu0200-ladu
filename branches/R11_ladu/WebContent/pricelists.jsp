@@ -14,6 +14,7 @@
 </head>
 <body>
 	<%@ include file="logout.jsp"%>
+<div class="cl-main-box">
 	<%
 		String id = "";
 		String status = "";
@@ -44,6 +45,6 @@
 			out.println("Mingi viga: " + ex.getMessage());
 		}		
 	%>
-
+</div>
 </body>
 </html>

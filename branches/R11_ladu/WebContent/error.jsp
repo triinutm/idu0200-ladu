@@ -4,11 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles.css"/>
 <title>Vealeht</title>
 </head>
 <body>
+<div class="cl-main-box">
 <h3>VEALEHT</h3>
 Süsteemi töös tekkis viga!
 Liigu <a href="${pageContext.request.contextPath}">esilehele</a>
+</div>
 </body>
 </html>

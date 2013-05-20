@@ -28,12 +28,13 @@
 </head>
 <body>
 <%@ include file="logout.jsp" %>
+<div class="cl-main-box">
 <a href='<%=request.getContextPath()%>/pricelist'>Hinnakirjad</a>
 	<form action="pricelist?action=update" method="POST">
 		<input type="hidden" name="id" value='<%=pricelist.getId()%>'>
 		<table border="1">
 			<tr>
-				<th>staatus</th>
+				<th bgcolor="#CEE3F6">staatus</th>
 				<td><select name="status" id="status">
 						<option value='<%=pricelist.getPriceListStatusType()%>'><%=pricelist.getPriceListStatusType()%></option>
 						<%
@@ -44,22 +45,22 @@
 				</select></td>
 			</tr>
 			<tr>
-				<th>allahindluse protsent</th>
+				<th bgcolor="#CEE3F6">allahindluse protsent</th>
 				<td><input type="text" name="discount"
 					value="<%=pricelist.getDefaultDiscountXtra()%>" /></td>
 			</tr>
 			<tr>
-				<th>kehtimise algus</th>
+				<th bgcolor="#CEE3F6">kehtimise algus</th>
 				<td><input READONLY type="text" name="date_from" id="date_from"
 					value="<%=pricelist.getDateFrom()%>" /></td>
 			</tr>
 			<tr>
-				<th>kehtimise l6pp</th>
+				<th bgcolor="#CEE3F6">kehtimise l6pp</th>
 				<td><input READONLY type="text" name="date_to" id="date_to"
 					value="<%=pricelist.getDateTo()%>" /></td>
 			</tr>
 			<tr>
-				<th>m2rkus</th>
+				<th bgcolor="#CEE3F6">m2rkus</th>
 				<td><textarea name="note" rows="8" cols="35"><%=pricelist.getNote()%></textarea></td>
 			</tr>
 		</table>
@@ -71,7 +72,7 @@
 		String id = "";
 		String name = "";
 		out.println("KLIENDID:");
-		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>nimi</th><th></th></tr>");
+		out.println("<table border='1'><tr bgcolor=\"#CEE3F6\"><th>kood</th><th>nimi</th><th></th></tr>");
 		try {
 			for (CustomerModel c : customers) {
 				id = Integer.toString(c.getId());
@@ -115,7 +116,7 @@
 		String discount_price;
 		String sale_price;
 		out.println("<br><br>TOOTED:");
-		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>nimi</th><th>hind allahindluseta</th><th>allahindluse protsent</th><th>hind allahindlusega</th><th></th><th></th></tr>");
+		out.println("<table border='1'><tr bgcolor=\"#CEE3F6\"><th>kood</th><th>nimi</th><th>hind allahindluseta</th><th>allahindluse protsent</th><th>hind allahindlusega</th><th></th><th></th></tr>");
 		try {
 			for (ItemModel i : items) {
 				id = Integer.toString(i.getId());
@@ -162,5 +163,6 @@
 			}
 			out.println("</table>");
 		} catch (Exception ex) {}%>
+		</div>
 </body>
 </html>

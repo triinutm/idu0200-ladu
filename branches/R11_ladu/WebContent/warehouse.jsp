@@ -2,7 +2,10 @@
     pageEncoding="ISO-8859-1"%>
    <%@page import="db.Item"%>
    <%@page import="db.Store"%>
+   <%@page import="db.ItemStore"%>
    <%@page import="java.util.List"%>
+   <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+	<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,6 +14,7 @@
 </head>
 <%Item item = (Item)request.getAttribute("item");%>
 <%List<Store> allStores = (List<Store>)request.getAttribute("allStores");%>
+<%List<ItemStore> itemStores = (List<ItemStore>)request.getAttribute("itemStores");%>
 <%String registerSuccessful = (String)request.getAttribute("register_successful"); %>
 <%String removeSuccessful = (String)request.getAttribute("remove_successful"); %>
 <%String moveFailed = (String)request.getAttribute("move_from_err"); %>
@@ -19,8 +23,12 @@
 <%String paramActionNeeded = (String)request.getAttribute("parameter_needed"); %>
 <body>
 <%@ include file="logout.jsp" %>
+<div class="cl-main-box">
 <h1>Lao toimingud</h1>
 <%if(item != null){ %>
+<b>TOODE: </b><%out.println(item.getName() + "- " + item.getDescription() );%>
+<br />
+<br />
 <%if(registerSuccessful != null){ %>
 	<%out.println(registerSuccessful); %>
 	<br />
@@ -51,6 +59,13 @@
 	<br />
 	<br />
 <%} %>
+<%if(itemStores.size() > 0){ %>
+	<c:import url="/newfile.xml" var="xmldocument"/>
+	<c:import url="/storeList.xsl" var="xslt"/>
+	<x:transform xml="${xmldocument}" xslt="${xslt}"/>
+<%}else{ out.println("<p class=\"message\">Toodet pole üheski laos!</p>");} %>
+<br />
+<br />
 <form method="post" id="warehouse_register_form" accept-charset="UTF-8" action="?action=register">
 	<table>
 		<tr>
@@ -187,5 +202,6 @@
 <%}else{ %>
 	Toodet ei leitud!
 <%} %>
+</div>
 </body>
 </html>

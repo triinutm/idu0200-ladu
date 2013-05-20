@@ -9,9 +9,9 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://imbi.ld.ttu.ee/t104348_ladu</property>
-        <property name="connection.username">t104087</property>
-        <property name="connection.password">IpoYK2JN</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/R11_ladu</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">admin</property>
         
         <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
 
