@@ -1,0 +1,13 @@
+Testsuite: test.TestDbUtil
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 4,398 sec
+------------- Standard Output ---------------
+Hibernate: select item0_.item as item1_12_0_, item0_.created as created2_12_0_, item0_.description as descript3_12_0_, item0_.supplier_enterprise_fk as supplie12_12_0_, item0_.item_type_fk as item13_12_0_, item0_.name as name4_12_0_, item0_.producer as producer5_12_0_, item0_.producer_code as producer6_12_0_, item0_.sale_price as sale7_12_0_, item0_.serial_no as serial8_12_0_, item0_.single_item as single9_12_0_, item0_.store_price as store10_12_0_, item0_.unit_type_fk as unit14_12_0_, item0_.upper_item_fk as upper11_12_0_ from item item0_ where item0_.item=?
+Hibernate: select item0_.item as item1_12_0_, item0_.created as created2_12_0_, item0_.description as descript3_12_0_, item0_.supplier_enterprise_fk as supplie12_12_0_, item0_.item_type_fk as item13_12_0_, item0_.name as name4_12_0_, item0_.producer as producer5_12_0_, item0_.producer_code as producer6_12_0_, item0_.sale_price as sale7_12_0_, item0_.serial_no as serial8_12_0_, item0_.single_item as single9_12_0_, item0_.store_price as store10_12_0_, item0_.unit_type_fk as unit14_12_0_, item0_.upper_item_fk as upper11_12_0_ from item item0_ where item0_.item=?
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+log4j:WARN No appenders could be found for logger (org.jboss.logging).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+------------- ---------------- ---------------
+
+Testcase: testUpdateItemPriceInWareHouse took 4,384 sec
