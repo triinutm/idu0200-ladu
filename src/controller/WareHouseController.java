@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,8 @@ public class WareHouseController extends BaseController {
 			RequestDispatcher view = request.getRequestDispatcher("/warehouse.jsp");
 			request.setCharacterEncoding("UTF-8");
 			
-			if(request.getParameter("item") != null){	
+			if(request.getParameter("item") != null){
+				WareHouseService wareHouseService = new WareHouseService();
 				Integer itemId = Integer.parseInt(request.getParameter("item"));
 				DBUtil dbUtil = new DBUtil();
 				Item item = dbUtil.getItemById(itemId);
@@ -48,6 +50,10 @@ public class WareHouseController extends BaseController {
 						request.setAttribute("allStores", allStores);
 					}
 				}
+				List<ItemStore> itemStores = dbUtil.getItemStoresByItem(item);
+				request.setAttribute("itemStores", itemStores);
+				String scontext = getServletContext().getRealPath("/");
+				wareHouseService.createItemStoreXml(item,scontext);
 			}
 			view.forward(request, response); 
 	}

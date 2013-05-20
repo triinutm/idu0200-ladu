@@ -20,33 +20,35 @@
 </head>
 <body>
 <%@ include file="logout.jsp" %>
+<div class="cl-main-box">
 <form action="pricelist?action=new" method="POST">
 		<table border="1">
 			<tr>
-				<th>staatus</th>
+				<th bgcolor="#CEE3F6">staatus</th>
 				<td><select name="status" id="status">		
 						<option value="pooleli" >pooleli</option>
 						<option value="kinnitatud">kinnitatud</option>
 				</select></td>
 			</tr>
 			<tr>
-				<th>allahindluse protsent</th>
+				<th bgcolor="#CEE3F6">allahindluse protsent</th>
 				<td><input type="text" name="discount"/></td>
 			</tr>
 			<tr>
-				<th>kehtimise algus</th>
+				<th bgcolor="#CEE3F6">kehtimise algus</th>
 				<td><input readonly type="text" name="date_from" id="date_from"/></td>
 			</tr>
 			<tr>
-				<th>kehtimise l6pp</th>
+				<th bgcolor="#CEE3F6">kehtimise l6pp</th>
 				<td><input readonly type="text" name="date_to" id="date_to"/></td>
 			</tr>
 			<tr>
-				<th>m2rkus</th>
+				<th bgcolor="#CEE3F6">m2rkus</th>
 				<td><textarea name="note" rows="8" cols="35"></textarea></td>
 			</tr>
 		</table>
 		<input type="submit" value="salvesta">
 	</form>
+</div>
 </body>
 </html>

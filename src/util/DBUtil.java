@@ -592,4 +592,30 @@ public class DBUtil {
 
 		return itemStore;
 	}
+	
+	/**
+	 * Meetod, mis leiab ItemStore kande itemi ja store'i põhjal.
+	 * 
+	 * @param item - toode.
+	 * @param store - ladu.
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ItemStore> getItemStoresByItem(Item item) {
+		List<ItemStore> itemStore = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			Query query = session
+					.createQuery("from ItemStore as i where i.item= :itemId");
+			query.setEntity("itemId", item);
+			itemStore = (List<ItemStore>) query.list();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			log.warn("DBUtil: getItemStoresByItem()" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return itemStore;
+	}
 }

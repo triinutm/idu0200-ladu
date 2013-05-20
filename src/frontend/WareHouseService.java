@@ -1,10 +1,28 @@
 package frontend;
 
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+
+import com.thoughtworks.xstream.XStream;
 
 import util.DBUtil;
 import db.Item;
@@ -177,5 +195,32 @@ public class WareHouseService {
 		
 		return itemAction;
 	}
+	
+	public void createItemStoreXml(Item item, String scontext) {
+        try {
+        	
+        DBUtil dbUtil = new DBUtil();
+        
+        List<ItemStore> itemstores = dbUtil.getItemStoresByItem(item);
+        File file = new File(scontext + "newfile.xml");
+        file.createNewFile();
+        
+        XStream xstream = new XStream();
+        xstream.alias("itemstore", ItemStore.class);
+        
+        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><?xml-stylesheet type=\"text/xsl\" href=\"storeList.xsl\"?>");
+		bw.write("<itemstorelist>");
+            for(ItemStore itemStore : itemstores){
+            	String xml = xstream.toXML(itemStore);
+            	bw.write(xml);
+            }
+        bw.write("</itemstorelist>");  
+        bw.close();	
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 	
 }

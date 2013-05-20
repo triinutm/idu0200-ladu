@@ -12,6 +12,7 @@
 </head>
 <body>
 <%@ include file="logout.jsp" %>
+<div class="cl-main-box">
 <h3>R11 LADU</h3>
 <%
 if(request.getAttribute("productModel") != null){
@@ -53,6 +54,6 @@ if(request.getAttribute("productModel") != null){
     out.println("<p>Sellist toodet pole olemas!</p>");
 } %>
 </form>
-
+</div>
 </body>
 </html>

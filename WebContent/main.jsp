@@ -11,25 +11,31 @@
 </head>
 
 <body>
-<%@ include file="logout.jsp" %>
-<a href='<%=request.getContextPath()%>/pricelist'>Hinnakirjad</a>
+<%@ include file="logout.jsp" %> 
+<div class="cl-main-box">
+<a href='<%= request.getContextPath()%>/pricelist'>Hinnakirjad</a>
 <%
 UserAccount user=(UserAccount)request.getSession().getAttribute("user");
 %>
+
+
 <% if (user != null) {%>
 <h1>Tere <%=user.getUsername()%></h1>
-<% }%> 
+<% }%>
 
-<%String categorytree = (String)request.getAttribute("categoryTree"); %>
-<%out.println(categorytree); 
-if(request.getAttribute("lastCatalog") != null){
+<%if(request.getAttribute("lastCatalog") != null){
     out.println("Valitud: " + request.getAttribute("lastCatalog")+" <br>");
     %>
     <a href="<%=request.getContextPath() + "/insert?catalog="+request.getParameter("catalog")%>">Lisa toode</a><br>
     <a href="<%=request.getContextPath() + "/search?catalog="+request.getParameter("catalog")%>">Otsi</a>
 <%}else{
     out.println("<a href='" + request.getContextPath()+"/search'>Otsi</a>");
-}%>
-
+}%> 
+<br />
+<br />
+<%String categorytree = (String)request.getAttribute("categoryTree"); %>
+<%out.println(categorytree);%>
+<br />
+</div>
 </body>
 </html>

@@ -10,6 +10,7 @@
 </head>
 <body>
 <%@ include file="logout.jsp" %>
+<div class="cl-main-box">
 	<h3>Toote otsing</h3>
 	<%if(request.getAttribute("form") != null){
 	    SearchForm form = (SearchForm) request.getAttribute("form");%>
@@ -80,6 +81,7 @@
 		    	}
 		    }
 		%>
+	</div>
 	</div>
 </body>
 <%! private String getValue(Object o){

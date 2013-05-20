@@ -12,7 +12,9 @@
 </head>
 <body>
 <%@ include file="logout.jsp" %>
+<div class="cl-main-box">
 <h3>R11 LADU</h3>
+
 <form action="" method="POST">
 <table>
 <%
@@ -44,5 +46,6 @@ if(request.getAttribute("productModel") != null){
 <%} %>
 </table>
 </form>
+</div>
 </body>
 </html>

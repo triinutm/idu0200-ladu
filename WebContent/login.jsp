@@ -5,11 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles.css"/>
 <title>Sisse logimine</title>
 </head>
 <%String wrongPassword = (String)request.getAttribute("wrongpass");%>
 <%String wrongUser = (String)request.getAttribute("wronguser");%>
 <body>
+
+<div class="cl-main-box">
 	<h3>Logi sisse:</h3>
 	
 	<form action="login" method="post">
@@ -25,6 +28,6 @@
 <%if(wrongUser != null){%>
 	<%out.println(wrongUser); %>
 <%}%>
-
+</div>
 </body>
 </html>
