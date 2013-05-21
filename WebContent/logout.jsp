@@ -11,15 +11,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<table>
 <%
 UserAccount currentuser=(UserAccount)request.getSession().getAttribute("user");
 %>
+<tr><td>
+
 <% if(currentuser!=null) {%>
+
 <form action="${pageContext.request.contextPath }/" method="post">
 <% out.println("<input type=\"submit\" value=\"Logi välja!\"/>"); %>
 </form>
 <%} %>
+</td>
+<td>
 <% out.println("<a href='" + request.getContextPath()+"/'>Pealeht</a>"); %>
+</td></tr>
+</table>
 </body>
 </html>
