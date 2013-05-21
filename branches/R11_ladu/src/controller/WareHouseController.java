@@ -170,7 +170,10 @@ public class WareHouseController extends BaseController {
 		}else{
 			request.setAttribute("parameter_needed", "Laotoimingute tegemiseks on parameeter action vajalik!");
 		}
-		
+		List<ItemStore> itemStores = dbUtil.getItemStoresByItem(item);
+		request.setAttribute("itemStores", itemStores);
+		String scontext = getServletContext().getRealPath("/");
+		wareHouseService.createItemStoreXml(item,scontext);
 		view.forward(request, response); 	
 	}
 }

@@ -29,11 +29,11 @@ public class MainPageController extends BaseController {
 			{
 				String s = request.getParameter("catalog");
 				selectedCatalogId = Integer.parseInt(s.trim());
-				DBUtil m = new DBUtil();
-				ItemType catalog = m.getItemTypeById(selectedCatalogId);
+				DBUtil dbUtil = new DBUtil();
+				ItemType catalog = dbUtil.getItemTypeById(selectedCatalogId);
 				Set<ItemType> subCatalogs = catalog.getItemTypes();
 				if(subCatalogs != null && subCatalogs.size() == 0){
-				    request.setAttribute("lastCatalog", m.getItemTypeById(selectedCatalogId).getTypeName());
+				    request.setAttribute("lastCatalog", dbUtil.getItemTypeById(selectedCatalogId).getTypeName());
 				}
 			}
 			
