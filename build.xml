@@ -149,5 +149,42 @@ Author:  Raul Liivrand
 	<test name="test.TestDbUtil" outfile="result" />
 	</junit>
 </target>
+	  <!-- 
+	===================================================================
+	============== --> 
+	   <!-- Deployment . Laadib war-faili remote serverile yle HTTP                           -->
+	   <!-- 
+	===================================================================
+	============== --> 
+	    
+	<target name="deploy_remote_to_imbi" description="Install web application" 
+	depends="war"> 
+	     <deploy url="${url}" username="${username}" password="${password}" 
+	             path="${path}" war="file:${application_name}.war"/> 
+	          <delete dir="${classes.dir}" /> 
+	          <delete dir="${web-inf.dir}" /> 
+	         <delete file="${application_name}.war"/> 
+	</target> 
 	
+	<target name="undeploy_remote_from_imbi" description="Remove web application" 
+	depends="init"> 
+	     <undeploy url="${url}" username="${username}" password="${password}" 
+	             path="${path}"/> 
+	   </target> 
+	   <!-- 
+	===================================================================
+	======================= --> 
+	   <!-- Deployment . Laadib war-faili remote serverile yle HTTP  (serveril juba on sama 
+	rakendus)  --> 
+	   <!-- 
+	===================================================================
+	======================= --> 
+	    
+	<target name="redeploy_remote_to_imbi" depends="undeploy_remote_from_imbi, war"> 
+	     <deploy url="${url}" username="${username}" password="${password}" 
+	             path="${path}" war="file:${application_name}.war"/> 
+	       <delete dir="${classes.dir}" /> 
+	       <delete dir="${web-inf.dir}" /> 
+	                 <delete file="${application_name}.war"/> 
+	</target> 
 </project>
