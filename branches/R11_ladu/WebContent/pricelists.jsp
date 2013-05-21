@@ -13,8 +13,9 @@
 <title>Hinnakirjad</title>
 </head>
 <body>
-	<%@ include file="logout.jsp"%>
+
 <div class="cl-main-box">
+	<%@ include file="logout.jsp"%>
 	<%
 		String id = "";
 		String status = "";

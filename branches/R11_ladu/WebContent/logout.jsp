@@ -20,12 +20,21 @@ UserAccount currentuser=(UserAccount)request.getSession().getAttribute("user");
 <% if(currentuser!=null) {%>
 
 <form action="${pageContext.request.contextPath }/" method="post">
-<% out.println("<input type=\"submit\" value=\"Logi välja!\"/>"); %>
+<% out.println("<input type=\"submit\" value=\"Logi välja! \"/>"); %>
 </form>
 <%} %>
 </td>
 <td>
-<% out.println("<a href='" + request.getContextPath()+"/'>Pealeht</a>"); %>
+<% out.println("<a href='" + request.getContextPath() +"/'>Pealeht</a>&nbsp;&nbsp;"); %>
+</td>
+<td>
+<% out.println("<a href='http://www.upload.ee/image/3325625/R11_login_jadadiagramm.jpg'>login jadadiagramm </a>&nbsp;&nbsp;"); %>
+</td>
+<td>
+<% out.println("<a href='http://www.upload.ee/image/3325770/R11_ladu_ladude_jadadiagramm.jpg'>ladude jadadiagramm </a>&nbsp;&nbsp;"); %>
+</td>
+<td>
+<% out.println("<a href='http://www.upload.ee/image/3325617/R11_ladu_klassidiagramm.jpg'>klassidiagramm </a>&nbsp;&nbsp;"); %>
 </td></tr>
 </table>
 </body>
