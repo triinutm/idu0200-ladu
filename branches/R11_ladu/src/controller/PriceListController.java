@@ -55,7 +55,7 @@ public class PriceListController extends BaseController {
 	}
 
 	/**
-	 * meetod, mis otsustab, kas soovitakse teha tegevusi pricelists või pricelist-iga seoses
+	 * meetod, mis otsustab, kas soovitakse teha tegevusi pricelists or pricelist-iga seoses
 	 * @param request
 	 * @param dao
 	 * @return view
@@ -150,7 +150,7 @@ public class PriceListController extends BaseController {
 	}
 
 	/**
-	 * meetid, mis m22rab hinnakirja muutmise lehe andmed pöördudes DAO poole
+	 * meetid, mis m22rab hinnakirja muutmise lehe andmed p66rdudes DAO poole
 	 * @param request
 	 * @param dao
 	 */
