@@ -14,7 +14,7 @@
 
 <div class="cl-main-box">
 <%@ include file="logout.jsp" %>
-<h3>R11 LADU</h3>
+<h3>Toote detailvaade</h3>
 <%
 if(request.getAttribute("productModel") != null){
     ProductModel model = (ProductModel) request.getAttribute("productModel");
@@ -27,29 +27,28 @@ if(request.getAttribute("productModel") != null){
 <span><%=model.getDescription().getErrorMessage()%></span></td></tr>
 <tr><td>Müügihind</td><td><input type="text" name="price" value="<%=model.getPrice().getAttributeValue()%>"/>
 <span><%=model.getPrice().getErrorMessage()%></span></td></tr>
-<tr><td colspan="2">------------------------ attribuudid ------------------------ </td></tr>
+<tr><td colspan="2"><b>ATRIBUUDID</b></td></tr>
 <%
     for(Long key : model.getAttributes().keySet()){
 		AttributeModel attributeModel = model.getAttributes().get(key);
 		out.println("<tr><td>"+attributeModel.getAttributeName()+"</td><td>");
-		out.println("<input type='text' name='"+key+"' placeholder='"
-		+attributeModel.getAttributeName()+"' value='"+attributeModel.getAttributeValue()+"'/>"+
+		out.println("<input type='text' name='"+key+"' value='"+attributeModel.getAttributeValue()+"'/>"+
 		"<input type='hidden' name='"+key+"'value='"+attributeModel.getAttributeName()+"' />"+
 		"<input type='hidden' name='"+key+"'value='"+attributeModel.getAttributeId()+"' />"
 		+"<span>"+attributeModel.getErrorMessage()+"</span></td></tr>");
     }
-	out.println("<tr><td>Toote tüüp</td><td>"+model.getType()+
+	out.println("<tr><td>Toote tüüp</td><td><b>"+model.getType()+ "</b>" +
 	    "<input type='hidden' name='type' value='"+model.getType()+"' />"+
 	    "<input type='hidden' name='itemType' value='"+model.getItemType()+"'</td><tr>");
 %>
-<tr><td><input type="submit" value="Salvesta" /></td></tr>
+<tr><td colspan="2"><input type="submit" value="Salvesta" /> <input type="submit" name="delete" value="Kustuta" /></td></tr>
 </table>
 <div>
 <%if(request.getAttribute("error") != null) {
     out.println(request.getAttribute("error"));
 }%>
 </div><br>
-<input type="submit" name="delete" value="Kustuta" />
+
 
 <%}else{
     out.println("<p>Sellist toodet pole olemas!</p>");
