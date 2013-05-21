@@ -65,10 +65,11 @@ public class InsertController extends BaseController implements Servlet {
 	if(request.getParameter("catalog") != null){
 	    RequestDispatcher view = request.getRequestDispatcher("/insert.jsp");
 	    Integer id = Integer.parseInt(request.getParameter("catalog"));
-	    DBUtil m = new DBUtil();
-	    List<TypeAttribute> itemAttributes = m.getTypeAttributesByItemType(id);
+	    DBUtil dbUtil = new DBUtil();
+	    List<TypeAttribute> itemAttributes = dbUtil.getTypeAttributesByItemType(id);
+	    
 	    ProductModel model = new ProductModel();
-	    ItemType type = m.getItemTypeById(id);
+	    ItemType type = dbUtil.getItemTypeById(id);
 	    model.setType(type.getTypeName());
 	    model.setItemType(id.toString());
 	    for(TypeAttribute attribute : itemAttributes){
