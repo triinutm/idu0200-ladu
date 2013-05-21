@@ -27,8 +27,9 @@
 </script>
 </head>
 <body>
-<%@ include file="logout.jsp" %>
+
 <div class="cl-main-box">
+<%@ include file="logout.jsp" %>
 <a href='<%=request.getContextPath()%>/pricelist'>Hinnakirjad</a>
 	<form action="pricelist?action=update" method="POST">
 		<input type="hidden" name="id" value='<%=pricelist.getId()%>'>

@@ -22,8 +22,9 @@
 <%String moveCountError = (String)request.getAttribute("move_from_err_counts"); %>
 <%String paramActionNeeded = (String)request.getAttribute("parameter_needed"); %>
 <body>
-<%@ include file="logout.jsp" %>
+
 <div class="cl-main-box">
+<%@ include file="logout.jsp" %>
 <h1>Lao toimingud</h1>
 <%if(item != null){ %>
 <b>TOODE: </b><%out.println(item.getName() + "- " + item.getDescription() );%>
