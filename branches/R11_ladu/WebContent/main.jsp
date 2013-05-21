@@ -11,9 +11,16 @@
 </head>
 
 <body>
+<table>
+<tr><td>
 <%@ include file="logout.jsp" %> 
-<div class="cl-main-box">
+</td>
+<td>
 <a href='<%= request.getContextPath()%>/pricelist'>Hinnakirjad</a>
+</td></tr>
+</table>
+<div class="cl-main-box">
+
 <%
 UserAccount user=(UserAccount)request.getSession().getAttribute("user");
 %>
@@ -22,7 +29,6 @@ UserAccount user=(UserAccount)request.getSession().getAttribute("user");
 <% if (user != null) {%>
 <h1>Tere <%=user.getUsername()%></h1>
 <% }%>
-
 <%if(request.getAttribute("lastCatalog") != null){
     out.println("Valitud: " + request.getAttribute("lastCatalog")+" <br>");
     %>
