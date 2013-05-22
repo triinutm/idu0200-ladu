@@ -31,7 +31,7 @@ UserAccount currentuser=(UserAccount)request.getSession().getAttribute("user");
 <% out.println("<a href='http://www.upload.ee/image/3325625/R11_login_jadadiagramm.jpg'>login jadadiagramm </a>&nbsp;&nbsp;"); %>
 </td>
 <td>
-<% out.println("<a href='http://www.upload.ee/image/3325770/R11_ladu_ladude_jadadiagramm.jpg'>ladude jadadiagramm </a>&nbsp;&nbsp;"); %>
+<% out.println("<a href='http://www.upload.ee/image/3326550/R11_ladu_ladude_jadadiagramm.jpg'>ladude jadadiagramm </a>&nbsp;&nbsp;"); %>
 </td>
 <td>
 <% out.println("<a href='http://www.upload.ee/image/3325617/R11_ladu_klassidiagramm.jpg'>klassidiagramm </a>&nbsp;&nbsp;"); %>
