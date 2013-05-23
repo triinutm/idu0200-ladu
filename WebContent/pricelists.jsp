@@ -12,6 +12,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Hinnakirjad</title>
 </head>
+<script>
+function open_new(){
+	document.getElementById("new").reset();
+	if (document.layers) document.layers["new_div"].visibility="show";
+	else document.getElementById("new_div").style.visibility="visible";
+}
+function close_new(){
+	if (document.layers) document.layers["new_div"].visibility="hide";
+	else document.getElementById("new_div").style.visibility="hidden";
+}
+</script>
 <body>
 	<%@ include file="logout.jsp"%>
 	<%
@@ -39,11 +50,12 @@
 						"</td><td><a HREF='pricelist?action=delete&uid="+ id
 						+ "'TARGET='_self'><strong>kustuta</strong></a></td></tr>");
 			}
-			out.println("</table><input type=button onclick=\"window.location.href='/R14_ladu/pricelist?id=new'\"value='Loo uus'>");
+			out.println("</table><input type=button onclick='open_new()' value='Loo uus'><br><br>");
 		} catch (Exception ex) {
 			out.println("Mingi viga: " + ex.getMessage());
 		}		
 	%>
-
+	<div id="new_div" style="visibility: hidden;"><%@ include file="newpricelist.jsp"%>
+	<input type=button onclick='close_new()' value='Kinni'> </div>
 </body>
 </html>
