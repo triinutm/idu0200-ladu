@@ -18,8 +18,8 @@ import db.Item;
 import db.ItemAttribute;
 import db.ItemType;
 import db.TypeAttribute;
-import frontend.ProductValidator;
 
+import service.ProductValidator;
 import util.DBUtil;
 import util.FormUtil;
 

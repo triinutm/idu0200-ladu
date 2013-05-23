@@ -15,13 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import model.AttributeModel;
 import model.ProductModel;
 
+import service.ProductValidator;
 import util.DBUtil;
 import util.FormUtil;
 
 import db.Item;
 import db.ItemType;
 import db.TypeAttribute;
-import frontend.ProductValidator;
 
 /**
  * Servlet implementation class InsertController
