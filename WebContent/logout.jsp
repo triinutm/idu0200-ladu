@@ -13,9 +13,11 @@
 
 <%
 UserAccount currentuser=(UserAccount)request.getSession().getAttribute("user");
+String name = currentuser.getUsername();
 %>
 <% if(currentuser!=null) {%>
 <form action="${pageContext.request.contextPath }/" method="post">
+<% out.println("Sisseloginud kasutaja:<strong> "+name+"</strong>"); %>
 <% out.println("<input type=\"submit\" value=\"Logi välja!\"/>"); %>
 </form>
 <%} %>
