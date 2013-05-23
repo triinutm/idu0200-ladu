@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Vealeht</title>
+<title>Error</title>
 </head>
 <body>
-<h3>VEALEHT</h3>
+<h3>ERROR</h3>
 Süsteemi töös tekkis viga!
-Liigu <a href="${pageContext.request.contextPath}">esilehele</a>
+Liigu <a href="javascript:history.go(-1)">Tagasi</a>
 </body>
 </html>
