@@ -53,7 +53,7 @@ public class MainPageController extends BaseController {
 		
 		request.getSession().invalidate();
 		//String logoutPage = request.getParameter("/login.jsp");
-		response.sendRedirect("/R11_ladu/login");
+		response.sendRedirect("/R14_ladu/login");
 		
 	}
 

@@ -47,7 +47,7 @@ public class LoginPageController extends HttpServlet{
 			String hashedPassword=loginService.hashPassword(password);
 			if(userAccount.getPassw().equals(hashedPassword)){
 				request.getSession().setAttribute("user", userAccount);
-				response.sendRedirect("/R11_ladu/");
+				response.sendRedirect("/R14_ladu/");
 				return;
 			}else{
 				request.setAttribute("wrongpass", "Vale parool!");

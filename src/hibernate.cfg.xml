@@ -9,7 +9,7 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://imbi.ld.ttu.ee/103770_ladu</property>
+        <property name="connection.url">jdbc:postgresql://hektor4.ttu.ee/r14_ladu</property>
         <property name="connection.username">t103770</property>
         <property name="connection.password"></property>
         

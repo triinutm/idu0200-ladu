@@ -17,12 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 			throws ServletException, IOException {
 		
 		if(req.getSession().getAttribute("user") == null){
-			resp.sendRedirect("/R11_ladu/login");	
+			resp.sendRedirect("/R14_ladu/login");	
 		}else{
 			try{
 				doOnGet(req,resp);
 			}catch (Exception e){
-				resp.sendRedirect("/R11_ladu/viga");
+				resp.sendRedirect("/R14_ladu/viga");
 				e.printStackTrace();
 			}
 		}
@@ -33,12 +33,12 @@ import javax.servlet.http.HttpServletResponse;
 			throws ServletException, IOException {	
 		
 		if(req.getSession().getAttribute("user") == null){
-			resp.sendRedirect("/R11_ladu/login");
+			resp.sendRedirect("/R14_ladu/login");
 		}else{
 			try{
 				doOnPost(req,resp);
 			}catch (Exception e){
-				resp.sendRedirect("/R11_ladu/viga");
+				resp.sendRedirect("/R14_ladu/viga");
 				e.printStackTrace();
 			}
 		}
