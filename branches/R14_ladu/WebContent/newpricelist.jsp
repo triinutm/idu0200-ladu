@@ -10,7 +10,6 @@
 	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css" />
 <script>
 	$(function() {
 		$("#date_from").datepicker();
@@ -19,8 +18,8 @@
 </script>
 </head>
 <body>
-<%@ include file="logout.jsp" %>
-<form action="pricelist?action=new" method="POST">
+
+<form id="new" action="pricelist?action=new" method="POST">
 		<table border="1">
 			<tr>
 				<th>staatus</th>
@@ -46,7 +45,7 @@
 				<td><textarea name="note" rows="8" cols="35"></textarea></td>
 			</tr>
 		</table>
-		<input type="submit" value="salvesta">
+		<input type="submit" value="Salvesta">
 	</form>
 </body>
 </html>
