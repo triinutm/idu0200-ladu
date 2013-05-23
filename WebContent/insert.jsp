@@ -12,37 +12,39 @@
 </head>
 <body>
 <%@ include file="logout.jsp" %>
-<h3>R14 LADU</h3>
+<h3>TOOTE LISAMINE</h3>
 <form action="" method="POST">
-<table>
+<table border='1'>
 <%
 if(request.getAttribute("productModel") != null){
     ProductModel model = (ProductModel) request.getAttribute("productModel");
 %>
 
-<tr><td>Nimetus</td><td><input type="text" name="name" value="<%=model.getName().getAttributeValue()%>"/>
+<tr><th bgcolor=lightgrey>Nimetus</th><td><input type="text" name="name" value="<%=model.getName().getAttributeValue()%>"/>
 <span><%=model.getName().getErrorMessage()%></span></td></tr>
-<tr><td>Kirjeldus</td><td><input type="text" name="description" value="<%=model.getDescription().getAttributeValue()%>" />
+<tr><th bgcolor=lightgrey>Kirjeldus</th><td><input type="text" name="description" value="<%=model.getDescription().getAttributeValue()%>" />
 <span><%=model.getDescription().getErrorMessage()%></span></td></tr>
-<tr><td>Müügihind</td><td><input type="text" name="price" value="<%=model.getPrice().getAttributeValue()%>"/>
+<tr><th bgcolor=lightgrey>Müügihind</th><td><input type="text" name="price" value="<%=model.getPrice().getAttributeValue()%>"/>
 <span><%=model.getPrice().getErrorMessage()%></span></td></tr>
-<tr><td colspan="2">------------------------ attribuudid ------------------------ </td></tr>
+<tr><td align='center' colspan="2"><strong>---------------------------- attribuudid -----------------------------</strong></td></tr>
 <%
+out.println("<tr><th bgcolor=lightgrey>Toote tüüp</th><td><strong>"+model.getType()+
+	    "<input type='hidden' name='type' value='"+model.getType()+"' />"+
+	    "<input type='hidden' name='itemType' value='"+model.getItemType()+"'</strong></td><tr>");
     for(Long key : model.getAttributes().keySet()){
 		AttributeModel attributeModel = model.getAttributes().get(key);
-		out.println("<tr><td>"+attributeModel.getAttributeName()+"</td><td>");
+		out.println("<tr><th bgcolor=lightgrey>"+attributeModel.getAttributeName()+"</th><td>");
 		out.println("<input type='text' name='"+key+"' placeholder='"
 		+attributeModel.getAttributeName()+"' value='"+attributeModel.getAttributeValue()+"'/>"+
 		"<input type='hidden' name='"+key+"'value='"+attributeModel.getAttributeName()+"' />"
 		+"<span>"+attributeModel.getErrorMessage()+"</span></td></tr>");
     }
-	out.println("<tr><td>Toote tüüp</td><td>"+model.getType()+
-	    "<input type='hidden' name='type' value='"+model.getType()+"' />"+
-	    "<input type='hidden' name='itemType' value='"+model.getItemType()+"'</td><tr>");
+	
 %>
-<tr><td><input type="submit" value="Lisa uus toode" /></td></tr>
-<%} %>
 </table>
+<input type="submit" value="Lisa" />
+<%} %>
+
 </form>
 </body>
 </html>

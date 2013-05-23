@@ -202,7 +202,7 @@ public class WareHouseService {
         DBUtil dbUtil = new DBUtil();
         
         List<ItemStore> itemstores = dbUtil.getItemStoresByItem(item);
-        File file = new File(scontext + "newfile.xml");
+        File file = new File(scontext + "storeList.xml");
         file.createNewFile();
         
         XStream xstream = new XStream();

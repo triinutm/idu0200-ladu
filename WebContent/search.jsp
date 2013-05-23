@@ -10,32 +10,31 @@
 </head>
 <body>
 <%@ include file="logout.jsp" %>
-	<h3>Toote otsing</h3>
+	<h3>TOOTE OTSING</h3>
 	<%if(request.getAttribute("form") != null){
 	    SearchForm form = (SearchForm) request.getAttribute("form");%>
 	
 	<form action="" method="POST">
-		<table>
-		<tr><td>Nimetus</td><td><input type="text" name="name" value="<%=form.getName()%>"/></td></tr>
-		<tr><td>Kirjeldus</td><td><input type="text" name="description"  value="<%=form.getDescription()%>"/></td></tr>
-		<tr><td>Tootja kood</td><td><input type="text" name="producer_code"  value="<%=form.getProducerCode()%>"/></td></tr>
-		<tr><td>Tootja</td><td><input type="text" name="producer" value="<%=form.getProducer()%>" /></td></tr>
-		<tr><td>Arv laos</td><td><input type="text" name="quantity" value="<%=form.getQuantity()%>" /></td></tr>
-		<tr><td>Müügihind</td><td><input type="text" name="sale_price" value="<%=form.getSalePrice()%>" /></td></tr>
-		<tr><td>Laohind</td><td><input type="text" name="store_price" value="<%=form.getStorePrice()%>" /></td></tr>
+		<table border='1'>
+		<tr><th bgcolor=lightgrey>Nimetus</th><td><input type="text" name="name" value="<%=form.getName()%>"/></td></tr>
+		<tr><th bgcolor=lightgrey>Kirjeldus</th><td><input type="text" name="description"  value="<%=form.getDescription()%>"/></td></tr>
+		<tr><th bgcolor=lightgrey>Tootja kood</th><td><input type="text" name="producer_code"  value="<%=form.getProducerCode()%>"/></td></tr>
+		<tr><th bgcolor=lightgrey>Tootja</th><td><input type="text" name="producer" value="<%=form.getProducer()%>" /></td></tr>
+		<tr><th bgcolor=lightgrey>Arv laos</th><td><input type="text" name="quantity" value="<%=form.getQuantity()%>" /></td></tr>
+		<tr><th bgcolor=lightgrey>Müügihind</th><td><input type="text" name="sale_price" value="<%=form.getSalePrice()%>" /></td></tr>
+		<tr><th bgcolor=lightgrey>Laohind</th><td><input type="text" name="store_price" value="<%=form.getStorePrice()%>" /></td></tr>
 		<%if(form.getAttributes().size() == 0){
-		    out.println("<tr><td>Attribuut</td><td><input type='text' name='attribute' value='"+form.getAttribute()+"'/></td></tr>");
+		    out.println("<tr><th  bgcolor=lightgrey>Attribuut</th><td><input type='text' name='attribute' value='"+form.getAttribute()+"'/></td></tr>");
 		}else{
-		    out.println("<tr><td colspan'2'>------------ attribuudid ---------</td></tr>");
-		    out.println("<tr><td>Toote tüüp</td><td>"+form.getType()+
-			    "<input type='hidden' name='type' value='"+form.getType()+"'/></td></tr>");
+		    out.println("<tr><td align='center' colspan='2'><strong>---------------------- attribuudid --------------------</strong></td></tr>");
+		    out.println("<tr><th bgcolor=lightgrey>Toote tüüp</th><td><strong>"+form.getType()+
+			    "<input type='hidden' name='type' value='"+form.getType()+"'/></strong></td></tr>");
 		    for(Long key : form.getAttributes().keySet()){
 			AttributeModel current = form.getAttributes().get(key);
-			out.println("<tr><td>"+current.getAttributeName()+"</td><td><input type='text' name='"+key+"' value='"
+			out.println("<tr><th bgcolor=lightgrey>"+current.getAttributeName()+"</th><td><input type='text' name='"+key+"' value='"
 			+current.getAttributeValue()+"' /><input type='hidden' name='"+key+"'value='"+current.getAttributeName()+"' /></td></tr>");
 		    }
 		} %>
-		
 		</table>
 		<input type="submit" value="Otsi" />
 	</form>
@@ -46,18 +45,19 @@
 				List<Item> items = (List<Item>) request.getAttribute("items");
 				if (items != null && items.size() > 0) {
 		%>
-		<table>
+		<br>
+		<table border='1'>
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>Nimetus</th>
-					<th>Kirjeldus</th>
-					<th>Müügi hind</th>
-					<th>Lao hind</th>
-					<th>Tootja</th>
-					<th>Tootja kood</th>
-					<th></th>
-					<th></th>
+					<th bgcolor=lightgrey>Kood</th>
+					<th  bgcolor=lightgrey>Nimetus</th>
+					<th  bgcolor=lightgrey>Kirjeldus</th>
+					<th  bgcolor=lightgrey>Müügi hind</th>
+					<th  bgcolor=lightgrey>Lao hind</th>
+					<th  bgcolor=lightgrey>Tootja</th>
+					<th  bgcolor=lightgrey>Tootja kood</th>
+					<th  bgcolor=lightgrey></th>
+					<th  bgcolor=lightgrey></th>
 				</tr>
 			</thead>
 			<tbody>
