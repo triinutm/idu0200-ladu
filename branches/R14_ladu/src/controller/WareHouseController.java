@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,8 @@ public class WareHouseController extends BaseController {
 			RequestDispatcher view = request.getRequestDispatcher("/warehouse.jsp");
 			request.setCharacterEncoding("UTF-8");
 			
-			if(request.getParameter("item") != null){	
+			if(request.getParameter("item") != null){
+				WareHouseService wareHouseService = new WareHouseService();
 				Integer itemId = Integer.parseInt(request.getParameter("item"));
 				DBUtil dbUtil = new DBUtil();
 				Item item = dbUtil.getItemById(itemId);
@@ -48,6 +50,10 @@ public class WareHouseController extends BaseController {
 						request.setAttribute("allStores", allStores);
 					}
 				}
+				List<ItemStore> itemStores = dbUtil.getItemStoresByItem(item);
+				request.setAttribute("itemStores", itemStores);
+				String scontext = getServletContext().getRealPath("/");
+				wareHouseService.createItemStoreXml(item,scontext);
 			}
 			view.forward(request, response); 
 	}
@@ -77,7 +83,7 @@ public class WareHouseController extends BaseController {
 				String actionPrice = wareHouseService.getString(paramtereMap, "warehouse_register_price");
 				dbUtil.updateItemPriceInWareHouse(item, Integer.parseInt(itemCount),Integer.parseInt(actionPrice));
 				dbUtil.insertItemAction(itemActionRegister);				
-				request.setAttribute("register_successful", "Toote arvele võtmine õnnestus!");
+				request.setAttribute("register_successful", "Toote arvele v6tmine 6nnestus!");
 			}
 			request.setAttribute("item", item);
 			request.setAttribute("allStores", allStores);
@@ -103,7 +109,7 @@ public class WareHouseController extends BaseController {
 					ItemAction itemActionRemove = wareHouseService.createWareHouseRemoveItemAction(user, paramtereMap, allStores, item);
 					if(itemActionRemove != null){
 						dbUtil.insertItemAction(itemActionRemove);
-						request.setAttribute("remove_successful", "Toote eemaldamine õnnestus!");
+						request.setAttribute("remove_successful", "Toote eemaldamine 6nnestus!");
 					}
 				
 				}
@@ -143,7 +149,7 @@ public class WareHouseController extends BaseController {
 					ItemAction itemActionMove = wareHouseService.createWareHouseMoveItemAction(user, paramtereMap, allStores, item);
 					if(itemActionMove != null){
 						dbUtil.insertItemAction(itemActionMove);
-						request.setAttribute("move_successful", "Toote ladude vahel liigutamine õnnestus!");
+						request.setAttribute("move_successful", "Toote ladude vahel liigutamine 6nnestus!");
 					}
 				}else{ //kui toodet lisatavas laos pole, siis loome uue lao kirje
 					ItemStore newItemStore = new ItemStore();
@@ -155,7 +161,7 @@ public class WareHouseController extends BaseController {
 					ItemAction itemActionMove = wareHouseService.createWareHouseMoveItemAction(user, paramtereMap, allStores, item);
 					if(itemActionMove != null){
 						dbUtil.insertItemAction(itemActionMove);
-						request.setAttribute("move_successful", "Toote ladude vahel liigutamine õnnestus!");
+						request.setAttribute("move_successful", "Toote ladude vahel liigutamine 6nnestus!");
 					}
 				}
 			}
@@ -164,7 +170,10 @@ public class WareHouseController extends BaseController {
 		}else{
 			request.setAttribute("parameter_needed", "Laotoimingute tegemiseks on parameeter action vajalik!");
 		}
-		
+		List<ItemStore> itemStores = dbUtil.getItemStoresByItem(item);
+		request.setAttribute("itemStores", itemStores);
+		String scontext = getServletContext().getRealPath("/");
+		wareHouseService.createItemStoreXml(item,scontext);
 		view.forward(request, response); 	
 	}
 }
