@@ -1,4 +1,4 @@
-package frontend;
+package service;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
