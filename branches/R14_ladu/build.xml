@@ -3,9 +3,9 @@
 Version: $Revision: 4.12 $ $Date: 2012/01/23 10:36:29 $ 
 Author:  Raul Liivrand 
 -->
-<project name="R11_ladu" default="all" basedir="."> 
+<project name="R14_ladu" default="all" basedir="."> 
       
-	<property name="application_name" value="R11_ladu"/>
+	<property name="application_name" value="R14_ladu"/>
 <!-- Configure properties to access the Manager application -->
    	<property name="url"      value="http://imbi.ld.ttu.ee:7500/manager/text"/> 
    	<property name="username" value="manager"/> 
