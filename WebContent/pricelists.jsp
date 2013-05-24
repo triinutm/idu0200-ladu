@@ -24,6 +24,37 @@ function close_new(){
 }
 </script>
 <body>
+
+
+
+<script>
+function getNote(id){
+
+	var xmlhttp;    
+    if (id==""){
+       document.getElementById("note").innerHTML="";
+       return;
+    }
+    if (window.XMLHttpRequest){
+       xmlhttp=new XMLHttpRequest();
+    }
+    else{
+       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function(){
+       if (xmlhttp.readyState==4 && xmlhttp.status==200){
+        	kuvaInfo = JSON.parse(xmlhttp.responseText);
+      document.getElementById("note").innerHTML= "<b>Märkused</b> : "+ kuvaInfo.note + "<br>";
+      	
+       }
+    }
+       xmlhttp.open("GET","pricelists?id="+id,true);
+       xmlhttp.send();
+ 
+}
+</script>
+
+
 	<%@ include file="logout.jsp"%>
 	<%
 		String id = "";
@@ -33,7 +64,7 @@ function close_new(){
 		String date_to = "";
 		String note = "";
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>staatus</th><th>allahindluse protsent</th><th>kehtimise algus</th><th>kehtimise l6pp</th><th>m2rkus</th><th></th><th></th></tr>");
+		out.println("<table border='1'><tr bgcolor=lightgrey><th>kood</th><th>staatus</th><th>allahindluse protsent</th><th>kehtimise algus</th><th>kehtimise l6pp</th><th></th><th></th><th></th></tr>");
 		try {
 			for (PriceList p : pricelistElements) {
 				id = Long.toString(p.getPriceList());
@@ -41,20 +72,21 @@ function close_new(){
 				discount = Long.toString(p.getDefaultDiscountXtra());
 				date_from = df.format(p.getDateFrom());
 				date_to = df.format(p.getDateTo());
-				note = p.getNote();
 				out.println("<tr><td>" + id + "</td><td>" + status
 						+ "</td><td>" + discount + "</td><td>" + date_from
-						+ "</td><td>" + date_to + "</td><td>"+ note
-						+"</td><td><a HREF='pricelist?id="+ id
+						+ "</td><td>" + date_to + "</td><td><a HREF='pricelist?id="+ id
 								+ "'TARGET='_self'><strong>muuda</strong></a></td>"+ 
 						"</td><td><a HREF='pricelist?action=delete&uid="+ id
-						+ "'TARGET='_self'><strong>kustuta</strong></a></td></tr>");
+						+ "'TARGET='_self'><strong>kustuta</strong></a></td>"
+						+"<td nowrap><a href=\"javascript:getNote("+id+")\">märkused</a></td></tr>");
 			}
 			out.println("</table><input type=button onclick='open_new()' value='Loo uus'><br><br>");
 		} catch (Exception ex) {
 			out.println("Mingi viga: " + ex.getMessage());
 		}		
 	%>
+   <div id="note"></div>
+   
 	<div id="new_div" style="visibility: hidden;"><%@ include file="newpricelist.jsp"%>
 	<input type=button onclick='close_new()' value='Kinni'> </div>
 </body>
