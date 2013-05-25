@@ -10,7 +10,7 @@
 <%String wrongPassword = (String)request.getAttribute("wrongpass");%>
 <%String wrongUser = (String)request.getAttribute("wronguser");%>
 <body>
-	<h3>Ladu R_14:</h3>
+	<h3>Ladu R14:</h3>
 	
 	<form action="login" method="post">
 <table>
