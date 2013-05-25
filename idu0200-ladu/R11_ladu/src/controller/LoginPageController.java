@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.LoginService;
 import util.DBUtil;
 
 import db.UserAccount;
 
-import frontend.LoginService;
 
 @WebServlet("/login")
 public class LoginPageController extends HttpServlet{

@@ -1,4 +1,4 @@
-package frontend;
+package service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
