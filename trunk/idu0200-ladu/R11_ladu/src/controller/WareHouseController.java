@@ -17,8 +17,8 @@ import db.ItemAction;
 import db.ItemStore;
 import db.Store;
 import db.UserAccount;
-import frontend.WareHouseService;
 
+import service.WareHouseService;
 import util.DBUtil;
 
 /**
