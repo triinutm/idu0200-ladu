@@ -23,5 +23,13 @@
 out.println("<br><br>");
 String categorytree = (String)request.getAttribute("categoryTree"); 
 out.println(categorytree); %>
+<br>
+<br>
+<a href='static/pictures/klassidiagramm.jpg'>Klassidiagramm</a>
+<a href='static/pictures/ladude_jadadiagramm.jpg'>Ladude jadadiagramm</a>
+<a href='static/pictures/sisse_logimise_jadadiagramm.jpg'>Sisselogimise jadadiagramm</a>
+<a href='static/sql/f_leia_kliendid.sql.txt'>f_leia_kliendid.sql</a>
+<a href='static/sql/f_uuenda_lao_hinda.sql.txt'>f_uuenda_lao_hinda.sql</a>
+<a href='http://hektor4.ttu.ee/tomcat_webapp_logs/r14_ladu/log.txt'>log.txt</a>
 </body>
 </html>
