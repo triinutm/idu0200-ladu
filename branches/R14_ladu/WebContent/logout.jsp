@@ -6,6 +6,7 @@
 <%@page import="javax.servlet.http.HttpServletResponse"%>
 <html>
 <head>
+<link rel="stylesheet" href ="r_14.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -21,6 +22,6 @@ String username = currentuser.getUsername();
 <% out.println("<input type=\"submit\" value=\"Logi välja!\"/>"); %>
 </form>
 <%} %>
-<% out.println("<a href='" + request.getContextPath()+"/'>Pealeht</a>"); %>
+<% out.println("<a class='green-button' href='" + request.getContextPath()+"/'>Pealeht</a>"); %>
 </body>
 </html>

@@ -7,6 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href ="r_14.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Toote lisamine</title>
 </head>
@@ -26,7 +27,7 @@ if(request.getAttribute("productModel") != null){
 <span><%=model.getDescription().getErrorMessage()%></span></td></tr>
 <tr><th bgcolor=lightgrey>Müügihind</th><td><input type="text" name="price" value="<%=model.getPrice().getAttributeValue()%>"/>
 <span><%=model.getPrice().getErrorMessage()%></span></td></tr>
-<tr><td align='center' colspan="2"><strong>---------------------------- attribuudid -----------------------------</strong></td></tr>
+<tr><th align='center' colspan="2"><strong>Attribuudid</strong></th></tr>
 <%
 out.println("<tr><th bgcolor=lightgrey>Toote tüüp</th><td><strong>"+model.getType()+
 	    "<input type='hidden' name='type' value='"+model.getType()+"' />"+
