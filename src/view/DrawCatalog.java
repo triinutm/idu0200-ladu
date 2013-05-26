@@ -29,13 +29,13 @@ public class DrawCatalog {
 		String selected_indicator = "";
 		if (selected_catalog_id == itemType.getItemType()) {
 			this.selectedItemType = itemType;
-			selected_indicator = "<strong>[&#9632]</strong>";
+			selected_indicator = "<strong> &#9679 </strong>";
 		}
 		ItemType subcatalog = null;
 		for (int i = 0; i < (itemType.getLevel() - 1); i++) {
 			catalog_out = catalog_out + "&#8594";
 		}
-		catalog_out = catalog_out + selected_indicator + "<a href=\"?catalog="
+		catalog_out = catalog_out + selected_indicator + "<a class='stepsMenu' href=\"?catalog="
 				+ itemType.getItemType() + "\">" + itemType.getTypeName()
 				+ "</a><br>\n";
 		

@@ -4,7 +4,9 @@
 <%@page import="java.util.List"%>
 <%@page import="model.SearchForm"%>
 <html>
+
 <head>
+<link rel="stylesheet" href ="r_14.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Toote otsing</title>
 </head>
@@ -26,7 +28,7 @@
 		<%if(form.getAttributes().size() == 0){
 		    out.println("<tr><th  bgcolor=lightgrey>Attribuut</th><td><input type='text' name='attribute' value='"+form.getAttribute()+"'/></td></tr>");
 		}else{
-		    out.println("<tr><td align='center' colspan='2'><strong>---------------------- attribuudid --------------------</strong></td></tr>");
+		    out.println("<tr><td align='center' colspan='2'><strong>Attribuudid</strong></td></tr>");
 		    out.println("<tr><th bgcolor=lightgrey>Toote tüüp</th><td><strong>"+form.getType()+
 			    "<input type='hidden' name='type' value='"+form.getType()+"'/></strong></td></tr>");
 		    for(Long key : form.getAttributes().keySet()){
@@ -70,8 +72,8 @@
 			    out.println("<td>"+getValue(item.getStorePrice())+"</td>");
 			    out.println("<td>"+item.getProducer()+"</td>");
 			    out.println("<td>"+item.getProducerCode()+"</td>");
-			    out.println("<td><a href='"+request.getContextPath()+"/product?id="+item.getItem()+"'>Muuda</a></td>");
-			    out.println("<td><a href='"+request.getContextPath()+"/warehouse?item="+item.getItem()+"'>Lao toiming</a></td>");
+			    out.println("<td><a class='button' href='"+request.getContextPath()+"/product?id="+item.getItem()+"'>Muuda</a></td>");
+			    out.println("<td><a class='button' href='"+request.getContextPath()+"/warehouse?item="+item.getItem()+"'>Lao toiming</a></td>");
 			    out.println("</tr>");
 			} %>
 			</tbody>

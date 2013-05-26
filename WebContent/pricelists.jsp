@@ -9,6 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href ="r_14.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Hinnakirjad</title>
 </head>
@@ -74,11 +75,11 @@ function getNote(id){
 				date_to = df.format(p.getDateTo());
 				out.println("<tr><td>" + id + "</td><td>" + status
 						+ "</td><td>" + discount + "</td><td>" + date_from
-						+ "</td><td>" + date_to + "</td><td><a HREF='pricelist?id="+ id
-								+ "'TARGET='_self'><strong>muuda</strong></a></td>"+ 
-						"</td><td><a HREF='pricelist?action=delete&uid="+ id
-						+ "'TARGET='_self'><strong>kustuta</strong></a></td>"
-						+"<td nowrap><a href=\"javascript:getNote("+id+")\">märkused</a></td></tr>");
+						+ "</td><td>" + date_to + "</td><td><a class='button' HREF='pricelist?id="+ id
+								+ "'TARGET='_self'>muuda</a></td>"+ 
+						"</td><td><a class='button' HREF='pricelist?action=delete&uid="+ id
+						+ "'TARGET='_self'>kustuta</a></td>"
+						+"<td nowrap><a class='button' href=\"javascript:getNote("+id+")\">märkused</a></td></tr>");
 			}
 			out.println("</table><input type=button onclick='open_new()' value='Loo uus'><br><br>");
 		} catch (Exception ex) {

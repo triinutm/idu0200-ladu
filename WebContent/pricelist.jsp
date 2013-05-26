@@ -11,6 +11,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href ="r_14.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Hinnakiri</title>
 <link rel="stylesheet"
@@ -27,7 +28,7 @@
 </head>
 <body>
 <%@ include file="logout.jsp" %>
-<a href='<%=request.getContextPath()%>/pricelist'>Hinnakirjad</a>
+<a class="button" href='<%=request.getContextPath()%>/pricelist'>Hinnakirjad</a>
 	<form action="pricelist?action=update" method="POST">
 		<input type="hidden" name="id" value='<%=pricelist.getId()%>'>
 		<table border="1">
@@ -76,8 +77,8 @@
 				id = Integer.toString(c.getId());
 				name = c.getName();
 				out.println("<tr><td>" + id + "</td><td>" + name
-						+ "</td><td><a HREF='pricelist?id="+pricelist.getId()+"&action=deletecustomer&customer="+ id
-						+ "'TARGET='_self'><strong>kustuta</strong></a></td></tr>");
+						+ "</td><td><a class='button' HREF='pricelist?id="+pricelist.getId()+"&action=deletecustomer&customer="+ id
+						+ "'TARGET='_self'>kustuta</a></td></tr>");
 			}
 			out.println("</table>");
 		} catch (Exception ex) {
@@ -130,8 +131,8 @@
 						+"<td><input type='text' name='discount' value='"+discount_xtra+"'/></td>"
 						+ "<td><input disabled value='"+discount_price+"'/></td>"
 						+ "<td><input type='submit' value='muuda'/></td>"
-						+ "<td><a HREF='pricelist?id="+pricelist.getId()+"&action=deleteitem&item="+ id
-						+ "'TARGET='_self'><strong>kustuta</strong></a></td></form></tr>");
+						+ "<td><a class='button' HREF='pricelist?id="+pricelist.getId()+"&action=deleteitem&item="+ id
+						+ "'TARGET='_self'>kustuta</a></td></form></tr>");
 			}
 			out.println("</table>");
 		} catch (Exception ex) {
