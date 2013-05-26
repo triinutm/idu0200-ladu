@@ -543,7 +543,7 @@ public class DBUtil {
 	 *            - lisatava toote hind.
 	 */
 	public void updateItemPriceInWareHouse(Item item, int newItemCount,
-			int newItemPrice) {
+			double newItemPrice) {
 
 		long itemId = item.getItem();
 
