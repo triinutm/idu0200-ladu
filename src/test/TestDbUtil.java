@@ -12,7 +12,7 @@ import util.DBUtil;
 public class TestDbUtil {
 	
 	/**
-	 * Testime toote küsimist andmebaasist Id j2rgi ning toote hinna uuenemist.
+	 * Testime toote kysimist andmebaasist Id j2rgi ning toote hinna uuenemist.
 	 */
 	@Test
 	public void testUpdateItemPriceInWareHouse(){
